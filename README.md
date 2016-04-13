@@ -6,7 +6,7 @@
 - [ ] 'Reset' Befehl
 - [ ] Input/Befehle parsen
 - [ ] 'Load' Befehl+ Validierung
-- [ ] 'Show' Befehl ([Peter](https://github.com/petbuer))
+- [ ] 'Show' Befehl
 - [ ] 'Move' Befehl ([Peter](https://github.com/petbuer))
 - [ ] Spiellogik aller Felder ([Peter](https://github.com/petbuer))
 - [ ] 'Save' Befehl ([Peter](https://github.com/petbuer))
