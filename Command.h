@@ -19,14 +19,13 @@ class Game;
 class Command
 {
   private:
+    
     //--------------------------------------------------------------------------
     // Private copy constructor
-
     Command(const Command& original);
 
     //--------------------------------------------------------------------------
     // Private assignment operator
-
     Command& operator=(const Command& original);
 
     //--------------------------------------------------------------------------
@@ -34,14 +33,13 @@ class Command
     std::string command_name_;
 
   public:
+    
     //--------------------------------------------------------------------------
     // Constructor
-
     Command(std::string name);
 
     //--------------------------------------------------------------------------
     // Destructor
-
     virtual ~Command();
 
     //--------------------------------------------------------------------------
@@ -49,7 +47,6 @@ class Command
     // @param board The board where action should be performed on
     // @param params Possible parameters neede for the execution
     // @return Integer representing the success of the action
-
     virtual int execute(Game& board, std::vector<std::string>& params) = 0;
 
     //--------------------------------------------------------------------------
