@@ -1,6 +1,6 @@
 # SEP2016
 
-- [ ] Command Line Argumente (@jguertl)
+- [ ] Command Line Argumente ([Jakob](https://github.com/jguertl))
 - [ ] Error Handling
 - [ ] 'Fastmove' Befehl
 - [ ] 'Reset' Befehl
