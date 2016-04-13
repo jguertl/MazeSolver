@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// main.cpp
+// WrongUsageException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,18 +9,14 @@
 //------------------------------------------------------------------------------
 //
 
-#include <iostream>
 #include "WrongUsageException.h"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 //------------------------------------------------------------------------------
-// main function
-// entry point for execution
-// @param argc argument count
-// @param **argv argument values
-// @return return value for the OS
-//
-int main(int argc, char** argv) {
-    throw WrongUsageException();
-    std::cout << "Hello, World!\n";
-    return 0;
+WrongUsageException::WrongUsageException()
+{
+    cout << "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]" << endl;
 }

@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// main.cpp
+// OutOfMemoryException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,18 +9,14 @@
 //------------------------------------------------------------------------------
 //
 
+#include "OutOfMemoryException.h"
 #include <iostream>
-#include "WrongUsageException.h"
+
+using std::cout;
+using std::endl;
 
 //------------------------------------------------------------------------------
-// main function
-// entry point for execution
-// @param argc argument count
-// @param **argv argument values
-// @return return value for the OS
-//
-int main(int argc, char** argv) {
-    throw WrongUsageException();
-    std::cout << "Hello, World!\n";
-    return 0;
+OutOfMemoryException::OutOfMemoryException()
+{
+    cout << "[ERR] Out of memory." << endl;
 }
