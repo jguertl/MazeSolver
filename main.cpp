@@ -3,14 +3,15 @@
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
-// Authors: Armin Adam (1430748)
-// Peter Buerscher (1530750)
+// Authors: Peter Buerscher (1530750)
 // Jakob Guertl (1530763)
 //------------------------------------------------------------------------------
 //
 
 #include <iostream>
 #include "WrongUsageException.h"
+using std::cout;
+using std::endl;
 
 //------------------------------------------------------------------------------
 // main function
@@ -20,7 +21,5 @@
 // @return return value for the OS
 //
 int main(int argc, char** argv) {
-    throw WrongUsageException();
-    std::cout << "Hello, World!\n";
     return 0;
 }
