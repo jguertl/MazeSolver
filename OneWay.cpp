@@ -10,15 +10,27 @@
 
 #include "OneWay.h"
 
-OneWay::OneWay() {
+
+//------------------------------------------------------------------------------
+OneWay::OneWay()
+{
 }
 
-OneWay::OneWay(const OneWay& orig) {
+
+//------------------------------------------------------------------------------
+OneWay::OneWay(const OneWay& orig)
+{
 }
 
-OneWay::~OneWay() {
+
+//------------------------------------------------------------------------------
+OneWay::~OneWay()
+{
 }
 
-bool OneWay::move(string direction){
+
+//------------------------------------------------------------------------------
+bool OneWay::move(string direction)
+{
     return true;
 }

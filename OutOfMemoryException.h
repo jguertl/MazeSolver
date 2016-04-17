@@ -20,7 +20,7 @@
 class OutOfMemoryException : BaseException
 {
     
-public:
+  public:
     
     //--------------------------------------------------------------------------
     // Constructor

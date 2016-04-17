@@ -8,23 +8,49 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef BONUS_H
-#define BONUS_H
+#ifndef BONUS_H_INCLUDED
+#define BONUS_H_INCLUDED
 
 #include <string>
 #include "Tile.h"
 
 using std::string;
 
-class Bonus : public Tile{
-public:
+//----------------------------------------------------------------------------
+// Bonus Class
+// Class to represent a bonus field which increments the remaining steps
+//
+class Bonus : Tile
+{
+  private:
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     Bonus();
+    
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Bonus Object.
+    // @param orig Original to copy.
+    //
     Bonus(const Bonus& orig);
+    
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~Bonus();
+    
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
     virtual bool move(string direction) override;
-private:
-
 };
 
-#endif /* BONUS_H */
+#endif //BONUS_H_INCLUDED
 

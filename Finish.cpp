@@ -10,15 +10,23 @@
 
 #include "Finish.h"
 
-Finish::Finish() {
+//------------------------------------------------------------------------------
+Finish::Finish()
+{
 }
 
-Finish::Finish(const Finish& orig) {
+//------------------------------------------------------------------------------
+Finish::Finish(const Finish& orig)
+{
 }
 
-Finish::~Finish() {
+//------------------------------------------------------------------------------
+Finish::~Finish()
+{
 }
 
-bool Finish::move(string direction){
+//------------------------------------------------------------------------------
+bool Finish::move(string direction)
+{
     return true;
 }

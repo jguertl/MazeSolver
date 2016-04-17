@@ -17,5 +17,5 @@ using std::endl;
 //------------------------------------------------------------------------------
 WrongUsageException::WrongUsageException()
 {
-    cout << "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]" << endl;
+  cout << "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]" << endl;
 }

@@ -8,23 +8,49 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef ICE_H
-#define ICE_H
+#ifndef ICE_H_INCLUDED
+#define ICE_H_INCLUDED
 
 #include <string>
 #include "Tile.h"
 
 using std::string;
 
-class Ice : public Tile{
-public:
+//----------------------------------------------------------------------------
+// Ice Class
+// Class to represent an ice field
+//
+class Ice : Tile
+{
+  private:
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     Ice();
+    
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Ice Object.
+    // @param orig Original to copy.
+    //
     Ice(const Ice& orig);
+    
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~Ice();
+    
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
     virtual bool move(string direction) override;
-private:
-
 };
 
-#endif /* ICE_H */
+#endif //ICE_H_INCLUDED
 

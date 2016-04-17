@@ -22,11 +22,11 @@ class WrongUsageException : BaseException
         
   public:
         
-  //--------------------------------------------------------------------------
-  // Constructor
-  // Constructs the exception and outputs the error message.
-  //
-  WrongUsageException();
+    //--------------------------------------------------------------------------
+    // Constructor
+    // Constructs the exception and outputs the error message.
+    //
+    WrongUsageException();
 };
 
 #endif //WRONGUSAGEEXCEPTION_H_INCLUDED

@@ -8,23 +8,49 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef FINISH_H
-#define FINISH_H
+#ifndef FINISH_H_INCLUDED
+#define FINISH_H_INCLUDED
 
 #include <string>
 #include "Tile.h"
 
 using std::string;
 
-class Finish : public Tile{
-public:
+//----------------------------------------------------------------------------
+// Finish Class
+// Class to represent the finish field
+//
+class Finish : Tile
+{
+  private:
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     Finish();
+    
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Finish Object.
+    // @param orig Original to copy.
+    //
     Finish(const Finish& orig);
+    
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~Finish();
+    
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
     virtual bool move(string direction) override;
-private:
-
 };
 
-#endif /* FINISH_H */
+#endif //FINISH_H_INCLUDED
 

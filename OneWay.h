@@ -8,23 +8,48 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef ONEWAY_H
-#define ONEWAY_H
+#ifndef ONEWAY_H_INCLUDED
+#define ONEWAY_H_INCLUDED
 
 #include <string>
 #include "Tile.h"
 
 using std::string;
 
-class OneWay : public Tile{
-public:
+//----------------------------------------------------------------------------
+// OneWay Class
+// Class to represent a field with only one available direction
+//
+class OneWay : Tile
+{
+  private:
+    
+  public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     OneWay();
+    
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another OneWay Object.
+    // @param orig Original to copy.
+    //
     OneWay(const OneWay& orig);
+    
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~OneWay();
+    
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
     virtual bool move(string direction) override;
-private:
-
 };
 
-#endif /* ONEWAY_H */
+#endif //ONEWAY_H_INCLUDED
 

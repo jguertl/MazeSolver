@@ -8,8 +8,8 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME_H_INCLUDED
+#define GAME_H_INCLUDED
 
 #include <string>
 #include "Maze.h"
@@ -17,18 +17,55 @@
 
 using std::string;
 
+//----------------------------------------------------------------------------
+// Game Class
+// Class to represent a whole game
+//
 class Game {
-public:
+  private:
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     Game();
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    // @param loadfile Path to load
+    // @param savefile Path to save
+    //
     Game(string loadfile, string savefile);
+    
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Game Object.
+    // @param orig Original to copy.
+    //
     Game(const Game& orig);
+    
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~Game();
+    
+    //--------------------------------------------------------------------------
+    // TODO wirklich Public?
+    //
     Maze maze_;
+    
+    //--------------------------------------------------------------------------
+    // TODO wirklich Public?
+    //
     Player player_;
+    
+    //--------------------------------------------------------------------------
+    // Start Method
+    //Starts the game
+    //
     void startGame();
-private:
-
 };
 
-#endif /* GAME_H */
+#endif //GAME_H_INCLUDED
 

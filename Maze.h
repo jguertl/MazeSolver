@@ -8,29 +8,68 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef MAZE_H
-#define MAZE_H
+#ifndef MAZE_H_INCLUDED
+#define MAZE_H_INCLUDED
 #include <string>
 #include <vector>
 
 using std::string;
 using std::vector;
 
-class Maze {
-public:
-    Maze();
-    ~Maze();
-    void loadMaze(const string& path);
-    void saveMaze(const string& path);
-private:
+//----------------------------------------------------------------------------
+// Style Maze
+// class to represent a maze
+//
+class Maze
+{
+  private:
+    
+    //--------------------------------------------------------------------------
+    // TODO
+    //
     string moves_;
+    
+    //--------------------------------------------------------------------------
+    // Current amount of steps
+    //
     int steps_;
+    
+    //--------------------------------------------------------------------------
+    // Current Counter
+    //
     int counter_;
+    
+    //--------------------------------------------------------------------------
+    // Collection of tiles
+    //
     vector<string> tiles_;
     
+  public:
     
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Maze();
     
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    ~Maze();
+    
+    //--------------------------------------------------------------------------
+    // Load Method
+    // TODO description
+    // @param path file path to load
+    //
+    void loadMaze(const string& path);
+    
+    //--------------------------------------------------------------------------
+    // Save Method
+    // TODO description
+    // @param path file path to save
+    //
+    void saveMaze(const string& path);
 };
 
-#endif /* MAZE_H */
+#endif //MAZE_H_INCLUDED
 
