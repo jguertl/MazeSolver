@@ -9,3 +9,15 @@
 //
 
 #include "LoadCommand.h"
+
+//------------------------------------------------------------------------------
+LoadCommand::LoadCommand(string name)
+{
+    
+}
+
+//------------------------------------------------------------------------------
+int LoadCommand::execute(<#Game &board#>, <#std::vector<std::string> &params#>)
+{
+    
+}
