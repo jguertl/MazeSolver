@@ -29,4 +29,4 @@ class OutOfMemoryException : BaseException
     OutOfMemoryException();
 };
 
-#endif //OUTOFMEMORYEXCEPTION
+#endif //OUTOFMEMORYEXCEPTION_INCLUDED
