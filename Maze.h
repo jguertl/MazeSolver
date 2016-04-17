@@ -1,9 +1,12 @@
-/* 
- * File:   Maze.h
- * Author: Peter
- *
- * Created on 16. April 2016, 10:57
- */
+//------------------------------------------------------------------------------
+// Maze.h
+//
+// Group: Group 10, study assistant: Daniel Ellmeier
+//
+// Authors: Peter Buerscher (1530750)
+// Jakob Guertl (1530763)
+//------------------------------------------------------------------------------
+//
 
 #ifndef MAZE_H
 #define MAZE_H

@@ -15,7 +15,7 @@
 
 //----------------------------------------------------------------------------
 // Custom Wrong Usage Exception
-// class inform about invalid arguments
+// class to inform about invalid arguments
 //
 class WrongUsageException : BaseException
 {

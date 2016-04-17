@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Bonus.h
- * Author: Peter
- *
- * Created on 17. April 2016, 03:01
- */
+//------------------------------------------------------------------------------
+// Bonus.h
+//
+// Group: Group 10, study assistant: Daniel Ellmeier
+//
+// Authors: Peter Buerscher (1530750)
+// Jakob Guertl (1530763)
+//------------------------------------------------------------------------------
+//
 
 #ifndef BONUS_H
 #define BONUS_H
