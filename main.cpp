@@ -47,11 +47,11 @@ int main(int argc, char** argv) {
       game.setInputFilename(argv[2]);
       game.setOutputFilename(argv[4]);
     }
-    else
+    else if(argc != 1)
     {
       throw WrongUsageException();
     }
-    StartGameCommand* start_game_command = new StartGameCommand("New Game");
+    StartGameCommand* start_game_command = new StartGameCommand("Start new Game");
     std::vector<std::string> empty_parameters;
     start_game_command->execute(game, empty_parameters);
   }
