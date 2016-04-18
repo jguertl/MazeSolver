@@ -23,49 +23,51 @@ using std::vector;
 class Maze
 {
   private:
-    
+
     //--------------------------------------------------------------------------
     // TODO
     //
     string moves_;
-    
+
     //--------------------------------------------------------------------------
     // Current amount of steps
     //
     int steps_;
-    
+
     //--------------------------------------------------------------------------
     // Current Counter
     //
     int counter_;
-    
+
     //--------------------------------------------------------------------------
     // Collection of tiles
     //
-    vector<string> tiles_;
-    
+    vector< vector<char> > tiles_;
+
+
+
   public:
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Maze();
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     ~Maze();
-    
+
     //--------------------------------------------------------------------------
     // Load Method
-    // Loads the maze from the given path
+    // TODO description
     // @param path file path to load
     //
     void loadMaze(const string& path);
-    
+
     //--------------------------------------------------------------------------
     // Save Method
-    // Saves the maze to the given maze
+    // TODO description
     // @param path file path to save
     //
     void saveMaze(const string& path);
