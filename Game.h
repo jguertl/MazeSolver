@@ -17,6 +17,7 @@
 #include "Player.h"
 
 using std::string;
+using std::vector;
 
 //----------------------------------------------------------------------------
 // Game Class
@@ -73,7 +74,41 @@ class Game {
     // @param moves Moves to check
     // @return Returns result of the check operation.
     //
+
     bool checkMoves(string moves);
+
+    int showMaze();
+
+    //--------------------------------------------------------------------------
+    // Save Method
+    // Saves the current maze
+    //
+    int saveMaze(string filename);
+
+    //--------------------------------------------------------------------------
+    // Load Method
+    // Loads the current maze
+    //
+    int loadMaze(string filename);
+
+    //--------------------------------------------------------------------------
+    // Move Method
+    // Move the player in the given direction
+    //
+    int movePlayer(string direction);
+  
+    //--------------------------------------------------------------------------
+    // Fast Move Method
+    // Move the player in the given direction
+    //
+    int fastMovePlayer(vector<string> directions);
+  
+    //--------------------------------------------------------------------------
+    // Reset Method
+    // Resets the game
+    //
+    int reset();
+
 };
 
 #endif //GAME_H_INCLUDED
