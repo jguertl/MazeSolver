@@ -32,7 +32,7 @@ Maze::~Maze()
 }
 
 //------------------------------------------------------------------------------
-void Maze::loadMaze(const string& path)
+void Maze::load(const string& path)
 {
   cout << "Load from " << path << endl;
   ifstream file ("maze.txt");
@@ -113,7 +113,7 @@ void Maze::loadMaze(const string& path)
 }
 
 //------------------------------------------------------------------------------
-void Maze::saveMaze(const string& path)
+void Maze::save(const string& path)
 {
   cout << "Save to " << path << endl;
   ofstream outfile;
@@ -136,7 +136,7 @@ void Maze::saveMaze(const string& path)
 }
 
 //------------------------------------------------------------------------------
-void Maze::showMaze()
+void Maze::show()
 {
   for (int i = 0; i < tiles_.size(); i++)
   {
@@ -153,7 +153,7 @@ void Maze::showMore()
 {
   cout << "Remaining Steps: " << steps_ << std::endl;
   cout << "Moved Steps: " << moves_ << std::endl;
-  showMaze();
+  show();
 }
 
 //------------------------------------------------------------------------------
