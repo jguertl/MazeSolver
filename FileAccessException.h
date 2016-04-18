@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string FileAccessMessage;
+  static const string FILE_ACCESS_EXCEPTION;
   
 public:
   

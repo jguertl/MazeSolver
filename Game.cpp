@@ -10,6 +10,15 @@
 
 #include "Game.h"
 
+const string Game::DIRECTION_MOVE_UP = "up";
+const string Game::DIRECTION_MOVE_DOWN = "down";
+const string Game::DIRECTION_MOVE_RIGHT = "right";
+const string Game::DIRECTION_MOVE_LEFT = "left";
+const string Game::DIRECTION_FAST_MOVE_UP = "u";
+const string Game::DIRECTION_FAST_MOVE_DOWN = "d";
+const string Game::DIRECTION_FAST_MOVE_RIGHT = "r";
+const string Game::DIRECTION_FAST_MOVE_LEFT = "l";
+
 //------------------------------------------------------------------------------
 Game::Game()
 {
@@ -38,13 +47,13 @@ void Game::startGame()
   running_=true;
   while(running_==true)
   {
-      std::cout << "sep> ";
-      getline(std::cin, line);
+    std::cout << "sep> ";
+    getline(std::cin, line);
 
-      if(line.compare("quit")==0)
-      {
-          running_=false;
-      }
+    if(line.compare("quit")==0)
+    {
+      running_=false;
+    }
   }
 }
 
@@ -91,5 +100,11 @@ int Game::fastMovePlayer(string directions)
 int Game::reset()
 {
   return 1;
+}
+
+//------------------------------------------------------------------------------
+void Game::setAutoSave(bool autoSave)
+{
+  autoSaveEnabled_ = autoSave;
 }
 

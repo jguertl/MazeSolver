@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string NoMoreStepsException::NoMoreStepsMessage =
+const string NoMoreStepsException::NO_MORE_STEPS_MESSAGE =
   "[ERR] No more steps possible.";
 
 //------------------------------------------------------------------------------
 NoMoreStepsException::NoMoreStepsException()
 {
-  cout << NoMoreStepsMessage << endl;
+  cout << NO_MORE_STEPS_MESSAGE << endl;
 }

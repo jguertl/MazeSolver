@@ -23,7 +23,6 @@ FastMoveCommand::FastMoveCommand(string name) : Command(name)
 //------------------------------------------------------------------------------
 int FastMoveCommand::execute(Game& board, vector<string>& params)
 {
-  //TODO Get direction from params and validate
-  string directions;
+  string directions = params.at(1);
   return board.fastMovePlayer(directions);
 }

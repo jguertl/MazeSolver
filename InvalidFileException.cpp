@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string InvalidFileException::InvalidFileMessage =
+const string InvalidFileException::INVALID_FILE_EXCEPTION =
 "[ERR] Invalid file.";
 
 //------------------------------------------------------------------------------
 InvalidFileException::InvalidFileException()
 {
-  cout << InvalidFileMessage << endl;
+  cout << INVALID_FILE_EXCEPTION << endl;
 }

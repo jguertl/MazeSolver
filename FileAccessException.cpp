@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string FileAccessException::FileAccessMessage =
+const string FileAccessException::FILE_ACCESS_EXCEPTION =
 "[ERR] File could not be written.";
 
 //------------------------------------------------------------------------------
 FileAccessException::FileAccessException()
 {
-  cout << FileAccessMessage << endl;
+  cout << FILE_ACCESS_EXCEPTION << endl;
 }

@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include "MoveCommand.h"
+#include "InvalidMoveException.h"
+#include "AvailableDirections.h"
 
 using std::cout;
 using std::endl;
@@ -23,7 +25,14 @@ MoveCommand::MoveCommand(string name) : Command(name)
 //------------------------------------------------------------------------------
 int MoveCommand::execute(Game& board, vector<string>& params)
 {
-  //TODO Get direction from params and validate
-  string direction;
-  return board.movePlayer(direction);
+  string direction = params.at(1);
+  if(direction == Game.DIRECTION_MOVE_UP || direction == Game.DIRECTION_MOVE_DOWN ||
+    Game.DIRECTION_MOVE_LEFT || direction == Game.DIRECTION_MOVE_RIGHT)
+  {
+    return board.movePlayer(direction);
+  }
+  else
+  {
+    throw InvalidMoveException();
+  }
 }

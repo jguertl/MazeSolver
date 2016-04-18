@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string NoMazeLoadedException::NoMazeLoadedMessage =
+const string NoMazeLoadedException::NO_MAZE_LOADED_MESSAGE =
   "[ERR] No maze loaded";
 
 //------------------------------------------------------------------------------
 NoMazeLoadedException::NoMazeLoadedException()
 {
-  cout << NoMazeLoadedMessage << endl;
+  cout << NO_MAZE_LOADED_MESSAGE << endl;
 }

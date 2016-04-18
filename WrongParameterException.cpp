@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string WrongParameterException::WrongParameterMessage =
+const string WrongParameterException::WRONG_PARAMETER_MESSAGE =
   "[ERR] Wrong parameter.";
 
 //------------------------------------------------------------------------------
 WrongParameterException::WrongParameterException()
 {
-  cout << WrongParameterMessage << endl;
+  cout << WRONG_PARAMETER_MESSAGE << endl;
 }

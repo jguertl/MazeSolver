@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string UnknownCommandException::UnknownCommandMessage =
+const string UnknownCommandException::UNKNOWN_COMMAND_MESSAGE =
 "[ERR] Unknown command.";
 
 //------------------------------------------------------------------------------
 UnknownCommandException::UnknownCommandException()
 {
-  cout << UnknownCommandMessage << endl;
+  cout << UNKNOWN_COMMAND_MESSAGE << endl;
 }

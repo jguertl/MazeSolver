@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string NoMazeLoadedMessage;
+  static const string NO_MAZE_LOADED_MESSAGE;
   
 public:
   

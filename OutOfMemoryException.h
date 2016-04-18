@@ -27,7 +27,7 @@ class OutOfMemoryException : BaseException
     //--------------------------------------------------------------------------
     // Message to be shown in case of an exception
     //
-    static const string OutOfMemoryMessage;
+    static const string OUT_OF_MEMORY_MESSAGE;
   
   public:
     

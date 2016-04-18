@@ -14,10 +14,10 @@
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string OutOfMemoryException::OUT_OF_MEMORY_MESSAGE = "[ERR] Out of memory.";
 
 //------------------------------------------------------------------------------
 OutOfMemoryException::OutOfMemoryException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << OUT_OF_MEMORY_MESSAGE << endl;
 }

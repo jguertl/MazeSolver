@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string WrongParameterCountException::WrongParameterCountMessage =
+const string WrongParameterCountException::WRONG_PARAMETER_COUNT_MESSAGE =
   "[ERR] Wrong parameter count.";
 
 //------------------------------------------------------------------------------
 WrongParameterCountException::WrongParameterCountException()
 {
-  cout << WrongParameterCountMessage << endl;
+  cout << WRONG_PARAMETER_COUNT_MESSAGE << endl;
 }

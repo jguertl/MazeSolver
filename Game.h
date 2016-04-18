@@ -31,8 +31,63 @@ class Game {
     //
     bool running_;
   
+    //--------------------------------------------------------------------------
+    // Variable which indicates if the game is currently running
+    //
+    bool autoSaveEnabled_;
+  
+    //--------------------------------------------------------------------------
+    // Variable which represents the current maze
+    //
+    Maze maze_;
+  
+    //--------------------------------------------------------------------------
+    // Variable which represents the current player
+    //
+    Player player_;
+  
   public:
-
+  
+    //--------------------------------------------------------------------------
+    // Move Direction "up"
+    //
+    static const string DIRECTION_MOVE_UP;
+  
+    //--------------------------------------------------------------------------
+    // Move Direction "down"
+    //
+    static const string DIRECTION_MOVE_DOWN;
+  
+    //--------------------------------------------------------------------------
+    // Move Direction "left"
+    //
+    static const string DIRECTION_MOVE_LEFT;
+  
+    //--------------------------------------------------------------------------
+    // Move Direction "right"
+    //
+    static const string DIRECTION_MOVE_RIGHT;
+  
+    //--------------------------------------------------------------------------
+    // Fast Move Direction "u"
+    //
+    static const string DIRECTION_FAST_MOVE_UP;
+  
+    //--------------------------------------------------------------------------
+    // Fast Move Direction "d"
+    //
+    static const string DIRECTION_FAST_MOVE_DOWN;
+  
+    //--------------------------------------------------------------------------
+    // Fast Move Direction "l"
+    //
+    static const string DIRECTION_FAST_MOVE_LEFT;
+  
+    //--------------------------------------------------------------------------
+    // Fast Move Direction "r"
+    //
+    static const string DIRECTION_FAST_MOVE_RIGHT;
+  
     //--------------------------------------------------------------------------
     // Constructor
     //
@@ -56,16 +111,6 @@ class Game {
     // Destructor
     //
     virtual ~Game();
-
-    //--------------------------------------------------------------------------
-    // TODO wirklich Public?
-    //
-    Maze maze_;
-
-    //--------------------------------------------------------------------------
-    // TODO wirklich Public?
-    //
-    Player player_;
 
     //--------------------------------------------------------------------------
     // Start Method
@@ -126,7 +171,13 @@ class Game {
     // @return TODO
     //
     int reset();
-
+  
+    //--------------------------------------------------------------------------
+    // Auto Save Method
+    // Sets the auto save flag
+    // @param autoSave Bool which indicates if auto save is enabled
+    //
+    void setAutoSave(bool autoSave);
 };
 
 #endif //GAME_H_INCLUDED

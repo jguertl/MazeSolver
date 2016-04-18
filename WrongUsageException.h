@@ -27,7 +27,7 @@ class WrongUsageException : BaseException
     //--------------------------------------------------------------------------
     // Message to be shown in case of an exception
     //
-    static const string WrongUsageMessage;
+    static const string WRONG_USAGE_MESSAGE;
   
   public:
         

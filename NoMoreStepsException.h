@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string NoMoreStepsMessage;
+  static const string NO_MORE_STEPS_MESSAGE;
   
 public:
   

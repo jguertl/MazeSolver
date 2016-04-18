@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string InvalidMoveException::InvalidMoveMessage =
+const string InvalidMoveException::INVALID_MOVE_EXCEPTION =
 "[ERR] Invalid move.";
 
 //------------------------------------------------------------------------------
 InvalidMoveException::InvalidMoveException()
 {
-  cout << InvalidMoveMessage << endl;
+  cout << INVALID_MOVE_EXCEPTION << endl;
 }

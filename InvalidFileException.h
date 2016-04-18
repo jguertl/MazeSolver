@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string InvalidFileMessage;
+  static const string INVALID_FILE_EXCEPTION;
   
 public:
   

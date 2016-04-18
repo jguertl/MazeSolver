@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string InvalidPathException::InvalidPathMessage =
+const string InvalidPathException::INVALID_PATH_EXCEPTION =
 "[ERR] Invalid path.";
 
 //------------------------------------------------------------------------------
 InvalidPathException::InvalidPathException()
 {
-  cout << InvalidPathMessage << endl;
+  cout << INVALID_PATH_EXCEPTION << endl;
 }

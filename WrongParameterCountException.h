@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string WrongParameterCountMessage;
+  static const string WRONG_PARAMETER_COUNT_MESSAGE;
   
 public:
   

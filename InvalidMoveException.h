@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string InvalidMoveMessage;
+  static const string INVALID_MOVE_EXCEPTION;
   
 public:
   

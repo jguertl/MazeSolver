@@ -27,7 +27,7 @@ private:
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
-  static const string InvalidPathMessage;
+  static const string INVALID_PATH_EXCEPTION;
   
 public:
   

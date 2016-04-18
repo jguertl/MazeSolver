@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include "WrongUsageException.h"
+#include "Game.h"
+#include "StartGameCommand.h"
 
 using std::cout;
 using std::endl;
@@ -22,5 +24,9 @@ using std::endl;
 // @return return value for the OS
 //
 int main(int argc, char** argv) {
+  Game game;
+  StartGameCommand* startGameCommand = new StartGameCommand("New Game");
+  std::vector<std::string> parameters;
+  startGameCommand->execute(game, parameters);
   return 0;
 }

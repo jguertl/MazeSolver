@@ -14,11 +14,11 @@
 using std::cout;
 using std::endl;
 
-const string FileOpenException::FileOpenMessage =
+const string FileOpenException::FILE_OPEN_MESSAGE =
 "[ERR] File could not be opened.";
 
 //------------------------------------------------------------------------------
 FileOpenException::FileOpenException()
 {
-  cout << FileOpenMessage << endl;
+  cout << FILE_OPEN_MESSAGE << endl;
 }
