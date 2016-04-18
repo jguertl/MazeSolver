@@ -65,6 +65,12 @@ class Game {
     // Starts the game
     //
     void startGame();
+  
+    //--------------------------------------------------------------------------
+    // Show Method
+    // Shows the current maze
+    //
+    int showMaze();
 };
 
 #endif //GAME_H_INCLUDED

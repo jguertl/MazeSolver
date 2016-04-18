@@ -21,7 +21,7 @@ SaveCommand::SaveCommand(string name) : Command(name)
 }
 
 //------------------------------------------------------------------------------
-int SaveCommand::execute(Game &board, vector<string> &params)
+int SaveCommand::execute(Game& board, vector<string>& params)
 {
   cout << "SaveCommand execute" << endl;
   return 1;

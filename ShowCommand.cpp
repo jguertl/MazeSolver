@@ -21,8 +21,7 @@ ShowCommand::ShowCommand(string name) : Command(name)
 }
 
 //------------------------------------------------------------------------------
-int ShowCommand::execute(Game &board, vector<string> &params)
+int ShowCommand::execute(Game& board, vector<string>& params)
 {
-  cout << "ShowCommand execute" << endl;
-  return 1;
+  return board.showMaze();
 }
