@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// WrongUsageException.cpp
+// SaveCommand.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -8,13 +8,19 @@
 //------------------------------------------------------------------------------
 //
 
-#include "WrongUsageException.h"
+#include "SaveCommand.h"
 
 using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-WrongUsageException::WrongUsageException()
+SaveCommand::SaveCommand(string name)
 {
-  cout << "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]" << endl;
+
+}
+
+//------------------------------------------------------------------------------
+int SaveCommand::execute(Game &board, vector<string> &params)
+{
+    cout << "SaveCommand execute" << endl;
 }

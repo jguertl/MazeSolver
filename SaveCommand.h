@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// LoadCommand.h
+// SaveCommand.h
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -8,8 +8,8 @@
 //------------------------------------------------------------------------------
 //
 
-#ifndef LOADCOMMAND_H_INCLUDED
-#define LOADCOMMAND_H_INCLUDED
+#ifndef SAVECOMMAND_H_INCLUDED
+#define SAVECOMMAND_H_INCLUDED
 
 #include <string>
 #include <vector>
@@ -18,14 +18,14 @@
 using std::string;
 using std::vector;
 
-class LoadCommand:Command
+class SaveCommand:Command
 {
-  public:
-    
+public:
+
     //--------------------------------------------------------------------------
     // Constructor
-    LoadCommand(string name);
-    
+    SaveCommand(string name);
+
     //--------------------------------------------------------------------------
     // Executes the command.
     // @param board The board where action should be performed on
@@ -34,4 +34,4 @@ class LoadCommand:Command
     int execute(Game& board, vector<string>& params);
 };
 
-#endif //LOADCOMMAND_H_INCLUDED
+#endif //SAVECOMMAND_H_INCLUDED

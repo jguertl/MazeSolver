@@ -58,14 +58,14 @@ class Maze
     
     //--------------------------------------------------------------------------
     // Load Method
-    // TODO description
+    // Loads the maze from the given path
     // @param path file path to load
     //
     void loadMaze(const string& path);
     
     //--------------------------------------------------------------------------
     // Save Method
-    // TODO description
+    // Saves the maze to the given maze
     // @param path file path to save
     //
     void saveMaze(const string& path);
