@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// SaveCommand.cpp
+// MoveCommand.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,21 +9,21 @@
 //
 
 #include <iostream>
-#include "SaveCommand.h"
+#include "MoveCommand.h"
 
 using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-SaveCommand::SaveCommand(string name) : Command(name)
+MoveCommand::MoveCommand(string name) : Command(name)
 {
 
 }
 
 //------------------------------------------------------------------------------
-int SaveCommand::execute(Game& board, vector<string>& params)
+int MoveCommand::execute(Game& board, vector<string>& params)
 {
-  //TODO get filename from parameter vector
-  string filename;
-  return board.saveMaze(filename);
+  //TODO Get direction from params and validate
+  string direction;
+  return board.movePlayer(direction);
 }

@@ -71,6 +71,24 @@ class Game {
     // Shows the current maze
     //
     int showMaze();
+
+    //--------------------------------------------------------------------------
+    // Save Method
+    // Saves the current maze
+    //
+    int saveMaze(string filename);
+
+    //--------------------------------------------------------------------------
+    // Load Method
+    // Loads the current maze
+    //
+    int loadMaze(string filename);
+
+    //--------------------------------------------------------------------------
+    // Move Method
+    // Move the player in the given direction
+    //
+    int movePlayer(string direction);
 };
 
 #endif //GAME_H_INCLUDED

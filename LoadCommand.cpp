@@ -23,6 +23,7 @@ LoadCommand::LoadCommand(string name) : Command(name)
 //------------------------------------------------------------------------------
 int LoadCommand::execute(Game &board, vector<string> &params)
 {
-  cout << "LoadCommand execute" << endl;
-  return 1;
+  //TODO get filename from parameter vector
+  string filename;
+  return board.loadMaze(filename);
 }
