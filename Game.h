@@ -73,29 +73,7 @@ class Game {
     // @param moves Moves to check
     // @return Returns result of the check operation.
     //
-<<<<<<< HEAD
     bool checkMoves(string moves);
-=======
-    int showMaze();
-
-    //--------------------------------------------------------------------------
-    // Save Method
-    // Saves the current maze
-    //
-    int saveMaze(string filename);
-
-    //--------------------------------------------------------------------------
-    // Load Method
-    // Loads the current maze
-    //
-    int loadMaze(string filename);
-
-    //--------------------------------------------------------------------------
-    // Move Method
-    // Move the player in the given direction
-    //
-    int movePlayer(string direction);
->>>>>>> origin/master
 };
 
 #endif //GAME_H_INCLUDED
