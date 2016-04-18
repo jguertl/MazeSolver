@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// InvalidMoveException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "InvalidMoveException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string InvalidMoveException::InvalidMoveMessage =
+"[ERR] Invalid move.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+InvalidMoveException::InvalidMoveException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << InvalidMoveMessage << endl;
 }

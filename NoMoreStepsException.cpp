@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// NoMoreStepsException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "NoMoreStepsException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string NoMoreStepsException::NoMoreStepsMessage =
+  "[ERR] No more steps possible.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+NoMoreStepsException::NoMoreStepsException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << NoMoreStepsMessage << endl;
 }

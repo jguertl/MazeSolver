@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// UnknownCommandException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "UnknownCommandException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string UnknownCommandException::UnknownCommandMessage =
+"[ERR] Unknown command.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+UnknownCommandException::UnknownCommandException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << UnknownCommandMessage << endl;
 }

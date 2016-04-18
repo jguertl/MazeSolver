@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// FileAccessException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "FileAccessException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string FileAccessException::FileAccessMessage =
+"[ERR] File could not be written.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+FileAccessException::FileAccessException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << FileAccessMessage << endl;
 }

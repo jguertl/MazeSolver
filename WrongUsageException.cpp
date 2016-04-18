@@ -14,8 +14,11 @@
 using std::cout;
 using std::endl;
 
+const string WrongUsageException::WrongUsageMessage =
+  "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]";
+
 //------------------------------------------------------------------------------
 WrongUsageException::WrongUsageException()
 {
-  cout << "[ERR] Wrong usage: ./basic [-s <filename1>] [-m <filename2>]" << endl;
+  cout << WrongUsageMessage << endl;
 }

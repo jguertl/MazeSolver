@@ -11,7 +11,10 @@
 #ifndef WRONGUSAGEEXCEPTION_H_INCLUDED
 #define WRONGUSAGEEXCEPTION_H_INCLUDED
 
+#include <string>
 #include "BaseException.h"
+
+using std::string;
 
 //----------------------------------------------------------------------------
 // Custom Wrong Usage Exception
@@ -19,7 +22,13 @@
 //
 class WrongUsageException : BaseException
 {
-        
+  private:
+  
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string WrongUsageMessage;
+  
   public:
         
     //--------------------------------------------------------------------------

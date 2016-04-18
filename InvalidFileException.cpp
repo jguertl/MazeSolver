@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// InvalidFileException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "InvalidFileException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string InvalidFileException::InvalidFileMessage =
+"[ERR] Invalid file.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+InvalidFileException::InvalidFileException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << InvalidFileMessage << endl;
 }

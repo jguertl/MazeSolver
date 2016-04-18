@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// WrongParameterException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "WrongParameterException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string WrongParameterException::WrongParameterMessage =
+  "[ERR] Wrong parameter.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+WrongParameterException::WrongParameterException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << WrongParameterMessage << endl;
 }

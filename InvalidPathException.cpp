@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// InvalidPathException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "InvalidPathException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string InvalidPathException::InvalidPathMessage =
+"[ERR] Invalid path.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+InvalidPathException::InvalidPathException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << InvalidPathMessage << endl;
 }

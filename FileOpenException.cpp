@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// FileOpenException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "FileOpenException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string FileOpenException::FileOpenMessage =
+"[ERR] File could not be opened.";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+FileOpenException::FileOpenException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << FileOpenMessage << endl;
 }

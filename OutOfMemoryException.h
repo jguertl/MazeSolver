@@ -11,7 +11,10 @@
 #ifndef OUTOFMEMORYEXCEPTION_H_INCLUDED
 #define OUTOFMEMORYEXCEPTION_H_INCLUDED
 
+#include <string>
 #include "BaseException.h"
+
+using std::string;
 
 //----------------------------------------------------------------------------
 // Custom Out of Memory Exception
@@ -19,7 +22,13 @@
 //
 class OutOfMemoryException : BaseException
 {
-    
+  private:
+  
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string OutOfMemoryMessage;
+  
   public:
     
     //--------------------------------------------------------------------------

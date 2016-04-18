@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// OutOfMemoryException.cpp
+// NoMazeLoadedException.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,15 +9,16 @@
 //
 
 #include <iostream>
-#include "OutOfMemoryException.h"
+#include "NoMazeLoadedException.h"
 
 using std::cout;
 using std::endl;
 
-const string OutOfMemoryException::OutOfMemoryMessage = "[ERR] Out of memory.";
+const string NoMazeLoadedException::NoMazeLoadedMessage =
+  "[ERR] No maze loaded";
 
 //------------------------------------------------------------------------------
-OutOfMemoryException::OutOfMemoryException()
+NoMazeLoadedException::NoMazeLoadedException()
 {
-  cout << OutOfMemoryMessage << endl;
+  cout << NoMazeLoadedMessage << endl;
 }
