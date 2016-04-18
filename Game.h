@@ -25,7 +25,12 @@ using std::vector;
 //
 class Game {
   private:
+  
+    //--------------------------------------------------------------------------
+    // Variable which indicates if the game is currently running
+    //
     bool running_;
+  
   public:
 
     //--------------------------------------------------------------------------
@@ -64,7 +69,7 @@ class Game {
 
     //--------------------------------------------------------------------------
     // Start Method
-    //Starts the game
+    // Starts the game
     //
     void startGame();
 
@@ -74,38 +79,51 @@ class Game {
     // @param moves Moves to check
     // @return Returns result of the check operation.
     //
-
     bool checkMoves(string moves);
-
+ 
+    //--------------------------------------------------------------------------
+    // Show Method
+    // Shows the current maze
+    // @return TODO
+    //
     int showMaze();
 
     //--------------------------------------------------------------------------
     // Save Method
     // Saves the current maze
+    // @param filename Filename of the maze which should be save
+    // @return TODO
     //
     int saveMaze(string filename);
 
     //--------------------------------------------------------------------------
     // Load Method
     // Loads the current maze
+    // @param filename Filename of the maze which should be loaded
+    // @return TODO
     //
     int loadMaze(string filename);
 
     //--------------------------------------------------------------------------
     // Move Method
     // Move the player in the given direction
+    // @param direction Direction to move
+    // @return TODO
     //
     int movePlayer(string direction);
   
     //--------------------------------------------------------------------------
     // Fast Move Method
     // Move the player in the given direction
+    // @param directions Directions to move
+    // @return TODO
     //
-    int fastMovePlayer(vector<string> directions);
+    int fastMovePlayer(string directions);
   
     //--------------------------------------------------------------------------
     // Reset Method
     // Resets the game
+    // @return TODO
     //
     int reset();
 

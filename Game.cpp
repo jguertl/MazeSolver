@@ -31,6 +31,7 @@ Game::~Game()
 
 }
 
+//------------------------------------------------------------------------------
 void Game::startGame()
 {
   string line;
@@ -47,10 +48,10 @@ void Game::startGame()
   }
 }
 
-
+//------------------------------------------------------------------------------
 bool Game::checkMoves(string moves)
 {
-
+  return true;
 }
 
 //------------------------------------------------------------------------------
@@ -78,7 +79,7 @@ int Game::movePlayer(string direction)
 }
 
 //------------------------------------------------------------------------------
-int Game::fastMovePlayer(vector<string> directions)
+int Game::fastMovePlayer(string directions)
 {
   return 1;
 }
