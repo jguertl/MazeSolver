@@ -11,7 +11,7 @@
 #define PLAYER_H_INCLUDED
 
 #include <string>
-#include "Tile.h"
+#include "Path.h"
 
 using std::string;
 
@@ -21,57 +21,59 @@ using std::string;
 //
 class Player
 {
-private:
-  
-  //--------------------------------------------------------------------------
-  // TODO
-  //
-  int x_;
-  
-  //--------------------------------------------------------------------------
-  // TODO
-  //
-  int y_;
- 
-  //--------------------------------------------------------------------------
-  // TODO
-  //
-  //Tile tile_;
-    
-public:
-    
-  //--------------------------------------------------------------------------
-  // Constructor
-  //
-  Player();
-    
-  //--------------------------------------------------------------------------
-  // Copy Constructor
-  // Makes a copy of another Player Object.
-  // @param orig Original to copy.
-  //
-  Player(const Player& orig);
-    
-  //--------------------------------------------------------------------------
-  // Destructor
-  //
-  virtual ~Player();
+  private:
 
-  //--------------------------------------------------------------------------
-  // Move Method
-  // TODO description
-  // @param direction Direction to move
-  // @return Returns result of the move operation.
-  //
-  void move(string direction);
-  
-  //--------------------------------------------------------------------------
-  // Check Method
-  // TODO description
-  // @param moves Moves to check
-  // @return Returns result of the check operation.
-  //
-  bool checkMoves(string moves);
+    //--------------------------------------------------------------------------
+    // TODO
+    //
+    int x_;
+
+    //--------------------------------------------------------------------------
+    // TODO
+    //
+    int y_;
+
+    //--------------------------------------------------------------------------
+    // TODO
+    //
+    Path tile_;
+
+  public:
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Player();
+
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Player Object.
+    // @param orig Original to copy.
+    //
+    Player(const Player& orig);
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    virtual ~Player();
+
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
+    void move(string direction);
+
+    //--------------------------------------------------------------------------
+    // Fastmove Method
+    // TODO description
+    // @param moves Directions
+    // @return Returns result of the move operation.
+    //
+    void fastMove(string moves);
+
+
 };
 
 #endif //PLAYER_H_INCLUDED

@@ -28,11 +28,11 @@ Player::~Player()
 //------------------------------------------------------------------------------
 void Player::move(string direction)
 {
-    
+
 }
 
 //------------------------------------------------------------------------------
-bool Player::checkMoves(string moves)
+void Player::fastMove(string moves)
 {
-  return true;
+
 }

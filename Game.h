@@ -12,6 +12,7 @@
 #define GAME_H_INCLUDED
 
 #include <string>
+#include <iostream>
 #include "Maze.h"
 #include "Player.h"
 
@@ -23,54 +24,56 @@ using std::string;
 //
 class Game {
   private:
-    
+    bool running_;
   public:
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Game();
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     // @param loadfile Path to load
     // @param savefile Path to save
     //
     Game(string loadfile, string savefile);
-    
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another Game Object.
     // @param orig Original to copy.
     //
     Game(const Game& orig);
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~Game();
-    
+
     //--------------------------------------------------------------------------
     // TODO wirklich Public?
     //
     Maze maze_;
-    
+
     //--------------------------------------------------------------------------
     // TODO wirklich Public?
     //
     Player player_;
-    
+
     //--------------------------------------------------------------------------
     // Start Method
-    // Starts the game
+    //Starts the game
     //
     void startGame();
-  
+
     //--------------------------------------------------------------------------
-    // Show Method
-    // Shows the current maze
+    // Check Method
+    // TODO description
+    // @param moves Moves to check
+    // @return Returns result of the check operation.
     //
-    int showMaze();
+    bool checkMoves(string moves);
 };
 
 #endif //GAME_H_INCLUDED
