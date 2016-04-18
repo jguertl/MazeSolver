@@ -47,7 +47,33 @@ void Game::startGame()
   }
 }
 
+<<<<<<< HEAD
 bool Game::checkMoves(string moves)
 {
 
 }
+=======
+//------------------------------------------------------------------------------
+int Game::showMaze()
+{
+  return 1;
+}
+
+//------------------------------------------------------------------------------
+int Game::saveMaze(string filename)
+{
+  return 1;
+}
+
+//------------------------------------------------------------------------------
+int Game::loadMaze(string filename)
+{
+  return 1;
+}
+
+//------------------------------------------------------------------------------
+int Game::movePlayer(string direction)
+{
+  return 1;
+}
+>>>>>>> origin/master
