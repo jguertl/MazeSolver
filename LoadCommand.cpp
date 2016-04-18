@@ -8,13 +8,14 @@
 //------------------------------------------------------------------------------
 //
 
+#include <iostream>
 #include "LoadCommand.h"
 
 using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-LoadCommand::LoadCommand(string name)
+LoadCommand::LoadCommand(string name) : Command(name)
 {
     
 }
@@ -23,4 +24,5 @@ LoadCommand::LoadCommand(string name)
 int LoadCommand::execute(Game &board, vector<string> &params)
 {
   cout << "LoadCommand execute" << endl;
+  return 1;
 }

@@ -8,13 +8,14 @@
 //------------------------------------------------------------------------------
 //
 
+#include <iostream>
 #include "ShowCommand.h"
 
 using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-ShowCommand::ShowCommand(string name)
+ShowCommand::ShowCommand(string name) : Command(name)
 {
     
 }
@@ -23,4 +24,5 @@ ShowCommand::ShowCommand(string name)
 int ShowCommand::execute(Game &board, vector<string> &params)
 {
   cout << "ShowCommand execute" << endl;
+  return 1;
 }

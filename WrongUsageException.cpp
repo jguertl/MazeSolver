@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 //
 
+#include <iostream>
 #include "WrongUsageException.h"
 
 using std::cout;

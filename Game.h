@@ -62,7 +62,7 @@ class Game {
     
     //--------------------------------------------------------------------------
     // Start Method
-    //Starts the game
+    // Starts the game
     //
     void startGame();
 };

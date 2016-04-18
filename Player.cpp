@@ -34,5 +34,5 @@ void Player::move(string direction)
 //------------------------------------------------------------------------------
 bool Player::checkMoves(string moves)
 {
-    
+  return true;
 }

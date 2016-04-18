@@ -8,8 +8,8 @@
 //------------------------------------------------------------------------------
 //
 
-#include "OutOfMemoryException.h"
 #include <iostream>
+#include "OutOfMemoryException.h"
 
 using std::cout;
 using std::endl;
@@ -17,5 +17,6 @@ using std::endl;
 //------------------------------------------------------------------------------
 OutOfMemoryException::OutOfMemoryException()
 {
+  //TODO replace with static constant string
   cout << "[ERR] Out of memory." << endl;
 }
