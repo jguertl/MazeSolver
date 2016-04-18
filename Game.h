@@ -45,6 +45,16 @@ class Game {
     // Variable which represents the current player
     //
     Player player_;
+
+    //--------------------------------------------------------------------------
+    // Variable wich represents the output filename in case of a save
+    //
+    string outputFilename_;
+  
+    //--------------------------------------------------------------------------
+    // Variable wich represents the output filename in case of a save
+    //
+    string inputFilename_;
   
   public:
   
@@ -92,13 +102,6 @@ class Game {
     // Constructor
     //
     Game();
-
-    //--------------------------------------------------------------------------
-    // Constructor
-    // @param loadfile Path to load
-    // @param savefile Path to save
-    //
-    Game(string loadfile, string savefile);
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -173,11 +176,18 @@ class Game {
     int reset();
   
     //--------------------------------------------------------------------------
-    // Auto Save Method
-    // Sets the auto save flag
-    // @param autoSave Bool which indicates if auto save is enabled
+    // Set output filename method
+    // Sets the output filename
+    // @param output_filename Path to the output file
     //
-    void setAutoSave(bool autoSave);
+    void setOutputFilename(string output_filename);
+  
+    //--------------------------------------------------------------------------
+    // Set input filename method
+    // Sets the input filename
+    // @param input_filename Path to the input file
+    //
+    void setInputFilename(string input_filename);
 };
 
 #endif //GAME_H_INCLUDED

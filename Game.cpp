@@ -24,10 +24,6 @@ Game::Game()
 {
 }
 
-//------------------------------------------------------------------------------
-Game::Game(string loadfile, string savefile)
-{
-}
 
 //------------------------------------------------------------------------------
 Game::Game(const Game& orig)
@@ -103,8 +99,15 @@ int Game::reset()
 }
 
 //------------------------------------------------------------------------------
-void Game::setAutoSave(bool autoSave)
+void Game::setInputFilename(string input_filename)
 {
-  autoSaveEnabled_ = autoSave;
+  inputFilename_ = input_filename;
+  loadMaze(inputFilename_);
+}
+
+void Game::setOutputFilename(string output_filename)
+{
+  outputFilename_ = output_filename;
+  autoSaveEnabled_ = true;
 }
 
