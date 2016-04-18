@@ -38,8 +38,9 @@ void Maze::loadMaze(const string& path)
   ifstream file ("maze.txt");
   string line;
   char buffer;
-  vector<char> buffer_vector;
+  vector<Tile*> buffer_vector;
   std::stringstream sstream;
+  Tile* tile_pointer;
   if (file.is_open())
   {
     std::getline(file, moves_);
@@ -51,8 +52,48 @@ void Maze::loadMaze(const string& path)
 
     while(file.get(buffer))
     {
-      //std::cout << "Read " << buffer << std::endl;
-      buffer_vector.push_back(buffer);
+      if(buffer=='#')
+      {
+        // Wall
+        tile_pointer = new Wall(buffer);
+      }else if(buffer==' ')
+      {
+        // Path
+        tile_pointer = new Path(buffer);
+      }else if(buffer=='+')
+      {
+        // Ice
+        tile_pointer = new Ice(buffer);
+      }else if(buffer=='o')
+      {
+        // Start
+        tile_pointer = new Start(buffer);
+      }else if(buffer=='x')
+      {
+        // Finish
+        tile_pointer = new Finish(buffer);
+      }else if(buffer>='a' && buffer<='e')
+      {
+        // Bonus
+        tile_pointer = new Bonus(buffer);
+      }else if(buffer>='f' && buffer<='j')
+      {
+        // Quicksand
+        tile_pointer = new Quicksand(buffer);
+      }else if(buffer>='A' && buffer<='Z')
+      {
+        // Teleport
+        tile_pointer = new Teleport(buffer);
+      }else if(buffer=='<' ||
+               buffer=='>' ||
+               buffer=='^' ||
+               buffer=='v')
+      {
+        // OneWay
+        tile_pointer = new OneWay(buffer);
+      }
+
+      buffer_vector.push_back(tile_pointer);
 
       if(buffer=='\n')
       {
@@ -85,30 +126,44 @@ void Maze::saveMaze(const string& path)
   {
     for (int j = 0; j < tiles_[i].size(); j++)
     {
-      outfile << tiles_[i][j];
+      outfile << tiles_[i][j]->getSymbol();
     }
     outfile << std::endl;
   }
 
+
   outfile.close();
 }
 
+//------------------------------------------------------------------------------
 void Maze::showMaze()
 {
   for (int i = 0; i < tiles_.size(); i++)
   {
     for (int j = 0; j < tiles_[i].size(); j++)
     {
-      cout << tiles_[i][j];
+      cout << tiles_[i][j]->getSymbol();
     }
     cout << std::endl;
   }
 }
 
-
+//------------------------------------------------------------------------------
 void Maze::showMore()
 {
   cout << "Remaining Steps: " << steps_ << std::endl;
   cout << "Moved Steps: " << moves_ << std::endl;
   showMaze();
+}
+
+//------------------------------------------------------------------------------
+void Maze::deleteMaze()
+{
+  for (int i = 0; i < tiles_.size(); i++)
+  {
+    for (int j = 0; j < tiles_[i].size(); j++)
+    {
+      delete(tiles_[i][j]);
+    }
+  }
 }

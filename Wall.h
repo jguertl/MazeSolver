@@ -20,35 +20,40 @@ using std::string;
 // Wall Class
 // Class to represent a wall field which cannot be entered
 //
-class Wall : Tile {
+class Wall : public Tile {
   private:
-  
+
   public:
-  
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Wall();
-  
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Wall(char symbol);
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another Wall Object.
     // @param orig Original to copy.
     //
     Wall(const Wall& orig);
-  
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~Wall();
-  
+
     //--------------------------------------------------------------------------
     // Move Method
     // TODO description
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction) override;
+    bool move(string direction);
 };
 
 #endif //WALL_H_INCLUDED

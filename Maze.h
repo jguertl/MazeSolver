@@ -12,6 +12,16 @@
 #define MAZE_H_INCLUDED
 #include <string>
 #include <vector>
+#include "Tile.h"
+#include "Wall.h"
+#include "Path.h"
+#include "Ice.h"
+#include "Start.h"
+#include "Finish.h"
+#include "Bonus.h"
+#include "Quicksand.h"
+#include "Teleport.h"
+#include "OneWay.h"
 
 using std::string;
 using std::vector;
@@ -42,7 +52,7 @@ class Maze
     //--------------------------------------------------------------------------
     // Collection of tiles
     //
-    vector< vector<char> > tiles_;
+    vector< vector<Tile*> > tiles_;
 
   public:
 
@@ -69,6 +79,12 @@ class Maze
     // @param path file path to save
     //
     void saveMaze(const string& path);
+
+    //--------------------------------------------------------------------------
+    // Delete Maze
+    // TODO description
+    //
+    void deleteMaze();
 
     //--------------------------------------------------------------------------
     // Show Maze

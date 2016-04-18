@@ -20,36 +20,41 @@ using std::string;
 // Path Class
 // Class to represent a path without restrictions
 //
-class Path : Tile
+class Path : public Tile
 {
   private:
-  
+
   public:
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Path();
-    
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Path(char symbol);
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another Path Object.
     // @param orig Original to copy.
     //
     Path(const Path& orig);
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~Path();
-    
+
     //--------------------------------------------------------------------------
     // Move Method
     // TODO description
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction) override;
+    bool move(string direction);
 };
 
 #endif //PATH_H_INCLUDED

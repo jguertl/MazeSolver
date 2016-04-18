@@ -20,36 +20,41 @@ using std::string;
 // Ice Class
 // Class to represent an ice field
 //
-class Ice : Tile
+class Ice : public Tile
 {
   private:
-    
+
   public:
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Ice();
-    
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Ice(char symbol);
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another Ice Object.
     // @param orig Original to copy.
     //
     Ice(const Ice& orig);
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~Ice();
-    
+
     //--------------------------------------------------------------------------
     // Move Method
     // TODO description
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction) override;
+    bool move(string direction);
 };
 
 #endif //ICE_H_INCLUDED

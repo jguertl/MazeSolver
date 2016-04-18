@@ -20,35 +20,40 @@ using std::string;
 // OneWay Class
 // Class to represent a field with only one available direction
 //
-class OneWay : Tile
+class OneWay : public Tile
 {
   private:
-    
+
   public:
     //--------------------------------------------------------------------------
     // Constructor
     //
     OneWay();
-    
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    OneWay(char symbol);
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another OneWay Object.
     // @param orig Original to copy.
     //
     OneWay(const OneWay& orig);
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~OneWay();
-    
+
     //--------------------------------------------------------------------------
     // Move Method
     // TODO description
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction) override;
+    bool move(string direction);
 };
 
 #endif //ONEWAY_H_INCLUDED

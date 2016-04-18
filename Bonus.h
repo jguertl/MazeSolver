@@ -20,36 +20,41 @@ using std::string;
 // Bonus Class
 // Class to represent a bonus field which increments the remaining steps
 //
-class Bonus : Tile
+class Bonus : public Tile
 {
   private:
-    
+
   public:
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Bonus();
-    
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Bonus(char symbol);
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another Bonus Object.
     // @param orig Original to copy.
     //
     Bonus(const Bonus& orig);
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~Bonus();
-    
+
     //--------------------------------------------------------------------------
     // Move Method
     // TODO description
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction) override;
+    bool move(string direction);
 };
 
 #endif //BONUS_H_INCLUDED

@@ -20,36 +20,41 @@ using std::string;
 // Quicksand Class
 // Class to represent a quicksand field which decrements the remaining steps
 //
-class Quicksand : Tile
+class Quicksand : public Tile
 {
   private:
-    
+
   public:
-    
+
     //--------------------------------------------------------------------------
     // Constructor
     //
     Quicksand();
-    
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Quicksand(char symbol);
+
     //--------------------------------------------------------------------------
     // Copy Constructor
     // Makes a copy of another Quicksand Object.
     // @param orig Original to copy.
     //
     Quicksand(const Quicksand& orig);
-    
+
     //--------------------------------------------------------------------------
     // Destructor
     //
     virtual ~Quicksand();
-    
+
     //--------------------------------------------------------------------------
     // Move Method
     // TODO description
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction) override;
+    bool move(string direction);
 };
 
 #endif //QUICKSAND_H_INCLUDED

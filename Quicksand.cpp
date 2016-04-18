@@ -16,6 +16,13 @@ Quicksand::Quicksand()
 }
 
 //------------------------------------------------------------------------------
+Quicksand::Quicksand(char symbol)
+{
+  setSymbol(symbol);
+}
+
+
+//------------------------------------------------------------------------------
 Quicksand::Quicksand(const Quicksand& orig)
 {
 }

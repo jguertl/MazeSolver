@@ -16,6 +16,13 @@ Teleport::Teleport()
 }
 
 //------------------------------------------------------------------------------
+Teleport::Teleport(char symbol)
+{
+  setSymbol(symbol);
+}
+
+
+//------------------------------------------------------------------------------
 Teleport::Teleport(const Teleport& orig)
 {
 }
