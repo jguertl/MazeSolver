@@ -28,5 +28,5 @@ Finish::~Finish()
 //------------------------------------------------------------------------------
 bool Finish::move(string direction)
 {
-    return true;
+  return true;
 }

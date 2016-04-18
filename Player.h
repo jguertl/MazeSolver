@@ -1,36 +1,78 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Player.h
- * Author: Peter
- *
- * Created on 17. April 2016, 03:15
- */
-
-#ifndef PLAYER_H
-#define PLAYER_H
+//------------------------------------------------------------------------------
+// Player.h
+//
+// Group: Group 10, study assistant: Daniel Ellmeier
+//
+// Authors: Peter Buerscher (1530750)
+// Jakob Guertl (1530763)
+//------------------------------------------------------------------------------
+//
+#ifndef PLAYER_H_INCLUDED
+#define PLAYER_H_INCLUDED
 
 #include <string>
 #include "Tile.h"
 
 using std::string;
 
-class Player {
-public:
-    Player();
-    Player(const Player& orig);
-    virtual ~Player();
-    void move(string direction);
-    bool checkMoves(string moves);
+//----------------------------------------------------------------------------
+// Player Class
+// Class to represent a player inside the maze
+//
+class Player
+{
 private:
-    int x_;
-    int y_;
-    Tile tile_;
+  
+  //--------------------------------------------------------------------------
+  // TODO
+  //
+  int x_;
+  
+  //--------------------------------------------------------------------------
+  // TODO
+  //
+  int y_;
+ 
+  //--------------------------------------------------------------------------
+  // TODO
+  //
+  Tile tile_;
+    
+public:
+    
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  Player();
+    
+  //--------------------------------------------------------------------------
+  // Copy Constructor
+  // Makes a copy of another Player Object.
+  // @param orig Original to copy.
+  //
+  Player(const Player& orig);
+    
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~Player();
+
+  //--------------------------------------------------------------------------
+  // Move Method
+  // TODO description
+  // @param direction Direction to move
+  // @return Returns result of the move operation.
+  //
+  void move(string direction);
+  
+  //--------------------------------------------------------------------------
+  // Check Method
+  // TODO description
+  // @param moves Moves to check
+  // @return Returns result of the check operation.
+  //
+  bool checkMoves(string moves);
 };
 
-#endif /* PLAYER_H */
+#endif //PLAYER_H_INCLUDED
 

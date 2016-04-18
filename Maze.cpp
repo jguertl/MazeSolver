@@ -23,7 +23,7 @@ using std::endl;
 //------------------------------------------------------------------------------
 Maze::Maze() : steps_(0), moves_("")
 {
-    cout << "Constructor 1" << endl;
+  cout << "Constructor 1" << endl;
 }
 
 //------------------------------------------------------------------------------
@@ -67,5 +67,5 @@ void Maze::loadMaze(const string& path)
 //------------------------------------------------------------------------------
 void Maze::saveMaze(const string& path)
 {
-    cout << "Save" << endl;
+  cout << "Save" << endl;
 }

@@ -1,33 +1,58 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//------------------------------------------------------------------------------
+// Teleport.h
+//
+// Group: Group 10, study assistant: Daniel Ellmeier
+//
+// Authors: Peter Buerscher (1530750)
+// Jakob Guertl (1530763)
+//------------------------------------------------------------------------------
+//
 
-/* 
- * File:   Teleport.h
- * Author: Peter
- *
- * Created on 17. April 2016, 02:56
- */
-
-#ifndef TELEPORT_H
-#define TELEPORT_H
+#ifndef TELEPORT_H_INCLUDED
+#define TELEPORT_H_INCLUDED
 
 #include <string>
 #include "Tile.h"
 
 using std::string;
 
-class Teleport : public Tile{
-public:
+//----------------------------------------------------------------------------
+// Teleport Class
+// Class to represent a teleport field which transfers to the matchting
+// counterpart field
+//
+class Teleport : Tile
+{
+  private:
+  
+  public:
+  
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     Teleport();
+  
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Teleport Object.
+    // @param orig Original to copy.
+    //
     Teleport(const Teleport& orig);
+  
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~Teleport();
+  
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
     virtual bool move(string direction) override;
-private:
 
 };
 
-#endif /* TELEPORT_H */
+#endif //TELEPORT_H _INCLUDED
 

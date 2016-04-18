@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "WrongUsageException.h"
+
 using std::cout;
 using std::endl;
 
@@ -21,5 +22,5 @@ using std::endl;
 // @return return value for the OS
 //
 int main(int argc, char** argv) {
-    return 0;
+  return 0;
 }

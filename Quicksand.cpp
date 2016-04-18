@@ -1,27 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Quicksand.cpp
- * Author: Peter
- * 
- * Created on 17. April 2016, 03:04
- */
+//------------------------------------------------------------------------------
+// Quicksand.cpp
+//
+// Group: Group 10, study assistant: Daniel Ellmeier
+//
+// Authors: Peter Buerscher (1530750)
+// Jakob Guertl (1530763)
+//------------------------------------------------------------------------------
+//
 
 #include "Quicksand.h"
 
-Quicksand::Quicksand() {
+//------------------------------------------------------------------------------
+Quicksand::Quicksand()
+{
 }
 
-Quicksand::Quicksand(const Quicksand& orig) {
+//------------------------------------------------------------------------------
+Quicksand::Quicksand(const Quicksand& orig)
+{
 }
 
-Quicksand::~Quicksand() {
+
+//------------------------------------------------------------------------------
+Quicksand::~Quicksand()
+{
 }
 
-bool Quicksand::move(string direction){
-    return true;
+
+//------------------------------------------------------------------------------
+bool Quicksand::move(string direction)
+{
+  return true;
 }

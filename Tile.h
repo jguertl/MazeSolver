@@ -1,32 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//------------------------------------------------------------------------------
+// Tile.h
+//
+// Group: Group 10, study assistant: Daniel Ellmeier
+//
+// Authors: Peter Buerscher (1530750)
+// Jakob Guertl (1530763)
+//------------------------------------------------------------------------------
+//
 
-/* 
- * File:   Tile.h
- * Author: Peter
- *
- * Created on 17. April 2016, 02:41
- */
-
-#ifndef TILE_H
-#define TILE_H
+#ifndef TILE_H_INCLUDED
+#define TILE_H_INCLUDED
 
 #include <string>
 
 using std::string;
 
+//----------------------------------------------------------------------------
+// Tile Class
+// Class to represent the base class for all tiles inside a maze
+//
 class Tile {
-public:
-    Tile();
-    Tile(const Tile& orig);
-    virtual ~Tile();
-    virtual bool move(string direction)=0;
-private:
+  private:
+  
+    //--------------------------------------------------------------------------
+    // TODO
+    //
     char symbol_;
+  
+  public:
+  
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Tile();
+  
+    //--------------------------------------------------------------------------
+    // Copy Constructor
+    // Makes a copy of another Tile Object.
+    // @param orig Original to copy.
+    //
+    Tile(const Tile& orig);
+  
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    virtual ~Tile();
+  
+    //--------------------------------------------------------------------------
+    // Move Method
+    // TODO description
+    // @param direction Direction to move
+    // @return Returns result of the move operation.
+    //
+    virtual bool move(string direction)=0;
 };
 
-#endif /* TILE_H */
+#endif //TILE_H_INCLUDED
 

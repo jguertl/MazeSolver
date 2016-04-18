@@ -17,5 +17,5 @@ using std::endl;
 //------------------------------------------------------------------------------
 OutOfMemoryException::OutOfMemoryException()
 {
-    cout << "[ERR] Out of memory." << endl;
+  cout << "[ERR] Out of memory." << endl;
 }

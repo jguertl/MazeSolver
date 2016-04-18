@@ -28,5 +28,5 @@ Ice::~Ice()
 //------------------------------------------------------------------------------
 bool Ice::move(string direction)
 {
-    return true;
+  return true;
 }

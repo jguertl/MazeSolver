@@ -22,5 +22,5 @@ LoadCommand::LoadCommand(string name)
 //------------------------------------------------------------------------------
 int LoadCommand::execute(Game &board, vector<string> &params)
 {
-   cout << "LoadCommand execute" << endl;
+  cout << "LoadCommand execute" << endl;
 }

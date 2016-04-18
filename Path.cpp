@@ -28,5 +28,5 @@ Path::~Path()
 //------------------------------------------------------------------------------
 bool Path::move(string direction)
 {
-    return true;
+  return true;
 }

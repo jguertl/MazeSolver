@@ -20,7 +20,7 @@ using std::vector;
 
 class ShowCommand:Command
 {
-public:
+  public:
 
     //--------------------------------------------------------------------------
     // Constructor

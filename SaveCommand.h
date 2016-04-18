@@ -20,7 +20,7 @@ using std::vector;
 
 class SaveCommand:Command
 {
-public:
+  public:
 
     //--------------------------------------------------------------------------
     // Constructor

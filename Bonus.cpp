@@ -28,5 +28,5 @@ Bonus::~Bonus()
 //------------------------------------------------------------------------------
 bool Bonus::move(string direction)
 {
-    return true;
+  return true;
 }

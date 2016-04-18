@@ -32,5 +32,5 @@ OneWay::~OneWay()
 //------------------------------------------------------------------------------
 bool OneWay::move(string direction)
 {
-    return true;
+  return true;
 }

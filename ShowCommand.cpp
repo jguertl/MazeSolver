@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// Wall.cpp
+// ShowCommand.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -8,25 +8,19 @@
 //------------------------------------------------------------------------------
 //
 
-#include "Wall.h"
+#include "ShowCommand.h"
+
+using std::cout;
+using std::endl;
 
 //------------------------------------------------------------------------------
-Wall::Wall()
+ShowCommand::ShowCommand(string name)
 {
+    
 }
 
 //------------------------------------------------------------------------------
-Wall::Wall(const Wall& orig)
+int ShowCommand::execute(Game &board, vector<string> &params)
 {
-}
-
-//------------------------------------------------------------------------------
-Wall::~Wall()
-{
-}
-
-//------------------------------------------------------------------------------
-bool Wall::move(string direction)
-{
-  return false;
+  cout << "ShowCommand execute" << endl;
 }
