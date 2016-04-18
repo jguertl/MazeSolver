@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// FastMoveCommand.cpp
+// StartGameCommand.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,21 +9,20 @@
 //
 
 #include <iostream>
-#include "FastMoveCommand.h"
+#include "StartGameCommand.h"
 
 using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-FastMoveCommand::FastMoveCommand(string name) : Command(name)
+StartGameCommand::StartGameCommand(string name) : Command(name)
 {
   
 }
 
 //------------------------------------------------------------------------------
-int FastMoveCommand::execute(Game& board, vector<string>& params)
+int StartGameCommand::execute(Game& board, vector<string>& params)
 {
-  //TODO Get direction from params and validate
-  string directions;
-  return board.fastMovePlayer(directions);
+  board.startGame();
+  return 1;
 }

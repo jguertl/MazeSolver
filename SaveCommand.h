@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include "Command.h"
+#include "Game.h"
 
 using std::string;
 using std::vector;
