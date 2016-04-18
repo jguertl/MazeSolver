@@ -69,22 +69,6 @@ void Maze::loadMaze(const string& path)
     cout << "Unable to open file" ;
   }
 
-  /*
-  cout << "Moves: " << moves_ << endl;
-  cout << "Steps: " << steps_ << endl;
-  cout << "Size of Maze: " << tiles_.size() << endl;
-  cout << "Size of Line: " << tiles_[0].size() << endl;
-
-  for (int i = 0; i < tiles_.size(); i++)
-  {
-    for (int j = 0; j < tiles_[i].size(); j++)
-    {
-      cout << tiles_[i][j];
-    }
-    cout << std::endl;
-  }
-  */
-
 }
 
 //------------------------------------------------------------------------------
@@ -109,3 +93,22 @@ void Maze::saveMaze(const string& path)
   outfile.close();
 }
 
+void Maze::showMaze()
+{
+  for (int i = 0; i < tiles_.size(); i++)
+  {
+    for (int j = 0; j < tiles_[i].size(); j++)
+    {
+      cout << tiles_[i][j];
+    }
+    cout << std::endl;
+  }
+}
+
+
+void Maze::showMore()
+{
+  cout << "Remaining Steps: " << steps_ << std::endl;
+  cout << "Moved Steps: " << moves_ << std::endl;
+  showMaze();
+}

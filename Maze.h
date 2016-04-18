@@ -71,6 +71,18 @@ class Maze
     // @param path file path to save
     //
     void saveMaze(const string& path);
+
+    //--------------------------------------------------------------------------
+    // Show Maze
+    // TODO description
+    //
+    void showMaze();
+
+    //--------------------------------------------------------------------------
+    // Show More
+    // TODO description
+    //
+    void showMore();
 };
 
 #endif //MAZE_H_INCLUDED
