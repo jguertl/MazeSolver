@@ -53,3 +53,15 @@ int Game::movePlayer(string direction)
 {
   return 1;
 }
+
+//------------------------------------------------------------------------------
+int Game::fastMovePlayer(vector<string> directions)
+{
+  return 1;
+}
+
+//------------------------------------------------------------------------------
+int Game::reset()
+{
+  return 1;
+}

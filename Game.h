@@ -16,6 +16,7 @@
 #include "Player.h"
 
 using std::string;
+using std::vector;
 
 //----------------------------------------------------------------------------
 // Game Class
@@ -89,6 +90,18 @@ class Game {
     // Move the player in the given direction
     //
     int movePlayer(string direction);
+  
+    //--------------------------------------------------------------------------
+    // Fast Move Method
+    // Move the player in the given direction
+    //
+    int fastMovePlayer(vector<string> directions);
+  
+    //--------------------------------------------------------------------------
+    // Reset Method
+    // Resets the game
+    //
+    int reset();
 };
 
 #endif //GAME_H_INCLUDED
