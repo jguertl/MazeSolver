@@ -13,6 +13,7 @@
 #include "WrongUsageException.h"
 #include "Game.h"
 #include "StartGameCommand.h"
+#include "FastMoveCommand.h"
 
 using std::cout;
 using std::endl;
@@ -54,6 +55,12 @@ int main(int argc, char** argv) {
     StartGameCommand* start_game_command = new StartGameCommand("Start new Game");
     std::vector<std::string> empty_parameters;
     start_game_command->execute(game, empty_parameters);
+    
+    /*FastMoveCommand* fast_move_command = new FastMoveCommand("Start new Game");
+    std::vector<std::string> par;
+    par.push_back("fastmove");
+    par.push_back("dddrrr");
+    fast_move_command->execute(game, par);*/
   }
   catch(WrongUsageException wrong_usage_exception)
   {

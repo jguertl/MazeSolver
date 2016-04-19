@@ -11,7 +11,6 @@
 #include <iostream>
 #include "MoveCommand.h"
 #include "InvalidMoveException.h"
-#include "AvailableDirections.h"
 
 using std::cout;
 using std::endl;

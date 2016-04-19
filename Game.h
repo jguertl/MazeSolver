@@ -81,22 +81,22 @@ class Game {
     //--------------------------------------------------------------------------
     // Fast Move Direction "u"
     //
-    static const string DIRECTION_FAST_MOVE_UP;
+    static const char DIRECTION_FAST_MOVE_UP;
   
     //--------------------------------------------------------------------------
     // Fast Move Direction "d"
     //
-    static const string DIRECTION_FAST_MOVE_DOWN;
+    static const char DIRECTION_FAST_MOVE_DOWN;
   
     //--------------------------------------------------------------------------
     // Fast Move Direction "l"
     //
-    static const string DIRECTION_FAST_MOVE_LEFT;
+    static const char DIRECTION_FAST_MOVE_LEFT;
   
     //--------------------------------------------------------------------------
     // Fast Move Direction "r"
     //
-    static const string DIRECTION_FAST_MOVE_RIGHT;
+    static const char DIRECTION_FAST_MOVE_RIGHT;
   
     //--------------------------------------------------------------------------
     // Constructor

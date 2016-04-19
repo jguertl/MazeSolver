@@ -9,15 +9,16 @@
 //
 
 #include "Game.h"
+#include "UnknownCommandException.h"
 
 const string Game::DIRECTION_MOVE_UP = "up";
 const string Game::DIRECTION_MOVE_DOWN = "down";
 const string Game::DIRECTION_MOVE_RIGHT = "right";
 const string Game::DIRECTION_MOVE_LEFT = "left";
-const string Game::DIRECTION_FAST_MOVE_UP = "u";
-const string Game::DIRECTION_FAST_MOVE_DOWN = "d";
-const string Game::DIRECTION_FAST_MOVE_RIGHT = "r";
-const string Game::DIRECTION_FAST_MOVE_LEFT = "l";
+const char Game::DIRECTION_FAST_MOVE_UP = 'u';
+const char Game::DIRECTION_FAST_MOVE_DOWN = 'd';
+const char Game::DIRECTION_FAST_MOVE_RIGHT = 'r';
+const char Game::DIRECTION_FAST_MOVE_LEFT = 'l';
 
 //------------------------------------------------------------------------------
 Game::Game()
@@ -45,10 +46,20 @@ void Game::startGame()
   {
     std::cout << "sep> ";
     getline(std::cin, line);
-
+    
+    //TODO zu switch case umschreiben
     if(line.compare("quit")==0)
     {
       running_=false;
+      std::cout << "Bye!" << std::endl;
+    }
+    else if(line == "")
+    {
+      continue;
+    }
+    else
+    {
+      throw UnknownCommandException();
     }
   }
 }
