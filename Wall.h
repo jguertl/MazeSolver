@@ -12,9 +12,13 @@
 #define WALL_H_INCLUDED
 
 #include <string>
+#include <iostream>
 #include "Tile.h"
 
 using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 //----------------------------------------------------------------------------
 // Wall Class
@@ -53,7 +57,7 @@ class Wall : public Tile {
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    bool move(string direction);
+    virtual bool move(string direction) override;
 };
 
 #endif //WALL_H_INCLUDED

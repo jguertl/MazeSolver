@@ -26,10 +26,11 @@ Tile::~Tile()
 }
 
 //------------------------------------------------------------------------------
-bool Tile::move(string direction)
+/*bool Tile::move(string direction)
 {
   return false;
 }
+*/
 
 //------------------------------------------------------------------------------
 void Tile::setSymbol(char symbol)

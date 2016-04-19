@@ -39,5 +39,20 @@ OneWay::~OneWay()
 //------------------------------------------------------------------------------
 bool OneWay::move(string direction)
 {
-  return true;
+  if((getSymbol()=='<') && (direction.compare("left")==0))
+  {
+    return true;
+  }else if((getSymbol()=='>') && (direction.compare("right")==0))
+  {
+    return true;
+  }else if((getSymbol()=='^') && (direction.compare("up")==0))
+  {
+    return true;
+  }else if((getSymbol()=='v') && (direction.compare("down")==0))
+  {
+    return true;
+  }else
+  {
+    return false;
+  }
 }

@@ -12,8 +12,12 @@
 #define TILE_H_INCLUDED
 
 #include <string>
+#include <iostream>
 
 using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 //----------------------------------------------------------------------------
 // Tile Class
@@ -52,7 +56,7 @@ class Tile {
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    bool move(string direction);
+    virtual bool move(string direction)=0;
 
     //--------------------------------------------------------------------------
     // Setter

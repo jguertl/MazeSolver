@@ -12,9 +12,13 @@
 #define TELEPORT_H_INCLUDED
 
 #include <string>
+#include <iostream>
 #include "Tile.h"
 
 using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 //----------------------------------------------------------------------------
 // Teleport Class
@@ -55,7 +59,7 @@ class Teleport : public Tile
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    bool move(string direction);
+    virtual bool move(string direction) override;
 
 };
 

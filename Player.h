@@ -10,10 +10,14 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
+#include <iostream>
 #include <string>
 #include "Path.h"
 
 using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 //----------------------------------------------------------------------------
 // Player Class
@@ -36,7 +40,7 @@ class Player
     //--------------------------------------------------------------------------
     // TODO
     //
-    Path tile_;
+    Tile* tile_;
 
   public:
 
@@ -44,6 +48,11 @@ class Player
     // Constructor
     //
     Player();
+
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    Player(int position_x, int position_y);
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -73,7 +82,47 @@ class Player
     //
     void fastMove(string moves);
 
+    //--------------------------------------------------------------------------
+    // Setter tile_
+    // TODO description
+    // @param tile
+    //
+    void setTile(Tile* tile);
 
+    //--------------------------------------------------------------------------
+    // Getter tile_
+    // TODO description
+    // @return tile
+    //
+    Tile* getTile();
+
+    //--------------------------------------------------------------------------
+    // Setter x_
+    // TODO description
+    // @param x new x value
+    //
+    void setX(int x);
+
+    //--------------------------------------------------------------------------
+    // Getter x_
+    // TODO description
+    // @return x x-value
+    //
+    int getX();
+
+    //--------------------------------------------------------------------------
+    // Setter y_
+    // TODO description
+    // @param y new y value
+    //
+    void setY(int y);
+
+    //--------------------------------------------------------------------------
+    // Getter y_
+    // TODO description
+    // @return y y-value
+    //
+    int getY();
 };
 
 #endif //PLAYER_H_INCLUDED

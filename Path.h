@@ -11,10 +11,14 @@
 #ifndef PATH_H_INCLUDED
 #define PATH_H_INCLUDED
 
-#include "Tile.h"
 #include <string>
+#include <iostream>
+#include "Tile.h"
 
 using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 //----------------------------------------------------------------------------
 // Path Class
@@ -54,7 +58,7 @@ class Path : public Tile
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    bool move(string direction);
+    virtual bool move(string direction) override;
 };
 
 #endif //PATH_H_INCLUDED

@@ -12,6 +12,7 @@
 #define MAZE_H_INCLUDED
 #include <string>
 #include <vector>
+#include "Player.h"
 #include "Tile.h"
 #include "Wall.h"
 #include "Path.h"
@@ -45,9 +46,19 @@ class Maze
     int steps_;
 
     //--------------------------------------------------------------------------
-    // Current Counter
+    // Current x Counter
     //
-    int counter_;
+    int counter_x_;
+
+    //--------------------------------------------------------------------------
+    // Current y Counter
+    //
+    int counter_y_;
+
+    //--------------------------------------------------------------------------
+    // Player
+    //
+    Player player_;
 
     //--------------------------------------------------------------------------
     // Collection of tiles
@@ -97,6 +108,58 @@ class Maze
     // TODO description
     //
     void showMore();
+
+    //--------------------------------------------------------------------------
+    // Show More
+    // TODO description
+    //
+    int movePlayer(string direction);
+
+    //--------------------------------------------------------------------------
+    // Move to the corresponding Teleport Tile
+    // TODO description
+    //
+    int moveTeleport(char symbol);
+
+    //--------------------------------------------------------------------------
+    // Get Tile at Position
+    // TODO description
+    //
+    Tile* getTile(int x, int y);
+
+    //--------------------------------------------------------------------------
+    // Get Player
+    // TODO description
+    //
+    Player* getPlayer();
+
+    //--------------------------------------------------------------------------
+    // Getter Player x
+    // TODO description
+    // @return x x-value
+    //
+    int getPlayerX();
+
+    //--------------------------------------------------------------------------
+    // Setter Player x
+    // TODO description
+    // @param x x-value
+    //
+    void setPlayerX(int x);
+
+    //--------------------------------------------------------------------------
+    // Getter Player y
+    // TODO description
+    // @return y y-value
+    //
+    int getPlayerY();
+
+    //--------------------------------------------------------------------------
+    // Setter Player y
+    // TODO description
+    // @param y y-value
+    //
+    void setPlayerY(int y);
 };
 
 #endif //MAZE_H_INCLUDED
