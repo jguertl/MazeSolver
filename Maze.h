@@ -23,6 +23,7 @@
 #include "Quicksand.h"
 #include "Teleport.h"
 #include "OneWay.h"
+#include "Game.h"
 
 using std::string;
 using std::vector;
@@ -34,7 +35,87 @@ using std::vector;
 class Maze
 {
   private:
-
+  
+    //--------------------------------------------------------------------------
+    // field of type player
+    //
+    static const char FIELD_TYPE_PLAYER;
+  
+    //--------------------------------------------------------------------------
+    // field of type wall
+    //
+    static const char FIELD_TYPE_WALL;
+  
+    //--------------------------------------------------------------------------
+    // field of type path
+    //
+    static const char FIELD_TYPE_PATH;
+  
+    //--------------------------------------------------------------------------
+    // field of type ice
+    //
+    static const char FIELD_TYPE_ICE;
+  
+    //--------------------------------------------------------------------------
+    // field of type start
+    //
+    static const char FIELD_TYPE_START;
+  
+    //--------------------------------------------------------------------------
+    // field of type finish
+    //
+    static const char FIELD_TYPE_FINISH;
+  
+    //--------------------------------------------------------------------------
+    // field of type teleport minimum
+    //
+    static const char FIELD_TYPE_TELEPORT_MIN;
+  
+    //--------------------------------------------------------------------------
+    // field of type teleport maximum
+    //
+    static const char FIELD_TYPE_TELEPORT_MAX;
+  
+    //--------------------------------------------------------------------------
+    // field of type bonus minimum
+    //
+    static const char FIELD_TYPE_BONUS_MIN;
+  
+    //--------------------------------------------------------------------------
+    // field of type bonus maximum
+    //
+    static const char FIELD_TYPE_BONUS_MAX;
+  
+    //--------------------------------------------------------------------------
+    // field of type quicksand minimum
+    //
+    static const char FIELD_TYPE_QUICKSAND_MIN;
+  
+    //--------------------------------------------------------------------------
+    // field of type quicksand maximum
+    //
+    static const char FIELD_TYPE_QUICKSAND_MAX;
+  
+    //--------------------------------------------------------------------------
+    // field of type oneway up
+    //
+    static const char FIELD_TYPE_ONEWAY_UP;
+  
+    //--------------------------------------------------------------------------
+    // field of type oneway down
+    //
+    static const char FIELD_TYPE_ONEWAY_DOWN;
+  
+    //--------------------------------------------------------------------------
+    // field of type oneway left
+    //
+    static const char FIELD_TYPE_ONEWAY_LEFT;
+  
+    //--------------------------------------------------------------------------
+    // field of type oneway right
+    //
+    static const char FIELD_TYPE_ONEWAY_RIGHT;
+  
     //--------------------------------------------------------------------------
     // TODO
     //

@@ -18,6 +18,8 @@
 using std::cout;
 using std::endl;
 using std::string;
+using std::shared_ptr;
+using std::make_shared;
 
 //------------------------------------------------------------------------------
 // main function
@@ -30,6 +32,7 @@ int main(int argc, char** argv) {
   try
   {
     Game game;
+    shared_ptr<Command> start_game_command;
     if(argc == 3 && string(argv[1]) == "-m")
     {
       game.setInputFilename(argv[2]);
@@ -52,19 +55,17 @@ int main(int argc, char** argv) {
     {
       throw WrongUsageException();
     }
-    StartGameCommand* start_game_command = new StartGameCommand("Start new Game");
-    std::vector<std::string> empty_parameters;
+    start_game_command = make_shared<Command>("New Game");
+    vector<string> empty_parameters;
     start_game_command->execute(game, empty_parameters);
-    
-    /*FastMoveCommand* fast_move_command = new FastMoveCommand("Start new Game");
-    std::vector<std::string> par;
-    par.push_back("fastmove");
-    par.push_back("dddrrr");
-    fast_move_command->execute(game, par);*/
   }
   catch(WrongUsageException wrong_usage_exception)
   {
     return 2;
+  }
+  catch(...)
+  {
+    return 1;
   }
   return 0;
 }

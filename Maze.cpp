@@ -8,17 +8,35 @@
 //------------------------------------------------------------------------------
 //
 
-#include "Maze.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
+#include "Maze.h"
+#include "Game.h"
 
 using std::ofstream;
 using std::ifstream;
 using std::string;
 using std::cout;
 using std::endl;
+
+const char Maze::FIELD_TYPE_PLAYER = '*';
+const char Maze::FIELD_TYPE_WALL = '#';
+const char Maze::FIELD_TYPE_ICE = '+';
+const char Maze::FIELD_TYPE_PATH = ' ';
+const char Maze::FIELD_TYPE_START = 'o';
+const char Maze::FIELD_TYPE_FINISH = 'x';
+const char Maze::FIELD_TYPE_TELEPORT_MIN = 'A';
+const char Maze::FIELD_TYPE_TELEPORT_MAX = 'Z';
+const char Maze::FIELD_TYPE_BONUS_MIN = 'a';
+const char Maze::FIELD_TYPE_BONUS_MAX = 'e';
+const char Maze::FIELD_TYPE_QUICKSAND_MIN = 'f';
+const char Maze::FIELD_TYPE_QUICKSAND_MAX = 'j';
+const char Maze::FIELD_TYPE_ONEWAY_UP = '^';
+const char Maze::FIELD_TYPE_ONEWAY_DOWN = 'v';
+const char Maze::FIELD_TYPE_ONEWAY_LEFT = '<';
+const char Maze::FIELD_TYPE_ONEWAY_RIGHT = '>';
 
 //------------------------------------------------------------------------------
 Maze::Maze() : steps_(0), moves_("")
@@ -40,8 +58,8 @@ void Maze::load(const string& path)
   char buffer;
   vector<Tile*> buffer_vector;
   std::stringstream sstream;
-  counter_x_=0;
-  counter_y_=0;
+  counter_x_ = 0;
+  counter_y_ = 0;
   if (file.is_open())
   {
     std::getline(file, moves_);
@@ -53,7 +71,7 @@ void Maze::load(const string& path)
 
     while(file.get(buffer))
     {
-      if(buffer=='#')
+      if(buffer == FIELD_TYPE_WALL)
       {
         // Wall
         buffer_vector.push_back(new Wall(buffer));
@@ -63,42 +81,42 @@ void Maze::load(const string& path)
         // Path
         buffer_vector.push_back(new Path(buffer));
       }
-      else if(buffer=='+')
+      else if(buffer== FIELD_TYPE_ICE)
       {
         // Ice
         buffer_vector.push_back(new Ice(buffer));
       }
-      else if(buffer=='o')
+      else if(buffer==FIELD_TYPE_START)
       {
         // Start
         buffer_vector.push_back(new Start(buffer));
         player_.setX(counter_x_);
         player_.setY(counter_y_);
       }
-      else if(buffer=='x')
+      else if(buffer==FIELD_TYPE_FINISH)
       {
         // Finish
         buffer_vector.push_back(new Finish(buffer));
       }
-      else if(buffer>='a' && buffer<='e')
+      else if(buffer>=FIELD_TYPE_BONUS_MIN && buffer<=FIELD_TYPE_BONUS_MAX)
       {
         // Bonus
         buffer_vector.push_back(new Bonus(buffer));
       }
-      else if(buffer>='f' && buffer<='j')
+      else if(buffer>=FIELD_TYPE_QUICKSAND_MIN && buffer<=FIELD_TYPE_QUICKSAND_MAX)
       {
         // Quicksand
         buffer_vector.push_back(new Quicksand(buffer));
       }
-      else if(buffer>='A' && buffer<='Z')
+      else if(buffer>=FIELD_TYPE_TELEPORT_MIN && buffer<=FIELD_TYPE_TELEPORT_MAX)
       {
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
       }
-      else if(buffer=='<' ||
-               buffer=='>' ||
-               buffer=='^' ||
-               buffer=='v')
+      else if(buffer==FIELD_TYPE_ONEWAY_LEFT ||
+               buffer==FIELD_TYPE_ONEWAY_RIGHT ||
+               buffer==FIELD_TYPE_ONEWAY_UP ||
+               buffer==FIELD_TYPE_ONEWAY_DOWN)
       {
         // OneWay
         buffer_vector.push_back(new OneWay(buffer));
@@ -154,7 +172,7 @@ void Maze::show()
     {
       if((i==player_.getY()) && (j==player_.getX()))
       {
-        cout << "*";
+        cout << FIELD_TYPE_PLAYER;
       }
       else
       {
@@ -198,10 +216,10 @@ int Maze::movePlayer(string direction)
   }
 
   // Move in the direction, if the landing tile is no Wall
-  if(direction.compare("up")==0)
+  if(direction == Game.DIRECTION_MOVE_UP)
   {
     cout << "Up" << endl;
-    if(tiles_[player_.getY()-1][player_.getX()]->getSymbol()!='#')
+    if(tiles_[player_.getY()-1][player_.getX()]->getSymbol()!=FIELD_TYPE_WALL)
     {
       player_.setY(player_.getY()-1);
       steps_--;
@@ -215,7 +233,7 @@ int Maze::movePlayer(string direction)
   else if(direction.compare("down")==0)
   {
     cout << "Down" << endl;
-    if(tiles_[player_.getY()+1][player_.getX()]->getSymbol()!='#')
+    if(tiles_[player_.getY()+1][player_.getX()]->getSymbol()!=FIELD_TYPE_WALL)
     {
       player_.setY(player_.getY()+1);
       steps_--;
@@ -229,7 +247,7 @@ int Maze::movePlayer(string direction)
   else if(direction.compare("left")==0)
   {
     cout << "Left" << endl;
-    if(tiles_[player_.getY()][player_.getX()-1]->getSymbol()!='#')
+    if(tiles_[player_.getY()][player_.getX()-1]->getSymbol()!=FIELD_TYPE_WALL)
     {
       player_.setX(player_.getX()-1);
       steps_--;
@@ -243,7 +261,7 @@ int Maze::movePlayer(string direction)
   else if(direction.compare("right")==0)
   {
     cout << "Right" << endl;
-    if(tiles_[player_.getY()][player_.getX()+1]->getSymbol()!='#')
+    if(tiles_[player_.getY()][player_.getX()+1]->getSymbol()!=FIELD_TYPE_WALL)
     {
       player_.setX(player_.getX()+1);
       steps_--;
@@ -299,7 +317,7 @@ int Maze::movePlayer(string direction)
     return -2;
   }
   // Player lands on Ice
-  if(player_.getTile()->getSymbol()=='+')
+  if(player_.getTile()->getSymbol()== FIELD_TYPE_ICE)
   {
     movePlayer(direction);
   }
