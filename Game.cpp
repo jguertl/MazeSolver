@@ -10,7 +10,22 @@
 
 #include "Game.h"
 #include "UnknownCommandException.h"
+#include "LoadCommand.h"
+#include "memory"
 
+using std::cout;
+using std::shared_ptr;
+using std::make_shared;
+using std::cin;
+
+const string Game::QUIT_COMMAND = "quit";
+const string Game::LOAD_COMMAND = "load";
+const string Game::SHOW_COMMAND = "show";
+const string Game::RESET_COMMAND = "reset";
+const string Game::MOVE_COMMAND = "move";
+const string Game::FASTMOVE_COMMAND = "fastmove";
+const string Game::PROMPT_TEXT = "sep> ";
+const string Game::QUIT_TEXT = "Bye!";
 const string Game::DIRECTION_MOVE_UP = "up";
 const string Game::DIRECTION_MOVE_DOWN = "down";
 const string Game::DIRECTION_MOVE_RIGHT = "right";
@@ -41,17 +56,38 @@ Game::~Game()
 void Game::startGame()
 {
   string line;
-  running_=true;
-  while(running_==true)
+  running_ = true;
+  
+  while(running_ == true)
   {
-    std::cout << "sep> ";
-    getline(std::cin, line);
-    
-    //TODO zu switch case umschreiben
-    if(line.compare("quit")==0)
+    cout << Game::PROMPT_TEXT;
+    getline(cin, line);
+
+    if(line == Game::QUIT_COMMAND)
     {
-      running_=false;
-      std::cout << "Bye!" << std::endl;
+      running_ = false;
+      cout << Game::QUIT_TEXT << endl;
+    }
+    else if(line == Game::LOAD_COMMAND)
+    {
+      maze_.load("hello.txt");
+    }
+    else if(line == Game::SHOW_COMMAND)
+    {
+      maze_.show();
+      maze_.showMore();
+    }
+    else if(line == Game::RESET_COMMAND)
+    {
+      //RESET
+    }
+    else if(line == Game::MOVE_COMMAND)
+    {
+      maze_.movePlayer("up");
+    }
+    else if(line == Game::FASTMOVE_COMMAND)
+    {
+      //FASTMOVE
     }
     else if(line == "")
     {

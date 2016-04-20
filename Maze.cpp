@@ -56,7 +56,7 @@ Maze::~Maze()
 void Maze::load(const string& path)
 {
   cout << "Load from " << path << endl;
-  ifstream file ("maze.txt");
+  ifstream file ("hello.txt");
   string line;
   char buffer;
   vector<Tile*> buffer_vector;

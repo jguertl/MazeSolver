@@ -61,6 +61,51 @@ class Game {
     //
     bool is_maze_loaded_;
   
+    //--------------------------------------------------------------------------
+    // Variable representing the prompt text
+    //
+    static const string PROMPT_TEXT;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the quit text
+    //
+    static const string QUIT_TEXT;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the quit command
+    //
+    static const string QUIT_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the quit command
+    //
+    static const string LOAD_COMMAND;
+
+    //--------------------------------------------------------------------------
+    // Variable representing the show command
+    //
+    static const string SHOW_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the save command
+    //
+    static const string SAVE_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the reset command
+    //
+    static const string RESET_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the move command
+    //
+    static const string MOVE_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the fastmove command
+    //
+    static const string FASTMOVE_COMMAND;
+  
   public:
    
     //--------------------------------------------------------------------------
