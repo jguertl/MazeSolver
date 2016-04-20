@@ -114,9 +114,9 @@ void Maze::load(const string& path)
         buffer_vector.push_back(new Teleport(buffer));
       }
       else if(buffer==FIELD_TYPE_ONEWAY_LEFT ||
-               buffer==FIELD_TYPE_ONEWAY_RIGHT ||
-               buffer==FIELD_TYPE_ONEWAY_UP ||
-               buffer==FIELD_TYPE_ONEWAY_DOWN)
+              buffer==FIELD_TYPE_ONEWAY_RIGHT ||
+              buffer==FIELD_TYPE_ONEWAY_UP ||
+              buffer==FIELD_TYPE_ONEWAY_DOWN)
       {
         // OneWay
         buffer_vector.push_back(new OneWay(buffer));
@@ -151,11 +151,11 @@ void Maze::save(const string& path)
   outfile << moves_ << endl;
   outfile << steps_ << endl;
 
-  for (int i = 0; i < tiles_.size(); i++)
+  for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_y_++)
   {
-    for (int j = 0; j < tiles_[i].size(); j++)
+    for (counter_y_ = 0; counter_y_ < tiles_[counter_x_].size(); counter_y_++)
     {
-      outfile << tiles_[i][j]->getSymbol();
+      outfile << tiles_[counter_x_][counter_y_]->getSymbol();
     }
     outfile << endl;
   }
@@ -166,17 +166,17 @@ void Maze::save(const string& path)
 //------------------------------------------------------------------------------
 void Maze::show()
 {
-  for (int i = 0; i < tiles_.size(); i++)
+  for (counter_x_ = 0; counter_y_ < tiles_.size(); counter_x_++)
   {
-    for (int j = 0; j < tiles_[i].size(); j++)
+    for (counter_y_ = 0; counter_y_ < tiles_[counter_x_].size(); counter_y_++)
     {
-      if((i==player_.getY()) && (j==player_.getX()))
+      if((counter_x_ == player_.getY()) && (counter_y_ == player_.getX()))
       {
         cout << FIELD_TYPE_PLAYER;
       }
       else
       {
-        cout << tiles_[i][j]->getSymbol();
+        cout << tiles_[counter_x_][counter_y_]->getSymbol();
       }
     }
     cout << endl;
@@ -216,7 +216,7 @@ int Maze::movePlayer(string direction)
   }
 
   // Move in the direction, if the landing tile is no Wall
-  if(direction == Game.DIRECTION_MOVE_UP)
+  if(direction == DIRECTION_MOVE_UP)
   {
     cout << "Up" << endl;
     if(tiles_[player_.getY()-1][player_.getX()]->getSymbol()!=FIELD_TYPE_WALL)
@@ -277,8 +277,8 @@ int Maze::movePlayer(string direction)
   //cout << "New Tile Position: " << player_.getTile()->getSymbol() << endl;
 
   // Player lands on Teleport tile
-  if((player_.getTile()->getSymbol()>='A') &&
-     (player_.getTile()->getSymbol()<='Z'))
+  if((player_.getTile()->getSymbol()>=FIELD_TYPE_TELEPORT_MIN) &&
+     (player_.getTile()->getSymbol()<=FIELD_TYPE_TELEPORT_MAX))
   {
     if(moveTeleport(player_.getTile()->getSymbol())==0)
     {
@@ -291,20 +291,20 @@ int Maze::movePlayer(string direction)
   }
 
   // Player lands on Bonus tile
-  if((player_.getTile()->getSymbol()>='a') &&
-     (player_.getTile()->getSymbol()<='e'))
+  if((player_.getTile()->getSymbol()>=FIELD_TYPE_BONUS_MIN) &&
+     (player_.getTile()->getSymbol()<=FIELD_TYPE_BONUS_MAX))
   {
-    steps_=steps_+((player_.getTile()->getSymbol() - 'a') + 1);
+    steps_=steps_+((player_.getTile()->getSymbol() - FIELD_TYPE_BONUS_MIN) + 1);
   }
 
   // Player lands on Quicksand
-  if((player_.getTile()->getSymbol()>='f') &&
-     (player_.getTile()->getSymbol()<='j'))
+  if((player_.getTile()->getSymbol()>=FIELD_TYPE_QUICKSAND_MIN) &&
+     (player_.getTile()->getSymbol()<=FIELD_TYPE_QUICKSAND_MAX))
   {
-    steps_=steps_-((player_.getTile()->getSymbol() - 'f') + 1);
+    steps_=steps_-((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + 1);
   }
 
-  if(player_.getTile()->getSymbol()=='x')
+  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
   {
     cout << "Congratulation! You solved the maze." << endl;
     return 1;
@@ -355,11 +355,11 @@ int Maze::moveTeleport(char symbol)
 //------------------------------------------------------------------------------
 void Maze::deleteMaze()
 {
-  for (int i = 0; i < tiles_.size(); i++)
+  for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
   {
-    for (int j = 0; j < tiles_[i].size(); j++)
+    for (counter_y_ = 0; counter_y_ < tiles_[counter_y_].size(); counter_y_++)
     {
-      delete(tiles_[i][j]);
+      delete(tiles_[counter_x_][counter_y_]);
     }
   }
 }
@@ -367,6 +367,7 @@ void Maze::deleteMaze()
 //------------------------------------------------------------------------------
 Tile* Maze::getTile(int x, int y)
 {
+  //TODO sind da x und y absichtlich vertauscht?
   return tiles_[y][x];
 }
 

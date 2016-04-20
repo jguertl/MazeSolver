@@ -5,8 +5,8 @@
 - [ ] 'Fastmove' Befehl
 - [ ] 'Reset' Befehl
 - [ ] Input/Befehle parsen
-- [ ] 'Load' Befehl+ Validierung ([Peter](https://github.com/petbuer))
-- [ ] 'Show' Befehl ([Peter](https://github.com/petbuer))
+- [ ] 'Load' Befehl + Validierung ([Peter](https://github.com/petbuer))
+- [x] 'Show' Befehl ([Peter](https://github.com/petbuer))
 - [ ] 'Move' Befehl ([Peter](https://github.com/petbuer))
 - [ ] Spiellogik aller Felder ([Peter](https://github.com/petbuer))
-- [ ] 'Save' Befehl ([Peter](https://github.com/petbuer))
+- [x] 'Save' Befehl ([Peter](https://github.com/petbuer))
