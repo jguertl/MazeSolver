@@ -10,6 +10,11 @@
 
 #include "Game.h"
 #include "UnknownCommandException.h"
+#include "WrongParameterCountException.h"
+#include "WrongParameterException.h"
+#include "UnknownCommandException.h"
+#include "NoMazeLoadedException.h"
+#include "InvalidMoveException.h"
 #include "LoadCommand.h"
 #include "memory"
 
@@ -62,40 +67,54 @@ void Game::startGame()
   {
     cout << Game::PROMPT_TEXT;
     getline(cin, line);
-
-    if(line == Game::QUIT_COMMAND)
+    try
     {
-      running_ = false;
-      cout << Game::QUIT_TEXT << endl;
+      if(line == Game::QUIT_COMMAND)
+      {
+        running_ = false;
+        cout << Game::QUIT_TEXT << endl;
+      }
+      else if(line == Game::LOAD_COMMAND)
+      {
+        maze_.load("hello.txt");
+      }
+      else if(line == Game::SHOW_COMMAND)
+      {
+        maze_.show();
+        maze_.showMore();
+      }
+      else if(line == Game::RESET_COMMAND)
+      {
+        //RESET
+      }
+      else if(line == Game::MOVE_COMMAND)
+      {
+        maze_.movePlayer("up");
+      }
+      else if(line == Game::FASTMOVE_COMMAND)
+      {
+        //FASTMOVE
+      }
+      else if(line == "")
+      {
+        continue;
+      }
+      else
+      {
+        throw UnknownCommandException();
+      }
     }
-    else if(line == Game::LOAD_COMMAND)
+    catch(UnknownCommandException unknown_command_exception)
     {
-      maze_.load("hello.txt");
     }
-    else if(line == Game::SHOW_COMMAND)
+    catch(WrongParameterCountException wrong_parameter_count_exception)
     {
-      maze_.show();
-      maze_.showMore();
     }
-    else if(line == Game::RESET_COMMAND)
+    catch(WrongParameterException wrong_parameter_exception)
     {
-      //RESET
     }
-    else if(line == Game::MOVE_COMMAND)
+    catch(NoMazeLoadedException no_maze_loaded_exception)
     {
-      maze_.movePlayer("up");
-    }
-    else if(line == Game::FASTMOVE_COMMAND)
-    {
-      //FASTMOVE
-    }
-    else if(line == "")
-    {
-      continue;
-    }
-    else
-    {
-      throw UnknownCommandException();
     }
   }
 }
