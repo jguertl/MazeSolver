@@ -42,47 +42,47 @@ class Maze
     // minimum lowercase char allowed in filenames
     //
     static const char FILENAME_DEFINITION_LOWERCASE_MIN;
-  
+
     //--------------------------------------------------------------------------
     // maximum lowercase char allowed in filenames
     //
     static const char FILENAME_DEFINITION_LOWERCASE_MAX;
-  
+
     //--------------------------------------------------------------------------
     // minimum uppercase char allowed in filenames
     //
     static const char FILENAME_DEFINITION_UPPERCASE_MIN;
-  
+
     //--------------------------------------------------------------------------
     // maximum uppercase char allowed in filenames
     //
     static const char FILENAME_DEFINITION_UPPERCASE_MAX;
-  
+
     //--------------------------------------------------------------------------
     // minimum number allowed in filenames
     //
     static const char FILENAME_DEFINITION_NUMBER_MIN;
-  
+
     //--------------------------------------------------------------------------
     // maximum number allowed in filenames
     //
     static const char FILENAME_DEFINITION_NUMBER_MAX;
-  
+
     //--------------------------------------------------------------------------
     // special dot allowed in filenames
     //
     static const char FILENAME_DEFINITION_DOT;
-  
+
     //--------------------------------------------------------------------------
     // special slash allowed in filenames
     //
     static const char FILENAME_DEFINITION_SLASH;
-  
+
     //--------------------------------------------------------------------------
     // maximum filename length
     //
     static const int FILENAME_DEFINITION_LENGTH = 255;
-  
+
     //--------------------------------------------------------------------------
     // output string naming the remaining steps
     //
@@ -97,6 +97,11 @@ class Maze
     // output string naming the finished game
     //
     static const string OUTPUT_MAZE_SOLVED;
+
+    //--------------------------------------------------------------------------
+    // name of the save-file for reset
+    //
+    static const string SAVE_FILE_NAME;
 
     //--------------------------------------------------------------------------
     // field of type player
@@ -189,6 +194,11 @@ class Maze
     int steps_;
 
     //--------------------------------------------------------------------------
+    // Original amount of steps
+    //
+    int original_steps_;
+
+    //--------------------------------------------------------------------------
     // Current x Counter
     //
     int counter_x_;
@@ -265,6 +275,12 @@ class Maze
     int moveTeleport(char symbol);
 
     //--------------------------------------------------------------------------
+    // Move Player Fast
+    // TODO description
+    //
+    int fastMovePlayer(string directions);
+
+    //--------------------------------------------------------------------------
     // Get Tile at Position
     // TODO description
     //
@@ -303,7 +319,7 @@ class Maze
     // @param y y-value
     //
     void setPlayerY(int y);
-  
+
     //--------------------------------------------------------------------------
     // Filename Validation method
     // Checks wheter a filename is valid or not

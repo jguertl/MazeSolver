@@ -25,6 +25,7 @@ using std::endl;
 const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
 const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
 const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
+const string Maze::SAVE_FILE_NAME = "save_file.txt";
 const char Maze::FIELD_TYPE_PLAYER = '*';
 const char Maze::FIELD_TYPE_WALL = '#';
 const char Maze::FIELD_TYPE_ICE = '+';
@@ -78,7 +79,8 @@ void Maze::load(const string& path)
     std::getline(file, moves_);
     std::getline(file, line);
     sstream<<line;
-    sstream>>steps_;
+    sstream>>original_steps_;
+    steps_ = original_steps_;
     sstream.str("");
     sstream.clear();
 
@@ -180,6 +182,7 @@ void Maze::load(const string& path)
 
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
+    save(SAVE_FILE_NAME);
   }
   else
   {
@@ -189,19 +192,30 @@ void Maze::load(const string& path)
 }
 
 //------------------------------------------------------------------------------
+// Einige Angaben sind mir nicht ganz klar.
 void Maze::save(const string& path)
 {
   ofstream outputfile;
   //TODO Validierung
   outputfile.open(path.c_str());
-  outputfile << moves_ << endl;
-  outputfile << steps_ << endl;
 
-  for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_y_++)
+  if(path == SAVE_FILE_NAME)
   {
-    for (counter_y_ = 0; counter_y_ < tiles_[counter_x_].size(); counter_y_++)
+    outputfile << endl;
+  }
+  else
+  {
+    outputfile << moves_ << endl;
+  }
+
+  // Unklar ob das so gemeint ist
+  outputfile << original_steps_ << endl;
+
+  for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
+  {
+    for (counter_y_ = 0; counter_y_ < tiles_.at(counter_x_).size(); counter_y_++)
     {
-      outputfile << tiles_[counter_x_][counter_y_]->getSymbol();
+      outputfile << tiles_.at(counter_x_).at(counter_y_)->getSymbol();
     }
     outputfile << endl;
   }
@@ -214,7 +228,7 @@ void Maze::show()
 {
   for (counter_x_ = 0; counter_y_ < tiles_.size(); counter_x_++)
   {
-    for (counter_y_ = 0; counter_y_ < tiles_[counter_x_].size(); counter_y_++)
+    for (counter_y_ = 0; counter_y_ < tiles_.at(counter_x_).size(); counter_y_++)
     {
       if((counter_x_ == player_.getY()) && (counter_y_ == player_.getX()))
       {
@@ -222,7 +236,7 @@ void Maze::show()
       }
       else
       {
-        cout << tiles_[counter_x_][counter_y_]->getSymbol();
+        cout << tiles_.at(counter_x_).at(counter_y_)->getSymbol();
       }
     }
     cout << endl;
@@ -251,7 +265,7 @@ int Maze::movePlayer(string direction)
   if(player_.getTile()->getSymbol()=='x')
   {
     cout << "Game is over." << endl;
-    return -1;
+    return -2;
   }
 
   // delete Bonus Tile
@@ -294,7 +308,7 @@ int Maze::movePlayer(string direction)
   else if(direction == Game::DIRECTION_MOVE_LEFT)
   {
     cout << "Left" << endl;
-    if(tiles_[player_.getY()][player_.getX() - 1]->getSymbol() != FIELD_TYPE_WALL)
+    if(tiles_.at(player_.getY()).at(player_.getX() - 1)->getSymbol() != FIELD_TYPE_WALL)
     {
       player_.setX(player_.getX() - 1);
       steps_--;
@@ -308,7 +322,7 @@ int Maze::movePlayer(string direction)
   else if(direction == Game::DIRECTION_MOVE_RIGHT)
   {
     cout << "Right" << endl;
-    if(tiles_[player_.getY()][player_.getX() + 1]->getSymbol() != FIELD_TYPE_WALL)
+    if(tiles_.at(player_.getY()).at(player_.getX() + 1)->getSymbol() != FIELD_TYPE_WALL)
     {
       player_.setX(player_.getX() + 1);
       steps_--;
@@ -360,7 +374,7 @@ int Maze::movePlayer(string direction)
   {
     steps_ = 0;
     cout << "Game over" << endl;
-    return -2;
+    return -3;
   }
 
   // Player lands on Ice
@@ -373,13 +387,65 @@ int Maze::movePlayer(string direction)
 }
 
 //------------------------------------------------------------------------------
+// Es fehlt noch die Ausnahme, wenn der Player über das Ziel geht
+int Maze::fastMovePlayer(string directions)
+{
+  int player_position_x=player_.getX();
+  int player_position_y=player_.getY();
+  string moves_save=moves_;
+  int counter_string=0;
+  int return_value=0;
+
+  while(counter_string<directions.size())
+  {
+    if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_UP)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_UP);
+    }
+    else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_DOWN)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_DOWN);
+    }
+    else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_LEFT)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_LEFT);
+    }
+    else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_RIGHT)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_RIGHT);
+    }
+    else
+    {
+      return_value=-1;
+    }
+    counter_string++;
+
+    if(return_value!=0)
+    {
+      deleteMaze();
+      load(SAVE_FILE_NAME);
+      player_.setX(player_position_x);
+      player_.setY(player_position_y);
+      moves_=moves_save;
+      fastMovePlayer(moves_);
+      counter_string=directions.size();
+
+      return -1;
+    }
+  }
+
+
+  return 0;
+}
+
+//------------------------------------------------------------------------------
 int Maze::moveTeleport(char symbol)
 {
   for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
   {
     for (counter_y_ = 0; counter_y_ < tiles_[counter_y_].size(); counter_y_++)
     {
-      if((tiles_[counter_x_][counter_y_]->getSymbol() == symbol) &&
+      if((tiles_.at(counter_x_).at(counter_y_)->getSymbol() == symbol) &&
         ((counter_x_ != player_.getY()) || (counter_y_ != player_.getX())))
       {
         player_.setY(counter_x_);
@@ -397,9 +463,9 @@ void Maze::deleteMaze()
 {
   for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
   {
-    for (counter_y_ = 0; counter_y_ < tiles_[counter_y_].size(); counter_y_++)
+    for (counter_y_ = 0; counter_y_ < tiles_.at(counter_y_).size(); counter_y_++)
     {
-      delete(tiles_[counter_x_][counter_y_]);
+      delete(tiles_.at(counter_x_).at(counter_y_));
     }
   }
 }
