@@ -61,6 +61,7 @@ void Maze::load(const string& path)
   char buffer;
   vector<Tile*> buffer_vector;
   std::stringstream sstream;
+  int size_check = -1;
   counter_x_ = 0;
   counter_y_ = 0;
   if (file.is_open())
@@ -124,18 +125,51 @@ void Maze::load(const string& path)
       {
         // OneWay
         buffer_vector.push_back(new OneWay(buffer));
+      }else if(buffer != '\n')
+      {
+        cout << "Input File not valid  A" << endl;
       }
 
       counter_x_++;
       if(buffer=='\n')
       {
         tiles_.push_back(buffer_vector);
+
+        // Check Maze
+        if((size_check >= 0) && (size_check != buffer_vector.size()))
+        {
+          cout << "Input File not valid  B" << endl;
+        }
+        if((buffer_vector.at(0)->getSymbol() != FIELD_TYPE_WALL) &&
+           (buffer_vector.at(buffer_vector.size()-1)->getSymbol() != FIELD_TYPE_WALL))
+        {
+          cout << "Input File not valid  C" << endl;
+        }
+
+        size_check = buffer_vector.size();
         buffer_vector.clear();
         counter_y_++;
         counter_x_=0;
       }
     }
-    player_.setTile(tiles_[player_.getY()][player_.getX()]);
+    // Check if first line only contains Walls
+    for(counter_x_=0; counter_x_<tiles_.at(tiles_.size()-1).size(); counter_x_++)
+    {
+      if(tiles_.at(0).at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
+      {
+        cout << "Input File not valid  D" << endl;
+      }
+    }
+    // Check if last line only contains Walls
+    for(counter_x_=0; counter_x_<tiles_.at(tiles_.size()-1).size(); counter_x_++)
+    {
+      if(tiles_.at(tiles_.size()-1).at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
+      {
+        cout << "Input File not valid  E" << endl;
+      }
+    }
+
+    player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
   }
   else
