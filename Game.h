@@ -106,6 +106,20 @@ class Game {
     //
     static const string FASTMOVE_COMMAND;
   
+    //--------------------------------------------------------------------------
+    // Variable representing the more command
+    //
+    static const string MORE_COMMAND;
+
+    //--------------------------------------------------------------------------
+    // Split String
+    // Helper Method to split a string
+    // @param input String which should be splitted
+    // @param delimiter Char to split with
+    // @return return a vector with the splitted string
+    //
+    vector<string> splitString(string input, char delimiter);
+
   public:
    
     //--------------------------------------------------------------------------

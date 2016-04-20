@@ -14,6 +14,7 @@
 #include <sstream>
 #include "Maze.h"
 #include "Game.h"
+#include "FileOpenException.h"
 
 using std::ofstream;
 using std::ifstream;
