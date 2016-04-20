@@ -220,56 +220,56 @@ int Maze::movePlayer(string direction)
   }
 
   // Move in the direction, if the landing tile is no Wall
-  if(direction == Game.DIRECTION_MOVE_UP)
+  if(direction == Game::DIRECTION_MOVE_UP)
   {
     cout << "Up" << endl;
-    if(tiles_[player_.getY()-1][player_.getX()]->getSymbol()!=FIELD_TYPE_WALL)
+    if(tiles_[player_.getY()-1][player_.getX()]->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setY(player_.getY()-1);
+      player_.setY(player_.getY() - 1);
       steps_--;
-      moves_.append("u");
+      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_UP));
     }
     else
     {
       return -1;
     }
   }
-  else if(direction.compare("down")==0)
+  else if(direction == Game::DIRECTION_MOVE_DOWN)
   {
     cout << "Down" << endl;
-    if(tiles_[player_.getY()+1][player_.getX()]->getSymbol()!=FIELD_TYPE_WALL)
+    if(tiles_[player_.getY()+1][player_.getX()]->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setY(player_.getY()+1);
+      player_.setY(player_.getY() + 1);
       steps_--;
-      moves_.append("d");
+      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_DOWN));
     }
     else
     {
       return -1;
     }
   }
-  else if(direction.compare("left")==0)
+  else if(direction == Game::DIRECTION_MOVE_LEFT)
   {
     cout << "Left" << endl;
-    if(tiles_[player_.getY()][player_.getX()-1]->getSymbol()!=FIELD_TYPE_WALL)
+    if(tiles_[player_.getY()][player_.getX() - 1]->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setX(player_.getX()-1);
+      player_.setX(player_.getX() - 1);
       steps_--;
-      moves_.append("l");
+      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_LEFT));
     }
     else
     {
       return -1;
     }
   }
-  else if(direction.compare("right")==0)
+  else if(direction == Game::DIRECTION_MOVE_RIGHT)
   {
     cout << "Right" << endl;
-    if(tiles_[player_.getY()][player_.getX()+1]->getSymbol()!=FIELD_TYPE_WALL)
+    if(tiles_[player_.getY()][player_.getX() + 1]->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setX(player_.getX()+1);
+      player_.setX(player_.getX() + 1);
       steps_--;
-      moves_.append("r");
+      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_RIGHT));
     }
     else
     {
@@ -307,7 +307,7 @@ int Maze::movePlayer(string direction)
     steps_ = steps_- ((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + 1);
   }
 
-  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+  if(player_.getTile()->getSymbol() == FIELD_TYPE_FINISH)
   {
     cout << OUTPUT_MAZE_SOLVED << endl;
     return 1;

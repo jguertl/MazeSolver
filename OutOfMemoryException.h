@@ -20,7 +20,7 @@ using std::string;
 // Custom Out of Memory Exception
 // class inform about bad memory allocation
 //
-class OutOfMemoryException : BaseException
+class OutOfMemoryException : std::bad_alloc
 {
   private:
   

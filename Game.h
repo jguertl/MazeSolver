@@ -57,7 +57,7 @@ class Game {
     string inputFilename_;
   
   public:
-  
+   
     //--------------------------------------------------------------------------
     // Move Direction "up"
     //
