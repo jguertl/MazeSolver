@@ -40,6 +40,14 @@ const char Maze::FIELD_TYPE_ONEWAY_UP = '^';
 const char Maze::FIELD_TYPE_ONEWAY_DOWN = 'v';
 const char Maze::FIELD_TYPE_ONEWAY_LEFT = '<';
 const char Maze::FIELD_TYPE_ONEWAY_RIGHT = '>';
+const char Maze::FILENAME_DEFINITION_LOWERCASE_MIN = 'a';
+const char Maze::FILENAME_DEFINITION_LOWERCASE_MAX = 'z';
+const char Maze::FILENAME_DEFINITION_UPPERCASE_MIN = 'A';
+const char Maze::FILENAME_DEFINITION_UPPERCASE_MAX = 'Z';
+const char Maze::FILENAME_DEFINITION_NUMBER_MIN = '0';
+const char Maze::FILENAME_DEFINITION_NUMBER_MAX = '9';
+const char Maze::FILENAME_DEFINITION_DOT = '.';
+const char Maze::FILENAME_DEFINITION_SLASH = '/';
 
 //------------------------------------------------------------------------------
 Maze::Maze()
@@ -56,7 +64,7 @@ Maze::~Maze()
 void Maze::load(const string& path)
 {
   cout << "Load from " << path << endl;
-  ifstream file ("hello.txt");
+  ifstream file ("maze.txt");
   string line;
   char buffer;
   vector<Tile*> buffer_vector;
@@ -430,6 +438,35 @@ int Maze::getPlayerY()
 void Maze::setPlayerY(int y)
 {
   player_.setY(y);
+}
+
+//------------------------------------------------------------------------------
+bool Maze::isFilnameValid(string filename)
+{
+  int filename_counter = 0;
+  for(char& filename_letter : filename)
+  {
+    if(filename_counter == 255)
+    {
+      return false;
+    }
+    if((filename_letter >= FILENAME_DEFINITION_LOWERCASE_MIN &&
+      filename_letter <= FILENAME_DEFINITION_LOWERCASE_MAX) ||
+      (filename_letter >= FILENAME_DEFINITION_UPPERCASE_MIN &&
+      filename_letter <= FILENAME_DEFINITION_UPPERCASE_MAX) ||
+      (filename_letter >= FILENAME_DEFINITION_NUMBER_MIN &&
+      filename_letter <= FILENAME_DEFINITION_NUMBER_MAX) ||
+      filename_letter == FILENAME_DEFINITION_DOT ||
+      filename_letter == FILENAME_DEFINITION_SLASH)
+    {
+      filename_counter++;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  return true;
 }
 
 

@@ -24,7 +24,6 @@
 #include "Quicksand.h"
 #include "Teleport.h"
 #include "OneWay.h"
-//#include "Game.h"
 
 class Game;
 
@@ -39,6 +38,51 @@ class Maze
 {
   private:
 
+    //--------------------------------------------------------------------------
+    // minimum lowercase char allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_LOWERCASE_MIN;
+  
+    //--------------------------------------------------------------------------
+    // maximum lowercase char allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_LOWERCASE_MAX;
+  
+    //--------------------------------------------------------------------------
+    // minimum uppercase char allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_UPPERCASE_MIN;
+  
+    //--------------------------------------------------------------------------
+    // maximum uppercase char allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_UPPERCASE_MAX;
+  
+    //--------------------------------------------------------------------------
+    // minimum number allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_NUMBER_MIN;
+  
+    //--------------------------------------------------------------------------
+    // maximum number allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_NUMBER_MAX;
+  
+    //--------------------------------------------------------------------------
+    // special dot allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_DOT;
+  
+    //--------------------------------------------------------------------------
+    // special slash allowed in filenames
+    //
+    static const char FILENAME_DEFINITION_SLASH;
+  
+    //--------------------------------------------------------------------------
+    // maximum filename length
+    //
+    static const int FILENAME_DEFINITION_LENGTH = 255;
+  
     //--------------------------------------------------------------------------
     // output string naming the remaining steps
     //
@@ -259,6 +303,13 @@ class Maze
     // @param y y-value
     //
     void setPlayerY(int y);
+  
+    //--------------------------------------------------------------------------
+    // Filename Validation method
+    // Checks wheter a filename is valid or not
+    // @param filename the given filename
+    //
+    static bool isFilnameValid(string filename);
 };
 
 #endif //MAZE_H_INCLUDED

@@ -3,13 +3,14 @@
 - [x] Command Line Argumente ([Jakob](https://github.com/jguertl))
 - [ ] Error Handling ([Jakob](https://github.com/jguertl))
 - [ ] 'Fastmove' Befehl ([Peter](https://github.com/petbuer))
--         Fastmove bei load
+-      [ ] Fastmove bei Load ausführen
 - [ ] 'Reset' Befehl ([Peter](https://github.com/petbuer))
--         Load -> Save in savefile.txt für reset
--         Bei Reset dann Load ohne Fastmove
+-      [ ] Load -> Backup speichern für Reset
+-      [ ] Bei Reset wird Load ohne Fastmove aufgerufen
 - [ ] Input/Befehle parsen ([Jakob](https://github.com/jguertl))
+       [x] Filename Validierung
 - [ ] 'Load' Befehl + Validierung ([Peter](https://github.com/petbuer))
--         Teleport prüfen
+-      [ ] Teleport prüfen
 - [x] 'Show' Befehl ([Peter](https://github.com/petbuer))
 - [ ] 'Move' Befehl ([Peter](https://github.com/petbuer))
 - [x] Spiellogik aller Felder ([Peter](https://github.com/petbuer))

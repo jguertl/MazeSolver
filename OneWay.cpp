@@ -42,16 +42,20 @@ bool OneWay::move(string direction)
   if((getSymbol()=='<') && (direction.compare("left")==0))
   {
     return true;
-  }else if((getSymbol()=='>') && (direction.compare("right")==0))
+  }
+  else if((getSymbol()=='>') && (direction.compare("right")==0))
   {
     return true;
-  }else if((getSymbol()=='^') && (direction.compare("up")==0))
+  }
+  else if((getSymbol()=='^') && (direction.compare("up")==0))
   {
     return true;
-  }else if((getSymbol()=='v') && (direction.compare("down")==0))
+  }
+  else if((getSymbol()=='v') && (direction.compare("down")==0))
   {
     return true;
-  }else
+  }
+  else
   {
     return false;
   }

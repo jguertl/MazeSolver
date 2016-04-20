@@ -67,6 +67,7 @@ void Game::startGame()
   {
     cout << Game::PROMPT_TEXT;
     getline(cin, line);
+    
     try
     {
       if(line == Game::QUIT_COMMAND)
@@ -76,7 +77,7 @@ void Game::startGame()
       }
       else if(line == Game::LOAD_COMMAND)
       {
-        maze_.load("hello.txt");
+        maze_.load("maze.txt");
       }
       else if(line == Game::SHOW_COMMAND)
       {
