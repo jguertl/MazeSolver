@@ -21,9 +21,9 @@ using std::string;
 using std::cout;
 using std::endl;
 
-const string OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
-const string OUTPUT_MOVED_STEPS = "Moved Steps: ";
-const string OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
+const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
+const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
+const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 const char Maze::FIELD_TYPE_PLAYER = '*';
 const char Maze::FIELD_TYPE_WALL = '#';
 const char Maze::FIELD_TYPE_ICE = '+';
@@ -189,8 +189,8 @@ void Maze::show()
 //------------------------------------------------------------------------------
 void Maze::showMore()
 {
-  cout << OUTPUT_REMAINING_STEPS << steps_ << endl;
-  cout << OUTPUT_MOVED_STEPS << moves_ << endl;
+  cout << Maze::OUTPUT_REMAINING_STEPS << steps_ << endl;
+  cout << Maze::OUTPUT_MOVED_STEPS << moves_ << endl;
   show();
 }
 
@@ -200,7 +200,7 @@ int Maze::movePlayer(string direction)
   // check if move is in a valid direction
   if(player_.getTile()->move(direction) == false)
   {
-    
+
     cout << "[ERR] Invalid move." << endl;
     return -1;
   }
@@ -319,7 +319,7 @@ int Maze::movePlayer(string direction)
     cout << "Game over" << endl;
     return -2;
   }
-  
+
   // Player lands on Ice
   if((player_.getTile()->getSymbol()) == FIELD_TYPE_ICE)
   {

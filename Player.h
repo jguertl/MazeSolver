@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include <string>
-#include "Path.h"
+#include "Tile.h"
 
 using std::string;
 using std::cout;
