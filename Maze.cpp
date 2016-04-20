@@ -21,6 +21,9 @@ using std::string;
 using std::cout;
 using std::endl;
 
+const string OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
+const string OUTPUT_MOVED_STEPS = "Moved Steps: ";
+const string OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 const char Maze::FIELD_TYPE_PLAYER = '*';
 const char Maze::FIELD_TYPE_WALL = '#';
 const char Maze::FIELD_TYPE_ICE = '+';
@@ -39,9 +42,9 @@ const char Maze::FIELD_TYPE_ONEWAY_LEFT = '<';
 const char Maze::FIELD_TYPE_ONEWAY_RIGHT = '>';
 
 //------------------------------------------------------------------------------
-Maze::Maze() : steps_(0), moves_("")
+Maze::Maze()
 {
-    //cout << "Constructor 1" << endl;
+  steps_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -71,12 +74,13 @@ void Maze::load(const string& path)
 
     while(file.get(buffer))
     {
+      //TODO make switch case
       if(buffer == FIELD_TYPE_WALL)
       {
         // Wall
         buffer_vector.push_back(new Wall(buffer));
       }
-      else if(buffer==' ')
+      else if(buffer== FIELD_TYPE_PATH)
       {
         // Path
         buffer_vector.push_back(new Path(buffer));
@@ -144,23 +148,22 @@ void Maze::load(const string& path)
 //------------------------------------------------------------------------------
 void Maze::save(const string& path)
 {
-  cout << "Save to " << path << endl;
-  ofstream outfile;
-
-  outfile.open(path.c_str());
-  outfile << moves_ << endl;
-  outfile << steps_ << endl;
+  ofstream outputfile;
+  //TODO Validierung
+  outputfile.open(path.c_str());
+  outputfile << moves_ << endl;
+  outputfile << steps_ << endl;
 
   for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_y_++)
   {
     for (counter_y_ = 0; counter_y_ < tiles_[counter_x_].size(); counter_y_++)
     {
-      outfile << tiles_[counter_x_][counter_y_]->getSymbol();
+      outputfile << tiles_[counter_x_][counter_y_]->getSymbol();
     }
-    outfile << endl;
+    outputfile << endl;
   }
 
-  outfile.close();
+  outputfile.close();
 }
 
 //------------------------------------------------------------------------------
@@ -186,8 +189,8 @@ void Maze::show()
 //------------------------------------------------------------------------------
 void Maze::showMore()
 {
-  cout << "Remaining Steps: " << steps_ << endl;
-  cout << "Moved Steps: " << moves_ << endl;
+  cout << OUTPUT_REMAINING_STEPS << steps_ << endl;
+  cout << OUTPUT_MOVED_STEPS << moves_ << endl;
   show();
 }
 
@@ -195,8 +198,9 @@ void Maze::showMore()
 int Maze::movePlayer(string direction)
 {
   // check if move is in a valid direction
-  if(player_.getTile()->move(direction)==false)
+  if(player_.getTile()->move(direction) == false)
   {
+    
     cout << "[ERR] Invalid move." << endl;
     return -1;
   }
@@ -216,7 +220,7 @@ int Maze::movePlayer(string direction)
   }
 
   // Move in the direction, if the landing tile is no Wall
-  if(direction == DIRECTION_MOVE_UP)
+  if(direction == Game.DIRECTION_MOVE_UP)
   {
     cout << "Up" << endl;
     if(tiles_[player_.getY()-1][player_.getX()]->getSymbol()!=FIELD_TYPE_WALL)
@@ -274,13 +278,12 @@ int Maze::movePlayer(string direction)
   }
 
   player_.setTile(getTile(player_.getX(), player_.getY()));
-  //cout << "New Tile Position: " << player_.getTile()->getSymbol() << endl;
 
   // Player lands on Teleport tile
   if((player_.getTile()->getSymbol()>=FIELD_TYPE_TELEPORT_MIN) &&
      (player_.getTile()->getSymbol()<=FIELD_TYPE_TELEPORT_MAX))
   {
-    if(moveTeleport(player_.getTile()->getSymbol())==0)
+    if(moveTeleport(player_.getTile()->getSymbol()) == 0)
     {
       return 0;
     }
@@ -292,32 +295,33 @@ int Maze::movePlayer(string direction)
 
   // Player lands on Bonus tile
   if((player_.getTile()->getSymbol()>=FIELD_TYPE_BONUS_MIN) &&
-     (player_.getTile()->getSymbol()<=FIELD_TYPE_BONUS_MAX))
+    (player_.getTile()->getSymbol()<=FIELD_TYPE_BONUS_MAX))
   {
-    steps_=steps_+((player_.getTile()->getSymbol() - FIELD_TYPE_BONUS_MIN) + 1);
+    steps_ = steps_+((player_.getTile()->getSymbol() - FIELD_TYPE_BONUS_MIN) + 1);
   }
 
   // Player lands on Quicksand
-  if((player_.getTile()->getSymbol()>=FIELD_TYPE_QUICKSAND_MIN) &&
-     (player_.getTile()->getSymbol()<=FIELD_TYPE_QUICKSAND_MAX))
+  if((player_.getTile()->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
+    (player_.getTile()->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
   {
-    steps_=steps_-((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + 1);
+    steps_ = steps_- ((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + 1);
   }
 
   if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
   {
-    cout << "Congratulation! You solved the maze." << endl;
+    cout << OUTPUT_MAZE_SOLVED << endl;
     return 1;
   }
 
-  if(steps_<=0)
+  if(steps_ <= 0 )
   {
-    steps_=0;
+    steps_ = 0;
     cout << "Game over" << endl;
     return -2;
   }
+  
   // Player lands on Ice
-  if(player_.getTile()->getSymbol()== FIELD_TYPE_ICE)
+  if((player_.getTile()->getSymbol()) == FIELD_TYPE_ICE)
   {
     movePlayer(direction);
   }
@@ -328,27 +332,20 @@ int Maze::movePlayer(string direction)
 //------------------------------------------------------------------------------
 int Maze::moveTeleport(char symbol)
 {
-  cout << "Move Teleport: >" << symbol << "<" << endl;
-  cout << "Before Position X:" << player_.getX() << " Y: " << player_.getY() << endl;
-  for (int i = 0; i < tiles_.size(); i++)
+  for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
   {
-    for (int j = 0; j < tiles_[i].size(); j++)
+    for (counter_y_ = 0; counter_y_ < tiles_[counter_y_].size(); counter_y_++)
     {
-      if((tiles_[i][j]->getSymbol()==symbol) &&
-         ((i!=player_.getY()) ||
-         (j!=player_.getX())))
+      if((tiles_[counter_x_][counter_y_]->getSymbol() == symbol) &&
+        ((counter_x_ != player_.getY()) || (counter_y_ != player_.getX())))
       {
-
-        cout << "Found second " << symbol << " at X:" << j << " Y: " << i << endl;
-        player_.setY(i);
-        player_.setX(j);
-        player_.setTile(getTile(j, i));
-        cout << "Afterwards Position X:" << player_.getX() << " Y: " << player_.getY() << endl;
+        player_.setY(counter_x_);
+        player_.setX(counter_y_);
+        player_.setTile(getTile(counter_y_, counter_x_));
         return 0;
       }
     }
   }
-
   return -1;
 }
 

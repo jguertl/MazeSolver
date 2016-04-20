@@ -37,6 +37,21 @@ class Maze
   private:
   
     //--------------------------------------------------------------------------
+    // output string naming the remaining steps
+    //
+    static const string OUTPUT_MOVED_STEPS;
+  
+    //--------------------------------------------------------------------------
+    // output string naming the remaining steps
+    //
+    static const string OUTPUT_REMAINING_STEPS;
+  
+    //--------------------------------------------------------------------------
+    // output string naming the finished game
+    //
+    static const string OUTPUT_MAZE_SOLVED;
+ 
+    //--------------------------------------------------------------------------
     // field of type player
     //
     static const char FIELD_TYPE_PLAYER;
