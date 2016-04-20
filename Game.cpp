@@ -116,9 +116,17 @@ void Game::setInputFilename(string input_filename)
   loadMaze(inputFilename_);
 }
 
+//------------------------------------------------------------------------------
 void Game::setOutputFilename(string output_filename)
 {
   outputFilename_ = output_filename;
   autoSaveEnabled_ = true;
 }
+
+//------------------------------------------------------------------------------
+bool Game::isMazeLoaded()
+{
+  return is_maze_loaded_;
+}
+
 
