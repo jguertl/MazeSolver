@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include "memory"
 #include "WrongUsageException.h"
 #include "OutOfMemoryException.h"
 #include "Game.h"

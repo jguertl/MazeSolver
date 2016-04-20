@@ -47,14 +47,19 @@ class Game {
     Maze maze_;
   
     //--------------------------------------------------------------------------
-    // Variable wich represents the output filename in case of a save
+    // Variable which represents the output filename in case of a save
     //
     string outputFilename_;
   
     //--------------------------------------------------------------------------
-    // Variable wich represents the output filename in case of a save
+    // Variable which represents the output filename in case of a save
     //
     string inputFilename_;
+  
+    //--------------------------------------------------------------------------
+    // Variable which is true if a maze has been loaded
+    //
+    bool is_maze_loaded_;
   
   public:
    
@@ -188,6 +193,13 @@ class Game {
     // @param input_filename Path to the input file
     //
     void setInputFilename(string input_filename);
+  
+    //--------------------------------------------------------------------------
+    // Maze loaded method
+    // Returns the current loading state of the maze
+    // @return the current state 
+    //
+    bool isMazeLoaded();
 };
 
 #endif //GAME_H_INCLUDED
