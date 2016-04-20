@@ -13,8 +13,8 @@
 
 #include <string>
 #include <iostream>
-#include "Maze.h"
 #include "Player.h"
+#include "Maze.h"
 
 using std::string;
 using std::vector;
@@ -32,20 +32,20 @@ class Game {
     bool running_;
   
     //--------------------------------------------------------------------------
-    // Variable which indicates if the game is currently running
+    // Variable which indicates if auto save has been enabled
     //
     bool autoSaveEnabled_;
+  
+    //--------------------------------------------------------------------------
+    // Variable which represents the current player
+    //
+    Player player_;
   
     //--------------------------------------------------------------------------
     // Variable which represents the current maze
     //
     Maze maze_;
   
-    //--------------------------------------------------------------------------
-    // Variable which represents the current player
-    //
-    Player player_;
-
     //--------------------------------------------------------------------------
     // Variable wich represents the output filename in case of a save
     //

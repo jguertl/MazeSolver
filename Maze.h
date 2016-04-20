@@ -10,6 +10,7 @@
 
 #ifndef MAZE_H_INCLUDED
 #define MAZE_H_INCLUDED
+
 #include <string>
 #include <vector>
 #include "Player.h"

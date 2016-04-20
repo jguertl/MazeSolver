@@ -86,7 +86,7 @@ int Game::saveMaze(string filename)
 //------------------------------------------------------------------------------
 int Game::loadMaze(string filename)
 {
-  //TODO Throw FileOpenException / InvalidFile Exception / InvalidPathException
+  //TODO Throw FileOpenException / InvalidFileException / InvalidPathException
   // here or inside Maze
   return 1;
 }
