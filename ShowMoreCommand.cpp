@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// LoadCommand.cpp
+// ShowMoreCommand.cpp
 //
 // Group: Group 10, study assistant: Daniel Ellmeier
 //
@@ -9,26 +9,23 @@
 //
 
 #include <iostream>
-#include "LoadCommand.h"
-#include "Maze.h"
-#include "WrongParameterException.h"
+#include "ShowMoreCommand.h"
+#include "NoMazeLoadedException.h"
 
 using std::cout;
 using std::endl;
 
 //------------------------------------------------------------------------------
-LoadCommand::LoadCommand(string name) : Command(name)
+ShowMoreCommand::ShowMoreCommand(string name) : Command(name)
 {
-    
+
 }
 
 //------------------------------------------------------------------------------
-int LoadCommand::execute(Game &board, vector<string> &params)
+int ShowMoreCommand::execute(Game& board, vector<string>& params)
 {
-  string filename = params.at(1);
-  if(Maze::isFilenameValid(filename) == false)
-  {
-    throw WrongParameterException();
-  }
-  return board.loadMaze(filename);
+  if(board.isMazeLoaded() == false)
+    throw NoMazeLoadedException();
+
+  return board.showExtendedMaze();
 }

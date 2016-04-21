@@ -41,8 +41,6 @@ int main(int argc, char** argv) {
   try
   {
     Game game;
-    shared_ptr<StartGameCommand> start_game_command;
-    
     if(argc == 3 && string(argv[1]) == PROGRAM_ARGUMENT_INPUT)
     {
       game.setInputFilename(argv[2]);
@@ -68,9 +66,7 @@ int main(int argc, char** argv) {
       throw WrongUsageException();
     }
     
-    start_game_command = make_shared<StartGameCommand>("New Game");
-    vector<string> empty_parameters;
-    start_game_command->execute(game, empty_parameters);
+    game.startGame();
   }
   
   //Catch out of memory exception

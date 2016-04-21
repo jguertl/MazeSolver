@@ -19,7 +19,14 @@
 #include "InvalidFileException.h"
 #include "InvalidPathException.h"
 #include "FileAccessException.h"
+#include "FileAccessException.h"
 #include "LoadCommand.h"
+#include "ResetCommand.h"
+#include "MoveCommand.h"
+#include "FastMoveCommand.h"
+#include "ShowCommand.h"
+#include "ShowMoreCommand.h"
+#include "SaveCommand.h"
 #include "memory"
 #include <sstream>
 #include <iostream>
@@ -104,7 +111,9 @@ void Game::startGame()
       {
         if(splitted_commands.size() > 2)
           throw WrongParameterCountException();
-        maze_.load("maze.txt");
+
+        LoadCommand* load_command = new LoadCommand("Load");
+        load_command->execute(*this, splitted_commands);
       }
       else if(command == Game::SHOW_COMMAND)
       {
@@ -113,12 +122,16 @@ void Game::startGame()
 
         if(splitted_commands.size() == 1)
         {
-          maze_.show();
+          ShowCommand* show_command = new ShowCommand("Show");
+          show_command->execute(*this, splitted_commands);
         }
         else
         {
           if(splitted_commands.at(1) == Game::MORE_COMMAND)
-            maze_.showMore();
+          {
+            ShowMoreCommand* show_more_command = new ShowMoreCommand("Show More");
+            show_more_command->execute(*this, splitted_commands);
+          }
           else
             throw WrongParameterException();
         }
@@ -127,19 +140,33 @@ void Game::startGame()
       {
         if(splitted_commands.size() > 1)
           throw WrongParameterCountException();
-        //maze.reset();
+
+        ResetCommand* reset_command = new ResetCommand("Reset");
+        reset_command->execute(*this, splitted_commands);
       }
       else if(command == Game::MOVE_COMMAND)
       {
         if(splitted_commands.size() > 2)
           throw WrongParameterCountException();
-        maze_.movePlayer("up");
+
+        MoveCommand* move_command = new MoveCommand("Move");
+        move_command->execute(*this, splitted_commands);
       }
       else if(command == Game::FASTMOVE_COMMAND)
       {
-        if(splitted_commands.size() > 2)
+        if(splitted_commands.size() != 2)
           throw WrongParameterCountException();
-        //FASTMOVE
+
+        FastMoveCommand* fast_move_command = new FastMoveCommand("Fastmove");
+        fast_move_command->execute(*this, splitted_commands);
+      }
+      else if(command == Game::SAVE_COMMAND)
+      {
+        if(splitted_commands.size() != 2)
+          throw WrongParameterCountException();
+
+        SaveCommand* save_command = new SaveCommand("Save");
+        save_command->execute(*this, splitted_commands);
       }
       else
       {
@@ -185,21 +212,27 @@ bool Game::checkMoves(string moves)
 //------------------------------------------------------------------------------
 int Game::showMaze()
 {
+  maze_.show();
+  return 1;
+}
+
+//------------------------------------------------------------------------------
+int Game::showExtendedMaze()
+{
+  maze_.showMore();
   return 1;
 }
 
 //------------------------------------------------------------------------------
 int Game::saveMaze(string filename)
 {
-  //TODO Throw FileAccessException here or inside Maze
   return 1;
 }
 
 //------------------------------------------------------------------------------
 int Game::loadMaze(string filename)
 {
-  //TODO Throw FileOpenException / InvalidFileException / InvalidPathException
-  // here or inside Maze
+  maze_.load(filename);
   return 1;
 }
 
@@ -218,6 +251,7 @@ int Game::fastMovePlayer(string directions)
 //------------------------------------------------------------------------------
 int Game::reset()
 {
+  //maze.reset();
   return 1;
 }
 
@@ -254,4 +288,3 @@ vector<string> Game::splitString(string input, char delimiter)
 
   return splitted_strings;
 }
-

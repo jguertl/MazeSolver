@@ -25,7 +25,9 @@ ShowCommand::ShowCommand(string name) : Command(name)
 int ShowCommand::execute(Game& board, vector<string>& params)
 {
   if(board.isMazeLoaded() == false)
+  {
     throw NoMazeLoadedException();
+  }
   
   return board.showMaze();
 }

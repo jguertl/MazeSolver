@@ -201,6 +201,13 @@ class Game {
     int showMaze();
 
     //--------------------------------------------------------------------------
+    // Show More Method
+    // Shows the current maze with more infos
+    // @return TODO
+    //
+    int showExtendedMaze();
+
+    //--------------------------------------------------------------------------
     // Save Method
     // Saves the current maze
     // @param filename Filename of the maze which should be save

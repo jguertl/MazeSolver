@@ -15,6 +15,9 @@
 #include "Maze.h"
 #include "Game.h"
 #include "FileOpenException.h"
+#include "FileAccessException.h"
+#include "InvalidFileException.h"
+#include "InvalidPathException.h"
 
 using std::ofstream;
 using std::ifstream;
@@ -66,11 +69,10 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 void Maze::load(const string& path)
 {
-  //cout << "Load from " << path << endl;
-
-  if((path != SAVE_FILE_NAME) && (isFilenameValid(path)==false))
+  //TODO PETER hier musst du noch FileOpenException, InvalidFileException und InvalidPathException werfen.
+  if((path != SAVE_FILE_NAME))
   {
-    cout << "Load Filename not valid." << endl;
+    cout << "Load Filename cannot be used" << endl;
     return;
   }
 
@@ -261,7 +263,10 @@ void Maze::reset()
 // Einige Angaben sind mir nicht ganz klar.
 void Maze::save(const string& path)
 {
-  //cout << "Save: " << path << endl;
+  //TODO PETER Hier musst du noch irgendwo 'throw FileAccessException()' werfen
+  //Wenn das File nicht geöffnet oder beschrieben werden kann.
+
+
   ofstream outputfile;
   outputfile.open(path.c_str());
   if(path == SAVE_FILE_NAME)
@@ -270,16 +275,7 @@ void Maze::save(const string& path)
   }
   else
   {
-    if(isFilenameValid(path)==false)
-    {
-      cout << "Save Filename not valid." << endl;
-      outputfile.close();
-      return;
-    }
-    else
-    {
-      outputfile << moves_ << endl;
-    }
+    outputfile << moves_ << endl;
   }
 
   outputfile << original_steps_ << endl;

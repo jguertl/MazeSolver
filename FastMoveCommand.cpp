@@ -10,7 +10,8 @@
 
 #include <iostream>
 #include "FastMoveCommand.h"
-#include "InvalidMoveException.h"
+#include "WrongParameterException.h"
+#include "NoMazeLoadedException.h"
 
 using std::cout;
 using std::endl;
@@ -24,6 +25,11 @@ FastMoveCommand::FastMoveCommand(string name) : Command(name)
 //------------------------------------------------------------------------------
 int FastMoveCommand::execute(Game& board, vector<string>& params)
 {
+  if(board.isMazeLoaded() == false)
+  {
+    throw NoMazeLoadedException();
+  }
+
   string directions = params.at(1);
   for(char& single_direction : directions)
   {
@@ -32,7 +38,7 @@ int FastMoveCommand::execute(Game& board, vector<string>& params)
       && single_direction != Game::DIRECTION_FAST_MOVE_UP
       && single_direction != Game::DIRECTION_FAST_MOVE_DOWN)
     {
-      throw InvalidMoveException();
+      throw WrongParameterException();
     }
   }
   return board.fastMovePlayer(directions);
