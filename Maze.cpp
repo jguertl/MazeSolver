@@ -252,6 +252,12 @@ void Maze::load(const string& path)
 }
 
 //------------------------------------------------------------------------------
+void Maze::reset()
+{
+  load(SAVE_FILE_NAME);
+}
+
+//------------------------------------------------------------------------------
 // Einige Angaben sind mir nicht ganz klar.
 void Maze::save(const string& path)
 {

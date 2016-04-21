@@ -288,6 +288,12 @@ class Maze
     int moveTeleport(char symbol);
 
     //--------------------------------------------------------------------------
+    // Reset Method
+    // TODO description
+    //
+    void reset();
+
+    //--------------------------------------------------------------------------
     // Get Tile at Position
     // TODO description
     //
