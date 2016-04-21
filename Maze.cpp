@@ -70,7 +70,7 @@ void Maze::load(const string& path)
   if(isFilenameValid(path)!=0)
   {
     cout << "Filename not valid." << endl;
-    return -1;
+    return;
   }
   ifstream file ("maze.txt");
   string line;
@@ -160,7 +160,7 @@ void Maze::load(const string& path)
         {
           cout << "Input File not valid  B" << endl;
         }
-        if((buffer_vector.at(0)->getSymbol() != FIELD_TYPE_WALL) &&
+        if((buffer_vector.front()->getSymbol() != FIELD_TYPE_WALL) &&
            (buffer_vector.at(buffer_vector.size()-1)->getSymbol() != FIELD_TYPE_WALL))
         {
           cout << "Input File not valid  C" << endl;
@@ -173,33 +173,41 @@ void Maze::load(const string& path)
       }
     }
     // Check if first line only contains Walls
-    for(counter_x_=0; counter_x_<tiles_.at(tiles_.size()-1).size(); counter_x_++)
+    for(counter_x_=0; counter_x_<tiles_.back().size(); counter_x_++)
     {
-      if(tiles_.at(0).at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
+      if(tiles_.front().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
         cout << "Input File not valid  D" << endl;
       }
     }
     // Check if last line only contains Walls
-    for(counter_x_=0; counter_x_<tiles_.at(tiles_.size()-1).size(); counter_x_++)
+    for(counter_x_=0; counter_x_<tiles_.back().size(); counter_x_++)
     {
-      if(tiles_.at(tiles_.size()-1).at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
+      if(tiles_.back().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
         cout << "Input File not valid  E" << endl;
       }
     }
 
     // Check all Teleports
-    sort(teleport_symbols.begin(), teleport_symbols.end(), compareCharacters);
-    while(teleport_symbols.size()>0)
+    sort(teleport_symbols.begin(), teleport_symbols.end());
+    while(teleport_symbols.size()>1)
     {
-      if(teleport_symbols.pop_back() != teleport_symbols.pop_back())
+      buffer = teleport_symbols.back();
+      teleport_symbols.pop_back();
+      if(buffer != teleport_symbols.back())
       {
-        cout << "Teleport Error" << endl;
-        return -1;
+        cout << "Teleport Error 1" << endl;
+        return;
       }
-    }
+      teleport_symbols.pop_back();
 
+    }
+    if(teleport_symbols.size()!=0)
+    {
+      cout << "Teleport Error 2" << endl;
+      return;
+    }
 
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
@@ -221,7 +229,7 @@ void Maze::save(const string& path)
   if(isFilenameValid(path)!=0)
   {
     cout << "Filename not valid." << endl;
-    return -1;
+    return;
   }
   outputfile.open(path.c_str());
 
@@ -303,7 +311,7 @@ int Maze::movePlayer(string direction)
   if((player_.getTile()->getSymbol()>='a') &&
      (player_.getTile()->getSymbol()<='e'))
   {
-    delete tiles_.at(player_.getY().at(player_.getX());
+    delete tiles_.at(player_.getY()).at(player_.getX());
     tiles_.at(player_.getY()).at(player_.getX()) = new Path(' ');
   }
 
@@ -430,19 +438,19 @@ int Maze::fastMovePlayer(string directions)
   {
     if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_UP)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_UP.append(FAST_MOVE_FLAG));
+      return_value=movePlayer(Game::DIRECTION_MOVE_UP + Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_DOWN)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_DOWN.append(FAST_MOVE_FLAG));
+      return_value=movePlayer(Game::DIRECTION_MOVE_DOWN + Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_LEFT)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_LEFT.append(FAST_MOVE_FLAG));
+      return_value=movePlayer(Game::DIRECTION_MOVE_LEFT + Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_RIGHT)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_RIGHT.append(FAST_MOVE_FLAG));
+      return_value=movePlayer(Game::DIRECTION_MOVE_RIGHT + Maze::FAST_MOVE_FLAG);
     }
     else
     {
@@ -485,12 +493,6 @@ int Maze::moveTeleport(char symbol)
     }
   }
   return -1;
-}
-
-//------------------------------------------------------------------------------
-bool Maze::compareCharacters(const char symbol1, const char symbol2)
-{
-  return (strcmp(symbol1, symbol2)<0);
 }
 
 //------------------------------------------------------------------------------

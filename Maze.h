@@ -13,6 +13,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Player.h"
 #include "Tile.h"
 #include "Wall.h"
@@ -29,6 +30,7 @@ class Game;
 
 using std::string;
 using std::vector;
+using std::sort;
 
 //----------------------------------------------------------------------------
 // Style Maze
@@ -284,14 +286,6 @@ class Maze
     // TODO description
     //
     int moveTeleport(char symbol);
-
-    //--------------------------------------------------------------------------
-    // Compare two characters
-    // TODO description
-    // @param symbol1
-    // @param symbol2
-    //
-    bool compareCharacters(const char symbol1, const char symbol2);
 
     //--------------------------------------------------------------------------
     // Get Tile at Position
