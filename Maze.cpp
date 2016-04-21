@@ -67,14 +67,17 @@ Maze::~Maze()
 void Maze::load(const string& path)
 {
   cout << "Load from " << path << endl;
-  if(isFilenameValid(path)!=0)
+
+  if((path != SAVE_FILE_NAME) && (isFilenameValid(path)==false))
   {
-    cout << "Filename not valid." << endl;
+    cout << "Load Filename not valid." << endl;
     return;
   }
-  ifstream file ("maze.txt");
+
+  ifstream file (path);
   string line;
   char buffer;
+  char teleport_duplicate_check;
   vector<Tile*> buffer_vector;
   vector<char> teleport_symbols;
   std::stringstream sstream;
@@ -135,8 +138,8 @@ void Maze::load(const string& path)
       {
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
-
         teleport_symbols.push_back(buffer);
+        cout << "Teleport Unsorted: " << buffer << endl;
       }
       else if(buffer==FIELD_TYPE_ONEWAY_LEFT ||
               buffer==FIELD_TYPE_ONEWAY_RIGHT ||
@@ -190,22 +193,31 @@ void Maze::load(const string& path)
     }
 
     // Check all Teleports
+    teleport_duplicate_check=0;
     sort(teleport_symbols.begin(), teleport_symbols.end());
     while(teleport_symbols.size()>1)
     {
+      cout << "Teleport Sorted: " << teleport_symbols.back() << endl;
       buffer = teleport_symbols.back();
+      if(buffer==teleport_duplicate_check)
+      {
+        cout << "Teleport Error More than Two" << endl;
+        return;
+      }
+      teleport_duplicate_check=buffer;
       teleport_symbols.pop_back();
       if(buffer != teleport_symbols.back())
       {
-        cout << "Teleport Error 1" << endl;
+        cout << "Teleport Error Single Symbol" << endl;
         return;
       }
+      cout << "Teleport Sorted: " << teleport_symbols.back() << endl;
       teleport_symbols.pop_back();
 
     }
     if(teleport_symbols.size()!=0)
     {
-      cout << "Teleport Error 2" << endl;
+      cout << "Teleport Error Single Symbol" << endl;
       return;
     }
 
@@ -226,20 +238,24 @@ void Maze::load(const string& path)
 void Maze::save(const string& path)
 {
   ofstream outputfile;
-  if(isFilenameValid(path)!=0)
-  {
-    cout << "Filename not valid." << endl;
-    return;
-  }
-  outputfile.open(path.c_str());
 
+  outputfile.open(path.c_str());
   if(path == SAVE_FILE_NAME)
   {
     outputfile << endl;
   }
   else
   {
-    outputfile << moves_ << endl;
+    if(isFilenameValid(path)==false)
+    {
+      cout << "Save Filename not valid." << endl;
+      outputfile.close();
+      return;
+    }
+    else
+    {
+      outputfile << moves_ << endl;
+    }
   }
 
   outputfile << original_steps_ << endl;
