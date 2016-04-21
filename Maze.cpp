@@ -26,6 +26,7 @@ const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
 const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
 const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 const string Maze::SAVE_FILE_NAME = "save_file.txt";
+const char Maze::FAST_MOVE_FLAG = 'f';
 const char Maze::FIELD_TYPE_PLAYER = '*';
 const char Maze::FIELD_TYPE_WALL = '#';
 const char Maze::FIELD_TYPE_ICE = '+';
@@ -66,6 +67,11 @@ Maze::~Maze()
 void Maze::load(const string& path)
 {
   cout << "Load from " << path << endl;
+  if(isFilenameValid(path)!=0)
+  {
+    cout << "Filename not valid." << endl;
+    return -1;
+  }
   ifstream file ("maze.txt");
   string line;
   char buffer;
@@ -128,6 +134,8 @@ void Maze::load(const string& path)
       {
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
+
+        // Store all Teleports
       }
       else if(buffer==FIELD_TYPE_ONEWAY_LEFT ||
               buffer==FIELD_TYPE_ONEWAY_RIGHT ||
@@ -180,6 +188,8 @@ void Maze::load(const string& path)
       }
     }
 
+    // Check all Teleports
+
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
     save(SAVE_FILE_NAME);
@@ -196,7 +206,11 @@ void Maze::load(const string& path)
 void Maze::save(const string& path)
 {
   ofstream outputfile;
-  //TODO Validierung
+  if(isFilenameValid(path)!=0)
+  {
+    cout << "Filename not valid." << endl;
+    return -1;
+  }
   outputfile.open(path.c_str());
 
   if(path == SAVE_FILE_NAME)
@@ -262,11 +276,19 @@ int Maze::movePlayer(string direction)
     return -1;
   }
 
-  if(player_.getTile()->getSymbol()=='x')
+  if(direction.back()==FAST_MOVE_FLAG)
   {
-    cout << "Game is over." << endl;
-    return -2;
+    direction.pop_back();
   }
+  else
+  {
+    if(player_.getTile()->getSymbol()=='x')
+    {
+      cout << "Game is over." << endl;
+      return -2;
+    }
+  }
+
 
   // delete Bonus Tile
   if((player_.getTile()->getSymbol()>='a') &&
@@ -400,19 +422,19 @@ int Maze::fastMovePlayer(string directions)
   {
     if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_UP)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_UP);
+      return_value=movePlayer(Game::DIRECTION_MOVE_UP.append(FAST_MOVE_FLAG));
     }
     else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_DOWN)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_DOWN);
+      return_value=movePlayer(Game::DIRECTION_MOVE_DOWN.append(FAST_MOVE_FLAG));
     }
     else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_LEFT)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_LEFT);
+      return_value=movePlayer(Game::DIRECTION_MOVE_LEFT.append(FAST_MOVE_FLAG));
     }
     else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_RIGHT)
     {
-      return_value=movePlayer(Game::DIRECTION_MOVE_RIGHT);
+      return_value=movePlayer(Game::DIRECTION_MOVE_RIGHT.append(FAST_MOVE_FLAG));
     }
     else
     {
@@ -433,7 +455,6 @@ int Maze::fastMovePlayer(string directions)
       return -1;
     }
   }
-
 
   return 0;
 }
@@ -508,7 +529,7 @@ void Maze::setPlayerY(int y)
 }
 
 //------------------------------------------------------------------------------
-bool Maze::isFilnameValid(string filename)
+bool Maze::isFilenameValid(string filename)
 {
   int filename_counter = 0;
   for(char& filename_letter : filename)

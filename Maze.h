@@ -106,6 +106,11 @@ class Maze
     //--------------------------------------------------------------------------
     // field of type player
     //
+    static const char FAST_MOVE_FLAG;
+
+    //--------------------------------------------------------------------------
+    // field of type player
+    //
     static const char FIELD_TYPE_PLAYER;
 
     //--------------------------------------------------------------------------
@@ -325,7 +330,7 @@ class Maze
     // Checks wheter a filename is valid or not
     // @param filename the given filename
     //
-    static bool isFilnameValid(string filename);
+    static bool isFilenameValid(string filename);
 };
 
 #endif //MAZE_H_INCLUDED
