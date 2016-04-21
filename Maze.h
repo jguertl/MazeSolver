@@ -268,10 +268,16 @@ class Maze
     void showMore();
 
     //--------------------------------------------------------------------------
-    // Show More
+    // Move Player
     // TODO description
     //
     int movePlayer(string direction);
+
+    //--------------------------------------------------------------------------
+    // Move Player Fast
+    // TODO description
+    //
+    int fastMovePlayer(string directions);
 
     //--------------------------------------------------------------------------
     // Move to the corresponding Teleport Tile
@@ -280,10 +286,12 @@ class Maze
     int moveTeleport(char symbol);
 
     //--------------------------------------------------------------------------
-    // Move Player Fast
+    // Compare two characters
     // TODO description
+    // @param symbol1
+    // @param symbol2
     //
-    int fastMovePlayer(string directions);
+    bool compareCharacters(const char symbol1, const char symbol2);
 
     //--------------------------------------------------------------------------
     // Get Tile at Position

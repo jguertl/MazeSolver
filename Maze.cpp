@@ -76,6 +76,7 @@ void Maze::load(const string& path)
   string line;
   char buffer;
   vector<Tile*> buffer_vector;
+  vector<char> teleport_symbols;
   std::stringstream sstream;
   int size_check = -1;
   counter_x_ = 0;
@@ -135,7 +136,7 @@ void Maze::load(const string& path)
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
 
-        // Store all Teleports
+        teleport_symbols.push_back(buffer);
       }
       else if(buffer==FIELD_TYPE_ONEWAY_LEFT ||
               buffer==FIELD_TYPE_ONEWAY_RIGHT ||
@@ -189,10 +190,21 @@ void Maze::load(const string& path)
     }
 
     // Check all Teleports
+    sort(teleport_symbols.begin(), teleport_symbols.end(), compareCharacters);
+    while(teleport_symbols.size()>0)
+    {
+      if(teleport_symbols.pop_back() != teleport_symbols.pop_back())
+      {
+        cout << "Teleport Error" << endl;
+        return -1;
+      }
+    }
+
 
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
     save(SAVE_FILE_NAME);
+    fastMovePlayer(moves_);
   }
   else
   {
@@ -222,7 +234,6 @@ void Maze::save(const string& path)
     outputfile << moves_ << endl;
   }
 
-  // Unklar ob das so gemeint ist
   outputfile << original_steps_ << endl;
 
   for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
@@ -271,7 +282,6 @@ int Maze::movePlayer(string direction)
   // check if move is in a valid direction
   if(player_.getTile()->move(direction) == false)
   {
-
     cout << "[ERR] Invalid move." << endl;
     return -1;
   }
@@ -289,20 +299,19 @@ int Maze::movePlayer(string direction)
     }
   }
 
-
   // delete Bonus Tile
   if((player_.getTile()->getSymbol()>='a') &&
      (player_.getTile()->getSymbol()<='e'))
   {
-    delete tiles_[player_.getY()][player_.getX()];
-    tiles_[player_.getY()][player_.getX()] = new Path(' ');
+    delete tiles_.at(player_.getY().at(player_.getX());
+    tiles_.at(player_.getY()).at(player_.getX()) = new Path(' ');
   }
 
   // Move in the direction, if the landing tile is no Wall
   if(direction == Game::DIRECTION_MOVE_UP)
   {
     cout << "Up" << endl;
-    if(tiles_[player_.getY()-1][player_.getX()]->getSymbol() != FIELD_TYPE_WALL)
+    if(tiles_.at(player_.getY()-1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL)
     {
       player_.setY(player_.getY() - 1);
       steps_--;
@@ -316,7 +325,7 @@ int Maze::movePlayer(string direction)
   else if(direction == Game::DIRECTION_MOVE_DOWN)
   {
     cout << "Down" << endl;
-    if(tiles_[player_.getY()+1][player_.getX()]->getSymbol() != FIELD_TYPE_WALL)
+    if(tiles_.at(player_.getY()+1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL)
     {
       player_.setY(player_.getY() + 1);
       steps_--;
@@ -409,7 +418,6 @@ int Maze::movePlayer(string direction)
 }
 
 //------------------------------------------------------------------------------
-// Es fehlt noch die Ausnahme, wenn der Player über das Ziel geht
 int Maze::fastMovePlayer(string directions)
 {
   int player_position_x=player_.getX();
@@ -464,7 +472,7 @@ int Maze::moveTeleport(char symbol)
 {
   for (counter_x_ = 0; counter_x_ < tiles_.size(); counter_x_++)
   {
-    for (counter_y_ = 0; counter_y_ < tiles_[counter_y_].size(); counter_y_++)
+    for (counter_y_ = 0; counter_y_ < tiles_.at(counter_y_).size(); counter_y_++)
     {
       if((tiles_.at(counter_x_).at(counter_y_)->getSymbol() == symbol) &&
         ((counter_x_ != player_.getY()) || (counter_y_ != player_.getX())))
@@ -477,6 +485,12 @@ int Maze::moveTeleport(char symbol)
     }
   }
   return -1;
+}
+
+//------------------------------------------------------------------------------
+bool Maze::compareCharacters(const char symbol1, const char symbol2)
+{
+  return (strcmp(symbol1, symbol2)<0);
 }
 
 //------------------------------------------------------------------------------
@@ -495,7 +509,7 @@ void Maze::deleteMaze()
 Tile* Maze::getTile(int x, int y)
 {
   //TODO sind da x und y absichtlich vertauscht?
-  return tiles_[y][x];
+  return tiles_.at(y).at(x);
 }
 
 //------------------------------------------------------------------------------
