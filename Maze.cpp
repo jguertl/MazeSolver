@@ -69,13 +69,6 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 void Maze::load(const string& path)
 {
-  //TODO PETER hier musst du noch FileOpenException, InvalidFileException und InvalidPathException werfen.
-  if((path != SAVE_FILE_NAME))
-  {
-    cout << "Load Filename cannot be used" << endl;
-    return;
-  }
-
   ifstream file (path);
   string line;
   string moves_save;
@@ -89,6 +82,7 @@ void Maze::load(const string& path)
   int size_check = -1;
   counter_x_ = 0;
   counter_y_ = 0;
+
   if (file.is_open())
   {
     std::getline(file, moves_);
@@ -157,7 +151,10 @@ void Maze::load(const string& path)
         buffer_vector.push_back(new OneWay(buffer));
       }else if(buffer != '\n')
       {
-        cout << "Input File not valid  A" << endl;
+        //cout << "Input File not valid  A" << endl;
+        throw InvalidFileException();
+        deleteMaze();
+        return;
       }
 
       counter_x_++;
@@ -168,12 +165,18 @@ void Maze::load(const string& path)
         // Check Maze
         if((size_check >= 0) && (size_check != buffer_vector.size()))
         {
-          cout << "Input File not valid  B" << endl;
+          //cout << "Input File not valid  B" << endl;
+          throw InvalidFileException();
+          deleteMaze();
+          return;
         }
         if((buffer_vector.front()->getSymbol() != FIELD_TYPE_WALL) &&
-           (buffer_vector.at(buffer_vector.size()-1)->getSymbol() != FIELD_TYPE_WALL))
+           (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL))
         {
-          cout << "Input File not valid  C" << endl;
+          //cout << "Input File not valid  C" << endl;
+          throw InvalidFileException();
+          deleteMaze();
+          return;
         }
 
         size_check = buffer_vector.size();
@@ -187,7 +190,10 @@ void Maze::load(const string& path)
     {
       if(tiles_.front().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
-        cout << "Input File not valid  D" << endl;
+        //cout << "Input File not valid  D" << endl;
+        throw InvalidFileException();
+        deleteMaze();
+        return;
       }
     }
     // Check if last line only contains Walls
@@ -195,7 +201,10 @@ void Maze::load(const string& path)
     {
       if(tiles_.back().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
-        cout << "Input File not valid  E" << endl;
+        //cout << "Input File not valid  E" << endl;
+        throw InvalidFileException();
+        deleteMaze();
+        return;
       }
     }
 
@@ -204,6 +213,8 @@ void Maze::load(const string& path)
     {
       //cout << "Start or Finish Error" << endl;
       file.close();
+      throw InvalidFileException();
+      deleteMaze();
       return;
     }
 
@@ -218,6 +229,8 @@ void Maze::load(const string& path)
       {
         //cout << "Teleport Error More than Two" << endl;
         file.close();
+        throw InvalidFileException();
+        deleteMaze();
         return;
       }
       teleport_duplicate_check=buffer;
@@ -226,6 +239,8 @@ void Maze::load(const string& path)
       {
         //cout << "Teleport Error Single Symbol" << endl;
         file.close();
+        throw InvalidFileException();
+        deleteMaze();
         return;
       }
       //cout << "Teleport Sorted: " << teleport_symbols.back() << endl;
@@ -236,6 +251,8 @@ void Maze::load(const string& path)
     {
       //cout << "Teleport Error Single Symbol" << endl;
       file.close();
+      throw InvalidFileException();
+      deleteMaze();
       return;
     }
 
@@ -249,8 +266,8 @@ void Maze::load(const string& path)
   else
   {
     cout << "Unable to open file";
+    throw FileOpenException();
   }
-
 }
 
 //------------------------------------------------------------------------------
@@ -260,12 +277,8 @@ void Maze::reset()
 }
 
 //------------------------------------------------------------------------------
-// Einige Angaben sind mir nicht ganz klar.
 void Maze::save(const string& path)
 {
-  //TODO PETER Hier musst du noch irgendwo 'throw FileAccessException()' werfen
-  //Wenn das File nicht geöffnet oder beschrieben werden kann.
-
   ofstream outputfile;
   outputfile.open(path.c_str());
   if(outputfile.fail())
@@ -550,6 +563,7 @@ void Maze::deleteMaze()
     tiles_.at(counter_y_).clear();
   }
   tiles_.clear();
+
 }
 
 //------------------------------------------------------------------------------

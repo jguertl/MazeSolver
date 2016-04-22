@@ -18,19 +18,19 @@ using std::string;
 
 //----------------------------------------------------------------------------
 // Custom File Open Exception
-// class inform about a file which cannot be openend
+// class inform about an invalid file format
 //
 class InvalidFileException : BaseException
 {
 private:
-  
+
   //--------------------------------------------------------------------------
   // Message to be shown in case of an exception
   //
   static const string INVALID_FILE_EXCEPTION;
-  
+
 public:
-  
+
   //--------------------------------------------------------------------------
   // Constructor
   // Constructs the exception and outputs the error message.
