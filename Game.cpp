@@ -22,6 +22,7 @@
 #include "InvalidPathException.h"
 #include "FileAccessException.h"
 #include "FileAccessException.h"
+#include "NoMoreStepsException.h"
 #include "LoadCommand.h"
 #include "ResetCommand.h"
 #include "FastMoveCommand.h"
@@ -30,7 +31,6 @@
 #include "memory"
 #include <sstream>
 #include <iostream>
-
 
 using std::cout;
 using std::shared_ptr;
@@ -94,88 +94,37 @@ void Game::startGame()
     }
     vector<string> splitted_commands = splitString(line, ' ');
     command = splitted_commands.at(0);
-
-    //Change to lower case
-    for(char& letter : command)
-    {
-      letter = tolower(letter);
-    }
-
+    toLowercase(command);
+    
     try
     {
       if(command == Game::QUIT_COMMAND)
       {
-        if(splitted_commands.size() > 1)
-          throw WrongParameterCountException();
-        running_ = false;
-        cout << Game::QUIT_TEXT << endl;
+        quitCommandSelected(splitted_commands);
       }
       else if(command == Game::LOAD_COMMAND)
       {
-        if(splitted_commands.size() > 2)
-          throw WrongParameterCountException();
-
-        LoadCommand* load_command = new LoadCommand("Load");
-        if(load_command->execute(*this, splitted_commands)==SUCCESS)
-        {
-          is_maze_loaded_=true;
-        }
+        loadCommandSelected(splitted_commands);
       }
       else if(command == Game::SHOW_COMMAND)
       {
-        if(splitted_commands.size() > 2)
-          throw WrongParameterCountException();
-
-        if(splitted_commands.size() == 1)
-        {
-          ShowCommand* show_command = new ShowCommand("Show");
-          show_command->execute(*this, splitted_commands);
-        }
-        else
-        {
-          if(splitted_commands.at(1) == Game::MORE_COMMAND)
-          {
-            ShowMoreCommand* show_more_command = new ShowMoreCommand("Show More");
-            show_more_command->execute(*this, splitted_commands);
-          }
-          else
-            throw WrongParameterException();
-        }
+        showCommandSelected(splitted_commands);
       }
       else if(command == Game::RESET_COMMAND)
       {
-        if(splitted_commands.size() > 1)
-          throw WrongParameterCountException();
-
-        ResetCommand* reset_command = new ResetCommand("Reset");
-        reset_command->execute(*this, splitted_commands);
+        resetCommandSelected(splitted_commands);
       }
       else if(command == Game::MOVE_COMMAND)
       {
-        if(splitted_commands.size() > 2)
-          throw WrongParameterCountException();
-
-        MoveCommand* move_command = new MoveCommand("Move");
-        if(move_command->execute(*this, splitted_commands)!=SUCCESS)
-        {
-          throw InvalidMoveException();
-        }
+        moveCommandSelected(splitted_commands);
       }
       else if(command == Game::FASTMOVE_COMMAND)
       {
-        if(splitted_commands.size() != 2)
-          throw WrongParameterCountException();
-
-        FastMoveCommand* fast_move_command = new FastMoveCommand("Fastmove");
-        fast_move_command->execute(*this, splitted_commands);
+        fastMoveCommandSelected(splitted_commands);
       }
       else if(command == Game::SAVE_COMMAND)
       {
-        if(splitted_commands.size() != 2)
-          throw WrongParameterCountException();
-
-        SaveCommand* save_command = new SaveCommand("Save");
-        save_command->execute(*this, splitted_commands);
+        saveCommandSelected(splitted_commands);
       }
       else
       {
@@ -208,6 +157,10 @@ void Game::startGame()
     }
     catch(InvalidMoveException invalid_move_exception)
     {
+    }
+    catch(NoMoreStepsException no_more_steps_exception)
+    {
+      //Call reset
     }
   }
 }
@@ -271,7 +224,19 @@ int Game::reset()
 void Game::setInputFilename(string input_filename)
 {
   inputFilename_ = input_filename;
-  loadMaze(inputFilename_);
+  try
+  {
+    loadMaze(inputFilename_);
+  }
+  catch(FileOpenException file_open_exception)
+  {
+  }
+  catch(InvalidFileException invalid_file_exception)
+  {
+  }
+  catch(InvalidPathException invalid_path_exception)
+  {
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -294,9 +259,148 @@ vector<string> Game::splitString(string input, char delimiter)
   stringstream string_stream(input);
   string string_part;
 
-  while(getline(string_stream, string_part, delimiter)) {
-    splitted_strings.push_back(string_part);
+  while(getline(string_stream, string_part, delimiter))
+  {
+    if(string_part.empty() == false)
+    {
+      splitted_strings.push_back(string_part);
+    }
   }
 
   return splitted_strings;
+}
+
+//------------------------------------------------------------------------------
+string Game::toLowercase(string command)
+{
+  for(char& letter : command)
+  {
+    letter = tolower(letter);
+  }
+  return command;
+}
+
+//------------------------------------------------------------------------------
+void Game::quitCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() > 1)
+  {
+    throw WrongParameterCountException();
+  }
+  running_ = false;
+  cout << Game::QUIT_TEXT << endl;
+}
+
+//------------------------------------------------------------------------------
+void Game::loadCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() != 2)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  LoadCommand* load_command = new LoadCommand(splitted_commands.at(0));
+  if(load_command->execute(*this, splitted_commands)==SUCCESS)
+  {
+    is_maze_loaded_=true;
+  }
+}
+
+//------------------------------------------------------------------------------
+void Game::showCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() > 2)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  if(splitted_commands.size() == 1)
+  {
+    ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
+    show_command->execute(*this, splitted_commands);
+  }
+  else
+  {
+    if(splitted_commands.at(1) == Game::MORE_COMMAND)
+    {
+      ShowMoreCommand* show_more_command = new ShowMoreCommand(splitted_commands.at(0));
+      show_more_command->execute(*this, splitted_commands);
+    }
+    else
+    {
+      throw WrongParameterException();
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+void Game::resetCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() > 1)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  ResetCommand* reset_command = new ResetCommand(splitted_commands.at(0));
+  reset_command->execute(*this, splitted_commands);
+  
+  if(autoSaveEnabled_ == true)
+  {
+    SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
+    save_command->execute(*this, splitted_commands);
+  }
+}
+
+//------------------------------------------------------------------------------
+void Game::moveCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() > 2)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  MoveCommand* move_command = new MoveCommand(splitted_commands.at(0));
+  if(move_command->execute(*this, splitted_commands)!=SUCCESS)
+  {
+    throw InvalidMoveException();
+  }
+}
+
+//------------------------------------------------------------------------------
+void Game::fastMoveCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() != 2)
+  {
+    throw WrongParameterCountException();
+  }
+    
+  FastMoveCommand* fast_move_command = new FastMoveCommand(splitted_commands.at(0));
+  fast_move_command->execute(*this, splitted_commands);
+  
+  if(autoSaveEnabled_ == true)
+  {
+    SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
+    save_command->execute(*this, splitted_commands);
+  }
+  
+  ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
+  show_command->execute(*this, splitted_commands);
+}
+
+//------------------------------------------------------------------------------
+void Game::saveCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() != 2)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  if(autoSaveEnabled_ == true)
+  {
+    SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
+    save_command->execute(*this, splitted_commands);
+  }
+  
+  ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
+  show_command->execute(*this, splitted_commands);
 }
