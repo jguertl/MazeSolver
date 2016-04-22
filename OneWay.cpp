@@ -38,22 +38,22 @@ OneWay::~OneWay()
 //------------------------------------------------------------------------------
 bool OneWay::move(string direction)
 {
-  if((getSymbol() == Game::DIRECTION_FAST_MOVE_RIGHT) &&
+  if((getSymbol() == Game::ONE_WAY_RIGHT) &&
     (direction == Game::DIRECTION_MOVE_RIGHT))
   {
     return true;
   }
-  else if((getSymbol() == Game::DIRECTION_FAST_MOVE_LEFT) &&
+  else if((getSymbol() == Game::ONE_WAY_LEFT) &&
     (direction == Game::DIRECTION_MOVE_LEFT))
   {
     return true;
   }
-  else if((getSymbol() == Game::DIRECTION_FAST_MOVE_UP) &&
+  else if((getSymbol() == Game::ONE_WAY_UP) &&
     (direction == Game::DIRECTION_MOVE_UP))
   {
     return true;
   }
-  else if((getSymbol() == Game::DIRECTION_FAST_MOVE_DOWN) &&
+  else if((getSymbol() == Game::ONE_WAY_DOWN) &&
     (direction == Game::DIRECTION_MOVE_DOWN))
   {
     return true;

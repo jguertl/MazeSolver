@@ -32,6 +32,7 @@ const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
 const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 const string Maze::SAVE_FILE_NAME = "save_file.txt";
 const char Maze::FAST_MOVE_FLAG = 'f';
+const char Maze::ICE_MOVE_FLAG = 'i';
 const char Maze::FIELD_TYPE_PLAYER = '*';
 const char Maze::FIELD_TYPE_WALL = '#';
 const char Maze::FIELD_TYPE_ICE = '+';
@@ -82,6 +83,7 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 int Maze::load(const string& path)
 {
+  deleteMaze();
   ifstream file (path);
   string line;
   string moves_save;
@@ -96,6 +98,7 @@ int Maze::load(const string& path)
   counter_x_ = 0;
   counter_y_ = 0;
 
+
   if (file.is_open())
   {
     std::getline(file, moves_);
@@ -108,7 +111,6 @@ int Maze::load(const string& path)
 
     while(file.get(buffer))
     {
-      //TODO make switch case
       if(buffer == FIELD_TYPE_WALL)
       {
         // Wall
@@ -138,27 +140,30 @@ int Maze::load(const string& path)
         buffer_vector.push_back(new Finish(buffer));
         finish_check++;
       }
-      else if(buffer>=FIELD_TYPE_BONUS_MIN && buffer<=FIELD_TYPE_BONUS_MAX)
+      else if((buffer>=FIELD_TYPE_BONUS_MIN) &&
+              (buffer<=FIELD_TYPE_BONUS_MAX))
       {
         // Bonus
         buffer_vector.push_back(new Bonus(buffer));
       }
-      else if(buffer>=FIELD_TYPE_QUICKSAND_MIN && buffer<=FIELD_TYPE_QUICKSAND_MAX)
+      else if((buffer>=FIELD_TYPE_QUICKSAND_MIN) &&
+              (buffer<=FIELD_TYPE_QUICKSAND_MAX))
       {
         // Quicksand
         buffer_vector.push_back(new Quicksand(buffer));
       }
-      else if(buffer>=FIELD_TYPE_TELEPORT_MIN && buffer<=FIELD_TYPE_TELEPORT_MAX)
+      else if((buffer>=FIELD_TYPE_TELEPORT_MIN) &&
+              (buffer<=FIELD_TYPE_TELEPORT_MAX))
       {
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
         teleport_symbols.push_back(buffer);
         //cout << "Teleport Unsorted: " << buffer << endl;
       }
-      else if(buffer==FIELD_TYPE_ONEWAY_LEFT ||
-              buffer==FIELD_TYPE_ONEWAY_RIGHT ||
-              buffer==FIELD_TYPE_ONEWAY_UP ||
-              buffer==FIELD_TYPE_ONEWAY_DOWN)
+      else if((buffer==FIELD_TYPE_ONEWAY_LEFT) ||
+              (buffer==FIELD_TYPE_ONEWAY_RIGHT) ||
+              (buffer==FIELD_TYPE_ONEWAY_UP) ||
+              (buffer==FIELD_TYPE_ONEWAY_DOWN))
       {
         // OneWay
         buffer_vector.push_back(new OneWay(buffer));
@@ -175,7 +180,7 @@ int Maze::load(const string& path)
         tiles_.push_back(buffer_vector);
 
         // Check Maze
-        if((size_check >= 0) && (size_check != buffer_vector.size()))
+        if((size_check >= 0) && (size_check != (int)buffer_vector.size()))
         {
           //cout << "Input File not valid  B" << endl;
           deleteMaze();
@@ -201,6 +206,7 @@ int Maze::load(const string& path)
       if(tiles_.front().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
         //cout << "Input File not valid  D" << endl;
+        file.close();
         deleteMaze();
         throw InvalidFileException();
       }
@@ -211,6 +217,7 @@ int Maze::load(const string& path)
       if(tiles_.back().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
         //cout << "Input File not valid  E" << endl;
+        file.close();
         deleteMaze();
         throw InvalidFileException();
       }
@@ -252,7 +259,7 @@ int Maze::load(const string& path)
       teleport_symbols.pop_back();
 
     }
-    if(teleport_symbols.size()!=0)
+    if(teleport_symbols.size())
     {
       //cout << "Teleport Error Single Symbol" << endl;
       file.close();
@@ -292,7 +299,6 @@ int Maze::save(const string& path)
 
   if(path == SAVE_FILE_NAME)
   {
-    //TODO PETER wird dann nur ein /n hineingeschrieben? Dann sollte garnichts geschrieben werden oder?
     outputfile << endl;
   }
   else
@@ -357,24 +363,33 @@ int Maze::movePlayer(string direction)
     return OUT_OF_STEPS;
   }
 
-  // check if move is in a valid direction
-  if(player_.getTile()->move(direction) == false)
+  if(direction.back()!=FAST_MOVE_FLAG)
   {
-    cout << "[ERR] Invalid move." << endl;
-    return INVALID_MOVE;
+    if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+    {
+      cout << "[ERR] No more steps possible." << endl;
+      return GAME_WON;
+    }
+  }
+  else
+  {
+    direction.pop_back();
   }
 
-  if(direction.back()==FAST_MOVE_FLAG)
+  if(direction.back()==ICE_MOVE_FLAG)
   {
     direction.pop_back();
   }
   else
   {
-    if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
-    {
-      cout << "Game is over." << endl;
-      return GAME_WON;
-    }
+    steps_--;
+  }
+
+  // check if move is in a valid direction
+  if(player_.getTile()->move(direction) == false)
+  {
+    cout << "[ERR] Invalid move." << endl;
+    return INVALID_MOVE;
   }
 
   // delete Bonus Tile
@@ -393,10 +408,9 @@ int Maze::movePlayer(string direction)
     {
       if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
       {
-        steps_--;
+        moves_+=Game::DIRECTION_FAST_MOVE_UP;
       }
       player_.setY(player_.getY() - 1);
-      moves_+=Game::DIRECTION_FAST_MOVE_UP;
     }
     else
     {
@@ -410,14 +424,12 @@ int Maze::movePlayer(string direction)
     {
       if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
       {
-        steps_--;
+        moves_+=Game::DIRECTION_FAST_MOVE_DOWN;
       }
       player_.setY(player_.getY() + 1);
-      moves_+=Game::DIRECTION_FAST_MOVE_DOWN;
     }
     else
     {
-      //TODO PETER können wir hier nicht InvalidMoveException werfen statt das zurückzugeben?
       return INVALID_MOVE;
     }
   }
@@ -428,10 +440,9 @@ int Maze::movePlayer(string direction)
     {
       if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
       {
-        steps_--;
+        moves_+=Game::DIRECTION_FAST_MOVE_LEFT;
       }
       player_.setX(player_.getX() - 1);
-      moves_+=Game::DIRECTION_FAST_MOVE_LEFT;
     }
     else
     {
@@ -445,10 +456,9 @@ int Maze::movePlayer(string direction)
     {
       if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
       {
-        steps_--;
+        moves_+=Game::DIRECTION_FAST_MOVE_RIGHT;
       }
       player_.setX(player_.getX() + 1);
-      moves_+=Game::DIRECTION_FAST_MOVE_RIGHT;
     }
     else
     {
@@ -499,22 +509,22 @@ int Maze::movePlayer(string direction)
     if((direction == Game::DIRECTION_MOVE_UP) &&
             (tiles_.at(player_.getY()-1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
     {
-      movePlayer(direction);
+      movePlayer(direction+ICE_MOVE_FLAG);
     }
     else if((direction == Game::DIRECTION_MOVE_DOWN) &&
             (tiles_.at(player_.getY() + 1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
     {
-      movePlayer(direction);
+      movePlayer(direction+ICE_MOVE_FLAG);
     }
     else if((direction == Game::DIRECTION_MOVE_LEFT) &&
             (tiles_.at(player_.getY()).at(player_.getX() - 1)->getSymbol() != FIELD_TYPE_WALL))
     {
-      movePlayer(direction);
+      movePlayer(direction+ICE_MOVE_FLAG);
     }
     else if((direction == Game::DIRECTION_MOVE_RIGHT) &&
             (tiles_.at(player_.getY()).at(player_.getX() + 1)->getSymbol() != FIELD_TYPE_WALL))
     {
-      movePlayer(direction);
+      movePlayer(direction+ICE_MOVE_FLAG);
     }
   }
   return SUCCESS;
@@ -526,11 +536,17 @@ int Maze::fastMovePlayer(string directions)
   int player_position_x=player_.getX();
   int player_position_y=player_.getY();
   string moves_save=moves_;
-  int counter_string=0;
+  unsigned int counter_string=0;
   int return_value=0;
 
+  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+  {
+    cout << "[ERR] No more steps possible." << endl;
+    return GAME_WON;
+  }
   while(counter_string<directions.size())
   {
+    cout << "Fast: " << directions.at(counter_string) << endl;
     if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_UP)
     {
       return_value=movePlayer(Game::DIRECTION_MOVE_UP + Maze::FAST_MOVE_FLAG);
@@ -604,10 +620,9 @@ int Maze::moveTeleport(char symbol)
 //------------------------------------------------------------------------------
 int Maze::deleteMaze()
 {
-  //cout << "Delete" << endl;
-  for(counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
+  for(counter_y_ = tiles_.size()-1; counter_y_ >= 0; counter_y_--)
   {
-    for(counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
+    for(counter_x_ = tiles_.at(counter_y_).size()-1; counter_x_ >= 0; counter_x_--)
     {
       delete(tiles_.at(counter_y_).at(counter_x_));
     }
