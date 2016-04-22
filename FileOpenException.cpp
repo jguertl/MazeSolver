@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 
 const string FileOpenException::FILE_OPEN_MESSAGE =
-"[ERR] File could not be opened.";
+  "[ERR] File could not be opened.";
 
 //------------------------------------------------------------------------------
 FileOpenException::FileOpenException()

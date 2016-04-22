@@ -31,8 +31,10 @@ int MoveCommand::execute(Game& board, vector<string>& params)
   }
   
   string direction = params.at(1);
-  if((direction == Game::DIRECTION_MOVE_UP) || (direction == Game::DIRECTION_MOVE_DOWN) ||
-    (direction == Game::DIRECTION_MOVE_LEFT) || (direction == Game::DIRECTION_MOVE_RIGHT))
+  if((direction == Game::DIRECTION_MOVE_UP) ||
+    (direction == Game::DIRECTION_MOVE_DOWN) ||
+    (direction == Game::DIRECTION_MOVE_LEFT) ||
+    (direction == Game::DIRECTION_MOVE_RIGHT))
   {
     return board.movePlayer(direction);
   }

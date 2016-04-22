@@ -13,7 +13,7 @@
 
 #include "Tile.h"
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Bonus Class
 // Class to represent a bonus field which increments the remaining steps
 //

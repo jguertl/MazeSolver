@@ -21,18 +21,18 @@ using std::vector;
 
 class FastMoveCommand:Command
 {
-public:
-  
-  //--------------------------------------------------------------------------
-  // Constructor
-  FastMoveCommand(string name);
-  
-  //--------------------------------------------------------------------------
-  // Executes the command.
-  // @param board The board where action should be performed on
-  // @param params Possible parameters needed for the execution
-  // @return Integer representing the success of the action
-  int execute(Game& board, vector<string>& params);
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    FastMoveCommand(string name);
+    
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param board The board where action should be performed on
+    // @param params Possible parameters needed for the execution
+    // @return Integer representing the success of the action
+    int execute(Game& board, vector<string>& params);
 };
 
 #endif //FASTMOVECOMMAND_H_INCLUDED

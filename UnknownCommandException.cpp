@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 
 const string UnknownCommandException::UNKNOWN_COMMAND_MESSAGE =
-"[ERR] Unknown command.";
+  "[ERR] Unknown command.";
 
 //------------------------------------------------------------------------------
 UnknownCommandException::UnknownCommandException()

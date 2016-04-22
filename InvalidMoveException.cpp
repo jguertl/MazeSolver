@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 
 const string InvalidMoveException::INVALID_MOVE_EXCEPTION =
-"[ERR] Invalid move.";
+  "[ERR] Invalid move.";
 
 //------------------------------------------------------------------------------
 InvalidMoveException::InvalidMoveException()

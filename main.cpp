@@ -8,20 +8,12 @@
 //------------------------------------------------------------------------------
 //
 
-#include <iostream>
 #include <string>
-#include "memory"
 #include "WrongUsageException.h"
 #include "OutOfMemoryException.h"
 #include "Game.h"
-#include "StartGameCommand.h"
-#include "FastMoveCommand.h"
 
-using std::cout;
-using std::endl;
 using std::string;
-using std::shared_ptr;
-using std::make_shared;
 using std::exception;
 
 //------------------------------------------------------------------------------

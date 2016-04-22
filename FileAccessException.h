@@ -16,26 +16,26 @@
 
 using std::string;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Custom File Access Exception
 // class inform about invalid file access
 //
 class FileAccessException : BaseException
 {
-private:
-  
-  //--------------------------------------------------------------------------
-  // Message to be shown in case of an exception
-  //
-  static const string FILE_ACCESS_EXCEPTION;
-  
-public:
-  
-  //--------------------------------------------------------------------------
-  // Constructor
-  // Constructs the exception and outputs the error message.
-  //
-  FileAccessException();
+  private:
+    
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string FILE_ACCESS_EXCEPTION;
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    // Constructs the exception and outputs the error message.
+    //
+    FileAccessException();
 };
 
 #endif //FILEACCESSEXCEPTION_H_INCLUDED

@@ -13,7 +13,7 @@
 
 #include "Tile.h"
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Quicksand Class
 // Class to represent a quicksand field which decrements the remaining steps
 //

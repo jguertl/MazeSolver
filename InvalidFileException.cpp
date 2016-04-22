@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 
 const string InvalidFileException::INVALID_FILE_EXCEPTION =
-"[ERR] Invalid file.";
+  "[ERR] Invalid file.";
 
 //------------------------------------------------------------------------------
 InvalidFileException::InvalidFileException()

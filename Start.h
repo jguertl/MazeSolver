@@ -13,7 +13,7 @@
 
 #include "Tile.h"
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Start Class
 // Class to represent the start field which is the entry point for the game
 //

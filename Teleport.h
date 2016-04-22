@@ -13,7 +13,7 @@
 
 #include "Tile.h"
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Teleport Class
 // Class to represent a teleport field which transfers to the matchting
 // counterpart field

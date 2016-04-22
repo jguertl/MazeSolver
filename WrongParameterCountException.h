@@ -16,26 +16,26 @@
 
 using std::string;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Custom Wrong Parameter Count Exception
 // class inform about a wrong parameter count
 //
 class WrongParameterCountException : BaseException
 {
-private:
-  
-  //--------------------------------------------------------------------------
-  // Message to be shown in case of an exception
-  //
-  static const string WRONG_PARAMETER_COUNT_MESSAGE;
-  
-public:
-  
-  //--------------------------------------------------------------------------
-  // Constructor
-  // Constructs the exception and outputs the error message.
-  //
-  WrongParameterCountException();
+  private:
+    
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string WRONG_PARAMETER_COUNT_MESSAGE;
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    // Constructs the exception and outputs the error message.
+    //
+    WrongParameterCountException();
 };
 
 #endif //WRONGPARAMETERCOUNTEXCEPTION_H_INCLUDED

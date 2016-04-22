@@ -14,13 +14,14 @@
 #include "Game.h"
 #include "Tile.h"
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // OneWay Class
 // Class to represent a field with only one available direction
 //
 class OneWay : public Tile
 {
   public:
+  
     //--------------------------------------------------------------------------
     // Constructor
     //

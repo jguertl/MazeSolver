@@ -534,8 +534,6 @@ int Maze::fastMovePlayer(string directions)
     if((return_value!=SUCCESS) &&
        (return_value!=GAME_WON))
     {
-      //cout << "Append Test: " << (Game::DIRECTION_MOVE_RIGHT + Maze::FAST_MOVE_FLAG) << endl;
-      //cout << "  Fastmove ERROR " << directions << "  Step: " << counter_string << endl;
       deleteMaze();
       load(SAVE_FILE_NAME);
       player_.setX(player_position_x);
@@ -566,7 +564,7 @@ int Maze::moveTeleport(char symbol)
 {
   for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
   {
-    for (counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
     {
       if((tiles_.at(counter_y_).at(counter_x_)->getSymbol() == symbol) &&
         ((counter_y_ != player_.getY()) || (counter_x_ != player_.getX())))
@@ -585,9 +583,9 @@ int Maze::moveTeleport(char symbol)
 int Maze::deleteMaze()
 {
   //cout << "Delete" << endl;
-  for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
+  for(counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
   {
-    for (counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
     {
       delete(tiles_.at(counter_y_).at(counter_x_));
     }

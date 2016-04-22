@@ -20,8 +20,9 @@ class Maze;
 
 using std::string;
 using std::vector;
+using std::endl;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Game Class
 // Class to represent a whole game
 //

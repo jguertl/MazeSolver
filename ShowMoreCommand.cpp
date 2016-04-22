@@ -21,7 +21,9 @@ ShowMoreCommand::ShowMoreCommand(string name) : Command(name)
 int ShowMoreCommand::execute(Game& board, vector<string>& params)
 {
   if(board.isMazeLoaded() == false)
+  {
     throw NoMazeLoadedException();
-
+  }
+  
   return board.showExtendedMaze();
 }

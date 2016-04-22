@@ -16,26 +16,26 @@
 
 using std::string;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Custom No Maze Loaded Exception
 // class inform if a maze has been loaded
 //
 class NoMazeLoadedException : BaseException
 {
-private:
-  
-  //--------------------------------------------------------------------------
-  // Message to be shown in case of an exception
-  //
-  static const string NO_MAZE_LOADED_MESSAGE;
-  
-public:
-  
-  //--------------------------------------------------------------------------
-  // Constructor
-  // Constructs the exception and outputs the error message.
-  //
-  NoMazeLoadedException();
+  private:
+    
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string NO_MAZE_LOADED_MESSAGE;
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    // Constructs the exception and outputs the error message.
+    //
+    NoMazeLoadedException();
 };
 
 #endif //NOMAZELOADEDEXCEPTION_H_INCLUDED

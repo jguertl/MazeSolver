@@ -16,26 +16,26 @@
 
 using std::string;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Custom Unknown Command Exception
 // class inform about a unknown command
 //
 class UnknownCommandException : BaseException
 {
-private:
-  
-  //--------------------------------------------------------------------------
-  // Message to be shown in case of an exception
-  //
-  static const string UNKNOWN_COMMAND_MESSAGE;
-  
-public:
-  
-  //--------------------------------------------------------------------------
-  // Constructor
-  // Constructs the exception and outputs the error message.
-  //
-  UnknownCommandException();
+  private:
+    
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string UNKNOWN_COMMAND_MESSAGE;
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    // Constructs the exception and outputs the error message.
+    //
+    UnknownCommandException();
 };
 
 #endif //UNKNOWNCOMMANDEXCEPTION_INCLUDED

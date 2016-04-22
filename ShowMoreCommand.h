@@ -22,18 +22,18 @@ using std::vector;
 
 class ShowMoreCommand:Command
 {
-public:
+  public:
 
-  //--------------------------------------------------------------------------
-  // Constructor
-  ShowMoreCommand(string name);
+    //--------------------------------------------------------------------------
+    // Constructor
+    ShowMoreCommand(string name);
 
-  //--------------------------------------------------------------------------
-  // Executes the command.
-  // @param board The board where action should be performed on
-  // @param params Possible parameters needed for the execution
-  // @return Integer representing the success of the action
-  int execute(Game& board, vector<string>& params);
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param board The board where action should be performed on
+    // @param params Possible parameters needed for the execution
+    // @return Integer representing the success of the action
+    int execute(Game& board, vector<string>& params);
 };
 
 #endif //SHOWMORECOMMAND_H_INCLUDED

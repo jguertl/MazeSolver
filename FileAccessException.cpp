@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 
 const string FileAccessException::FILE_ACCESS_EXCEPTION =
-"[ERR] File could not be written.";
+  "[ERR] File could not be written.";
 
 //------------------------------------------------------------------------------
 FileAccessException::FileAccessException()

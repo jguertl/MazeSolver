@@ -16,26 +16,26 @@
 
 using std::string;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Custom File Open Exception
 // class inform about a file which cannot be openend
 //
 class InvalidPathException : BaseException
 {
-private:
-  
-  //--------------------------------------------------------------------------
-  // Message to be shown in case of an exception
-  //
-  static const string INVALID_PATH_EXCEPTION;
-  
-public:
-  
-  //--------------------------------------------------------------------------
-  // Constructor
-  // Constructs the exception and outputs the error message.
-  //
-  InvalidPathException();
+  private:
+    
+    //--------------------------------------------------------------------------
+    // Message to be shown in case of an exception
+    //
+    static const string INVALID_PATH_EXCEPTION;
+    
+  public:
+    
+    //--------------------------------------------------------------------------
+    // Constructor
+    // Constructs the exception and outputs the error message.
+    //
+    InvalidPathException();
 };
 
 #endif //INVALIDPATHEXCEPTION_H_INCLUDED
