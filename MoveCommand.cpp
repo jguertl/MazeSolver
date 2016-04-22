@@ -19,7 +19,7 @@ using std::endl;
 //------------------------------------------------------------------------------
 MoveCommand::MoveCommand(string name) : Command(name)
 {
-
+  
 }
 
 //------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ int MoveCommand::execute(Game& board, vector<string>& params)
   {
     throw NoMazeLoadedException();
   }
-
+  
   string direction = params.at(1);
   if((direction == Game::DIRECTION_MOVE_UP) || (direction == Game::DIRECTION_MOVE_DOWN) ||
      (direction == Game::DIRECTION_MOVE_LEFT) || (direction == Game::DIRECTION_MOVE_RIGHT))
