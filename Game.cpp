@@ -301,7 +301,6 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   }
 
   LoadCommand load_command(splitted_commands.at(0));
-
   if((load_command.execute(*this, splitted_commands)) == SUCCESS)
   {
     is_maze_loaded_=true;
@@ -362,7 +361,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   }
 
   MoveCommand move_command(splitted_commands.at(0));
-  if(move_command.execute(*this, splitted_commands)!=SUCCESS)
+  if(move_command.execute(*this, splitted_commands) != SUCCESS)
   {
     throw InvalidMoveException();
   }
@@ -397,12 +396,6 @@ void Game::saveCommandSelected(vector<string> splitted_commands)
     throw WrongParameterCountException();
   }
 
-  if(autoSaveEnabled_ == true)
-  {
-    SaveCommand save_command(splitted_commands.at(0));
-    save_command.execute(*this, splitted_commands);
-  }
-
-  ShowCommand show_command(splitted_commands.at(0));
-  show_command.execute(*this, splitted_commands);
+  SaveCommand save_command(splitted_commands.at(0));
+  save_command.execute(*this, splitted_commands);
 }
