@@ -175,49 +175,49 @@ bool Game::checkMoves(string moves)
 int Game::showMaze()
 {
   maze_.show();
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
 int Game::showExtendedMaze()
 {
   maze_.showMore();
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
 int Game::saveMaze(string filename)
 {
   maze_.save(filename);
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
 int Game::loadMaze(string filename)
 {
   maze_.load(filename);
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
 int Game::movePlayer(string direction)
 {
   maze_.movePlayer(direction);
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
 int Game::fastMovePlayer(string directions)
 {
   maze_.fastMovePlayer(directions);
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
 int Game::reset()
 {
   maze_.reset();
-  return 1;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
@@ -300,9 +300,9 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   }
   
   LoadCommand* load_command = new LoadCommand(splitted_commands.at(0));
-  if(load_command->execute(*this, splitted_commands)==SUCCESS)
+  if(load_command->execute(*this, splitted_commands) == SUCCESS)
   {
-    is_maze_loaded_=true;
+    is_maze_loaded_ = true;
   }
 }
 
