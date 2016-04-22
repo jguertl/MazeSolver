@@ -57,6 +57,7 @@ const char Game::DIRECTION_FAST_MOVE_UP = 'u';
 const char Game::DIRECTION_FAST_MOVE_DOWN = 'd';
 const char Game::DIRECTION_FAST_MOVE_RIGHT = 'r';
 const char Game::DIRECTION_FAST_MOVE_LEFT = 'l';
+const int Game::SUCCESS=0;
 
 //------------------------------------------------------------------------------
 Game::Game()
@@ -99,7 +100,7 @@ void Game::startGame()
     {
       letter = tolower(letter);
     }
-    
+
     try
     {
       if(command == Game::QUIT_COMMAND)
@@ -115,7 +116,10 @@ void Game::startGame()
           throw WrongParameterCountException();
 
         LoadCommand* load_command = new LoadCommand("Load");
-        load_command->execute(*this, splitted_commands);
+        if(load_command->execute(*this, splitted_commands)==SUCCESS)
+        {
+          is_maze_loaded_=true;
+        }
       }
       else if(command == Game::SHOW_COMMAND)
       {
@@ -152,7 +156,10 @@ void Game::startGame()
           throw WrongParameterCountException();
 
         MoveCommand* move_command = new MoveCommand("Move");
-        move_command->execute(*this, splitted_commands);
+        if(move_command->execute(*this, splitted_commands)!=SUCCESS)
+        {
+          throw InvalidMoveException();
+        }
       }
       else if(command == Game::FASTMOVE_COMMAND)
       {

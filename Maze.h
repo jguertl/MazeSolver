@@ -190,6 +190,32 @@ class Maze
     //
     static const char FIELD_TYPE_ONEWAY_RIGHT;
 
+
+    //--------------------------------------------------------------------------
+    // SUCCESS return value
+    //
+    static const int SUCCESS;
+
+    //--------------------------------------------------------------------------
+    // ERROR return value
+    //
+    static const int ERROR;
+
+    //--------------------------------------------------------------------------
+    // GAME_WON return value
+    //
+    static const int GAME_WON;
+
+    //--------------------------------------------------------------------------
+    // OUT_OF_STEPS return value
+    //
+    static const int OUT_OF_STEPS;
+
+    //--------------------------------------------------------------------------
+    // INVALID_MOVE return value
+    //
+    static const int INVALID_MOVE;
+
     //--------------------------------------------------------------------------
     // TODO
     //

@@ -18,6 +18,8 @@
 #include "FileAccessException.h"
 #include "InvalidFileException.h"
 #include "InvalidPathException.h"
+#include "NoMoreStepsException.h"
+#include "InvalidMoveException.h"
 
 using std::ofstream;
 using std::ifstream;
@@ -54,11 +56,15 @@ const char Maze::FILENAME_DEFINITION_NUMBER_MIN = '0';
 const char Maze::FILENAME_DEFINITION_NUMBER_MAX = '9';
 const char Maze::FILENAME_DEFINITION_DOT = '.';
 const char Maze::FILENAME_DEFINITION_SLASH = '/';
+const int Maze::GAME_WON = 1;
+const int Maze::SUCCESS = 0;
+const int Maze::ERROR = -1;
+const int Maze::OUT_OF_STEPS = -2;
+const int Maze::INVALID_MOVE = -3;
 
 //------------------------------------------------------------------------------
-Maze::Maze()
+Maze::Maze() : steps_(0)
 {
-  steps_ = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -339,11 +345,19 @@ void Maze::showMore()
 //------------------------------------------------------------------------------
 int Maze::movePlayer(string direction)
 {
+  // check if player is out of steps
+  if(steps_ <= 0 )
+  {
+    steps_ = 0;
+    //cout << "Game over" << endl;
+    return OUT_OF_STEPS;
+  }
+
   // check if move is in a valid direction
   if(player_.getTile()->move(direction) == false)
   {
     cout << "[ERR] Invalid move." << endl;
-    return -1;
+    return INVALID_MOVE;
   }
 
   if(direction.back()==FAST_MOVE_FLAG)
@@ -352,16 +366,16 @@ int Maze::movePlayer(string direction)
   }
   else
   {
-    if(player_.getTile()->getSymbol()=='x')
+    if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
     {
       cout << "Game is over." << endl;
-      return -2;
+      return GAME_WON;
     }
   }
 
   // delete Bonus Tile
-  if((player_.getTile()->getSymbol()>='a') &&
-     (player_.getTile()->getSymbol()<='e'))
+  if((player_.getTile()->getSymbol()>=FIELD_TYPE_BONUS_MIN) &&
+     (player_.getTile()->getSymbol()<=FIELD_TYPE_BONUS_MAX))
   {
     delete tiles_.at(player_.getY()).at(player_.getX());
     tiles_.at(player_.getY()).at(player_.getX()) = new Path(' ');
@@ -375,11 +389,11 @@ int Maze::movePlayer(string direction)
     {
       player_.setY(player_.getY() - 1);
       steps_--;
-      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_UP));
+      moves_+=Game::DIRECTION_FAST_MOVE_UP;
     }
     else
     {
-      return -1;
+      return INVALID_MOVE;
     }
   }
   else if(direction == Game::DIRECTION_MOVE_DOWN)
@@ -389,11 +403,11 @@ int Maze::movePlayer(string direction)
     {
       player_.setY(player_.getY() + 1);
       steps_--;
-      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_DOWN));
+      moves_+=Game::DIRECTION_FAST_MOVE_DOWN;
     }
     else
     {
-      return -1;
+      return INVALID_MOVE;
     }
   }
   else if(direction == Game::DIRECTION_MOVE_LEFT)
@@ -403,11 +417,11 @@ int Maze::movePlayer(string direction)
     {
       player_.setX(player_.getX() - 1);
       steps_--;
-      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_LEFT));
+      moves_+=Game::DIRECTION_FAST_MOVE_LEFT;
     }
     else
     {
-      return -1;
+      return INVALID_MOVE;
     }
   }
   else if(direction == Game::DIRECTION_MOVE_RIGHT)
@@ -417,11 +431,11 @@ int Maze::movePlayer(string direction)
     {
       player_.setX(player_.getX() + 1);
       steps_--;
-      moves_.append(string(1,Game::DIRECTION_FAST_MOVE_RIGHT));
+      moves_+=Game::DIRECTION_FAST_MOVE_RIGHT;
     }
     else
     {
-      return -1;
+      return INVALID_MOVE;
     }
   }
 
@@ -433,11 +447,11 @@ int Maze::movePlayer(string direction)
   {
     if(moveTeleport(player_.getTile()->getSymbol()) == 0)
     {
-      return 0;
+      return SUCCESS;
     }
     else
     {
-      return -1;
+      return INVALID_MOVE;
     }
   }
   // Player lands on Bonus tile
@@ -454,25 +468,39 @@ int Maze::movePlayer(string direction)
     steps_ = steps_- ((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + 1);
   }
 
-  if(player_.getTile()->getSymbol() == FIELD_TYPE_FINISH)
-  {
-    cout << OUTPUT_MAZE_SOLVED << endl;
-    return 1;
-  }
-
   if(steps_ <= 0 )
   {
     steps_ = 0;
-    cout << "Game over" << endl;
-    return -3;
+    //cout << "Game over" << endl;
+    return OUT_OF_STEPS;
   }
 
   // Player lands on Ice
   if((player_.getTile()->getSymbol()) == FIELD_TYPE_ICE)
   {
-    movePlayer(direction);
+    // Slide in the direction, if the landing tile is no Wall
+    if((direction == Game::DIRECTION_MOVE_UP) &&
+            (tiles_.at(player_.getY()-1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
+    {
+      movePlayer(direction);
+    }
+    else if((direction == Game::DIRECTION_MOVE_DOWN) &&
+            (tiles_.at(player_.getY()+1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
+    {
+      movePlayer(direction);
+    }
+    else if((direction == Game::DIRECTION_MOVE_LEFT) &&
+            (tiles_.at(player_.getY()).at(player_.getX() - 1)->getSymbol() != FIELD_TYPE_WALL))
+    {
+      movePlayer(direction);
+    }
+    else if((direction == Game::DIRECTION_MOVE_RIGHT) &&
+            (tiles_.at(player_.getY()).at(player_.getX() + 1)->getSymbol() != FIELD_TYPE_WALL))
+    {
+      movePlayer(direction);
+    }
   }
-  return 0;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
@@ -504,11 +532,12 @@ int Maze::fastMovePlayer(string directions)
     }
     else
     {
-      return_value=-1;
+      return_value=INVALID_MOVE;
     }
     counter_string++;
 
-    if(return_value!=0)
+    if((return_value!=SUCCESS) &&
+       (return_value!=GAME_WON))
     {
       //cout << "Append Test: " << (Game::DIRECTION_MOVE_RIGHT + Maze::FAST_MOVE_FLAG) << endl;
       //cout << "  Fastmove ERROR " << directions << "  Step: " << counter_string << endl;
@@ -516,15 +545,25 @@ int Maze::fastMovePlayer(string directions)
       load(SAVE_FILE_NAME);
       player_.setX(player_position_x);
       player_.setY(player_position_y);
-      moves_=moves_save;
+      moves_save=moves_;
       fastMovePlayer(moves_);
-      counter_string=directions.size();
-
-      return -1;
+      moves_=moves_save;
+      if(return_value==OUT_OF_STEPS)
+      {
+        throw NoMoreStepsException();
+      }
+      else if(return_value==INVALID_MOVE)
+      {
+        throw InvalidMoveException();
+      }
     }
   }
-  //cout << "  Fastmove Success" << endl;
-  return 0;
+  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+  {
+    cout << OUTPUT_MAZE_SOLVED << endl;
+    return GAME_WON;
+  }
+  return return_value;
 }
 
 //------------------------------------------------------------------------------

@@ -67,22 +67,6 @@ class Player
     virtual ~Player();
 
     //--------------------------------------------------------------------------
-    // Move Method
-    // TODO description
-    // @param direction Direction to move
-    // @return Returns result of the move operation.
-    //
-    void move(string direction);
-
-    //--------------------------------------------------------------------------
-    // Fastmove Method
-    // TODO description
-    // @param moves Directions
-    // @return Returns result of the move operation.
-    //
-    void fastMove(string moves);
-
-    //--------------------------------------------------------------------------
     // Setter tile_
     // TODO description
     // @param tile
