@@ -9,6 +9,8 @@
 //
 
 #include "Game.h"
+#include "SaveCommand.h"
+#include "MoveCommand.h"
 #include "UnknownCommandException.h"
 #include "WrongParameterCountException.h"
 #include "WrongParameterException.h"
@@ -22,11 +24,9 @@
 #include "FileAccessException.h"
 #include "LoadCommand.h"
 #include "ResetCommand.h"
-#include "MoveCommand.h"
 #include "FastMoveCommand.h"
 #include "ShowCommand.h"
 #include "ShowMoreCommand.h"
-#include "SaveCommand.h"
 #include "memory"
 #include <sstream>
 #include <iostream>
@@ -45,8 +45,8 @@ const string Game::SHOW_COMMAND = "show";
 const string Game::RESET_COMMAND = "reset";
 const string Game::MOVE_COMMAND = "move";
 const string Game::MORE_COMMAND = "more";
-const string Game::SAVE_COMMAND = "save";
 const string Game::FASTMOVE_COMMAND = "fastmove";
+const string Game::SAVE_COMMAND = "save";
 const string Game::PROMPT_TEXT = "sep> ";
 const string Game::QUIT_TEXT = "Bye!";
 const string Game::DIRECTION_MOVE_UP = "up";
@@ -86,6 +86,7 @@ void Game::startGame()
   {
     cout << Game::PROMPT_TEXT;
     getline(cin, line);
+
     if(line == "")
     {
       continue;
@@ -98,7 +99,7 @@ void Game::startGame()
     {
       letter = tolower(letter);
     }
-
+    
     try
     {
       if(command == Game::QUIT_COMMAND)

@@ -69,6 +69,12 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 void Maze::load(const string& path)
 {
+  if((path == SAVE_FILE_NAME))
+  {
+    cout << "Load Filename cannot be used" << endl;
+    return;
+  }
+
   ifstream file (path);
   string line;
   string moves_save;
@@ -152,9 +158,8 @@ void Maze::load(const string& path)
       }else if(buffer != '\n')
       {
         //cout << "Input File not valid  A" << endl;
-        throw InvalidFileException();
         deleteMaze();
-        return;
+        throw InvalidFileException();
       }
 
       counter_x_++;
@@ -166,17 +171,15 @@ void Maze::load(const string& path)
         if((size_check >= 0) && (size_check != buffer_vector.size()))
         {
           //cout << "Input File not valid  B" << endl;
-          throw InvalidFileException();
           deleteMaze();
-          return;
+          throw InvalidFileException();
         }
         if((buffer_vector.front()->getSymbol() != FIELD_TYPE_WALL) &&
            (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL))
         {
           //cout << "Input File not valid  C" << endl;
-          throw InvalidFileException();
           deleteMaze();
-          return;
+          throw InvalidFileException();
         }
 
         size_check = buffer_vector.size();
@@ -191,9 +194,8 @@ void Maze::load(const string& path)
       if(tiles_.front().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
         //cout << "Input File not valid  D" << endl;
-        throw InvalidFileException();
         deleteMaze();
-        return;
+        throw InvalidFileException();
       }
     }
     // Check if last line only contains Walls
@@ -202,9 +204,8 @@ void Maze::load(const string& path)
       if(tiles_.back().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
         //cout << "Input File not valid  E" << endl;
-        throw InvalidFileException();
         deleteMaze();
-        return;
+        throw InvalidFileException();
       }
     }
 
@@ -213,9 +214,8 @@ void Maze::load(const string& path)
     {
       //cout << "Start or Finish Error" << endl;
       file.close();
-      throw InvalidFileException();
       deleteMaze();
-      return;
+      throw InvalidFileException();
     }
 
     // Check all Teleports
@@ -229,8 +229,8 @@ void Maze::load(const string& path)
       {
         //cout << "Teleport Error More than Two" << endl;
         file.close();
-        throw InvalidFileException();
         deleteMaze();
+        throw InvalidFileException();
         return;
       }
       teleport_duplicate_check=buffer;
@@ -239,9 +239,8 @@ void Maze::load(const string& path)
       {
         //cout << "Teleport Error Single Symbol" << endl;
         file.close();
-        throw InvalidFileException();
         deleteMaze();
-        return;
+        throw InvalidFileException();
       }
       //cout << "Teleport Sorted: " << teleport_symbols.back() << endl;
       teleport_symbols.pop_back();
@@ -251,9 +250,8 @@ void Maze::load(const string& path)
     {
       //cout << "Teleport Error Single Symbol" << endl;
       file.close();
-      throw InvalidFileException();
       deleteMaze();
-      return;
+      throw InvalidFileException();
     }
 
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
@@ -284,7 +282,6 @@ void Maze::save(const string& path)
   if(outputfile.fail())
   {
     throw FileAccessException();
-    return;
   }
   if(path == SAVE_FILE_NAME)
   {
