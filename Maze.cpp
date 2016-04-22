@@ -72,6 +72,11 @@ Maze::Maze() : steps_(0)
 //------------------------------------------------------------------------------
 Maze::~Maze()
 {
+  // TODO PETER
+  // - vor und nach einem operator ein Leerzeichen (z.b. sstream << line)
+  // - kein Leerzeichen vor einer for-Schleife (z.b. for(int i....) )
+  // - Wenn du länger als 80 Zeichen bist, dann auf die nächste Zeile und genau
+  //   2 Leerzeilen einrücken
 }
 
 //------------------------------------------------------------------------------
@@ -284,8 +289,10 @@ int Maze::save(const string& path)
   {
     throw FileAccessException();
   }
+
   if(path == SAVE_FILE_NAME)
   {
+    //TODO PETER wird dann nur ein /n hineingeschrieben? Dann sollte garnichts geschrieben werden oder?
     outputfile << endl;
   }
   else
@@ -410,6 +417,7 @@ int Maze::movePlayer(string direction)
     }
     else
     {
+      //TODO PETER können wir hier nicht InvalidMoveException werfen statt das zurückzugeben?
       return INVALID_MOVE;
     }
   }
