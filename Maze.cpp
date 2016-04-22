@@ -263,7 +263,6 @@ int Maze::load(const string& path)
   }
   else
   {
-    cout << "Unable to open file";
     throw FileOpenException();
   }
   cout << "LoadMaze return SUCCESS" << endl;
