@@ -10,14 +10,7 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
-#include <iostream>
-#include <string>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Player Class
@@ -28,17 +21,17 @@ class Player
   private:
 
     //--------------------------------------------------------------------------
-    // TODO
+    // X coordinate
     //
     int x_;
 
     //--------------------------------------------------------------------------
-    // TODO
+    // Y coordinate
     //
     int y_;
 
     //--------------------------------------------------------------------------
-    // TODO
+    // Current tile
     //
     Tile* tile_;
 

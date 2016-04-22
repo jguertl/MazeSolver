@@ -20,7 +20,6 @@ Player::Player(int position_x, int position_y)
 {
   x_ = position_x;
   y_ = position_y;
-  std::cout << "Const. Player: " << position_x << "  " << position_y << std::endl;
 }
 
 //------------------------------------------------------------------------------

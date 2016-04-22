@@ -16,6 +16,8 @@
 #include "Player.h"
 #include "Maze.h"
 
+class Maze;
+
 using std::string;
 using std::vector;
 
@@ -23,7 +25,8 @@ using std::vector;
 // Game Class
 // Class to represent a whole game
 //
-class Game {
+class Game
+{
   private:
 
     //--------------------------------------------------------------------------
@@ -183,8 +186,14 @@ class Game {
     // @param splitted_command the command splitted by whitespace
     //
     void saveCommandSelected(vector<string> splitted_command);
-
-  public:
+  
+    //--------------------------------------------------------------------------
+    // No more steps method
+    // Gets called when no more steps are available
+    //
+    void handleNoMoreSteps();
+  
+public:
   
     //--------------------------------------------------------------------------
     // Move Direction "up"

@@ -11,14 +11,7 @@
 #ifndef ICE_H_INCLUDED
 #define ICE_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Ice Class
@@ -26,8 +19,6 @@ using std::endl;
 //
 class Ice : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

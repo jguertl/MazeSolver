@@ -35,23 +35,26 @@ OneWay::~OneWay()
 {
 }
 
-
 //------------------------------------------------------------------------------
 bool OneWay::move(string direction)
 {
-  if((getSymbol()=='<') && (direction.compare("left")==0))
+  if((getSymbol() == Game::DIRECTION_FAST_MOVE_RIGHT) &&
+    (direction == Game::DIRECTION_MOVE_RIGHT))
   {
     return true;
   }
-  else if((getSymbol()=='>') && (direction.compare("right")==0))
+  else if((getSymbol() == Game::DIRECTION_FAST_MOVE_LEFT) &&
+    (direction == Game::DIRECTION_MOVE_LEFT))
   {
     return true;
   }
-  else if((getSymbol()=='^') && (direction.compare("up")==0))
+  else if((getSymbol() == Game::DIRECTION_FAST_MOVE_UP) &&
+    (direction == Game::DIRECTION_MOVE_UP))
   {
     return true;
   }
-  else if((getSymbol()=='v') && (direction.compare("down")==0))
+  else if((getSymbol() == Game::DIRECTION_FAST_MOVE_DOWN) &&
+    (direction == Game::DIRECTION_MOVE_DOWN))
   {
     return true;
   }

@@ -11,22 +11,14 @@
 #ifndef WALL_H_INCLUDED
 #define WALL_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Wall Class
 // Class to represent a wall field which cannot be entered
 //
-class Wall : public Tile {
-  private:
-
+class Wall : public Tile
+{
   public:
 
     //--------------------------------------------------------------------------

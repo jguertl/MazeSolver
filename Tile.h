@@ -12,18 +12,15 @@
 #define TILE_H_INCLUDED
 
 #include <string>
-#include <iostream>
 
 using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Tile Class
 // Class to represent the base class for all tiles inside a maze
 //
-class Tile {
+class Tile
+{
   private:
 
     //--------------------------------------------------------------------------
@@ -56,7 +53,7 @@ class Tile {
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
-    virtual bool move(string direction)=0;
+    virtual bool move(string direction) = 0;
 
     //--------------------------------------------------------------------------
     // Setter

@@ -15,6 +15,7 @@
 #include <vector>
 #include "Command.h"
 #include "Game.h"
+#include "NoMazeLoadedException.h"
 
 using std::string;
 using std::vector;

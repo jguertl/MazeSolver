@@ -10,10 +10,6 @@
 
 #include <iostream>
 #include "ShowMoreCommand.h"
-#include "NoMazeLoadedException.h"
-
-using std::cout;
-using std::endl;
 
 //------------------------------------------------------------------------------
 ShowMoreCommand::ShowMoreCommand(string name) : Command(name)

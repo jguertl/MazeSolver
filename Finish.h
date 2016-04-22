@@ -11,14 +11,7 @@
 #ifndef FINISH_H_INCLUDED
 #define FINISH_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Finish Class
@@ -26,8 +19,6 @@ using std::endl;
 //
 class Finish : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

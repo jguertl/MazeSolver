@@ -11,14 +11,7 @@
 #ifndef START_H_INCLUDED
 #define START_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Start Class
@@ -26,8 +19,6 @@ using std::endl;
 //
 class Start : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

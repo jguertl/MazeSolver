@@ -21,18 +21,15 @@ Quicksand::Quicksand(char symbol)
   setSymbol(symbol);
 }
 
-
 //------------------------------------------------------------------------------
 Quicksand::Quicksand(const Quicksand& orig)
 {
 }
 
-
 //------------------------------------------------------------------------------
 Quicksand::~Quicksand()
 {
 }
-
 
 //------------------------------------------------------------------------------
 bool Quicksand::move(string direction)

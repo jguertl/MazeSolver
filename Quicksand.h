@@ -11,14 +11,7 @@
 #ifndef QUICKSAND_H_INCLUDED
 #define QUICKSAND_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Quicksand Class
@@ -26,8 +19,6 @@ using std::endl;
 //
 class Quicksand : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

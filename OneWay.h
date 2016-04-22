@@ -11,14 +11,8 @@
 #ifndef ONEWAY_H_INCLUDED
 #define ONEWAY_H_INCLUDED
 
-#include <string>
-#include <iostream>
+#include "Game.h"
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // OneWay Class
@@ -26,8 +20,6 @@ using std::endl;
 //
 class OneWay : public Tile
 {
-  private:
-
   public:
     //--------------------------------------------------------------------------
     // Constructor

@@ -161,7 +161,7 @@ void Game::startGame()
     }
     catch(NoMoreStepsException no_more_steps_exception)
     {
-      //Call reset
+      handleNoMoreSteps();
     }
   }
 }
@@ -279,6 +279,19 @@ string Game::toLowercase(string command)
     letter = tolower(letter);
   }
   return command;
+}
+
+//------------------------------------------------------------------------------
+void Game::handleNoMoreSteps()
+{
+  try
+  {
+    vector<string> reset_command = {RESET_COMMAND};
+    resetCommandSelected(reset_command);
+  }
+  catch(FileAccessException file_access_exception)
+  {
+  }
 }
 
 //------------------------------------------------------------------------------

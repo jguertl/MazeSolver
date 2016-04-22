@@ -11,14 +11,7 @@
 #ifndef TELEPORT_H_INCLUDED
 #define TELEPORT_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Teleport Class
@@ -27,8 +20,6 @@ using std::endl;
 //
 class Teleport : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

@@ -11,14 +11,7 @@
 #ifndef PATH_H_INCLUDED
 #define PATH_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Path Class
@@ -26,8 +19,6 @@ using std::endl;
 //
 class Path : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

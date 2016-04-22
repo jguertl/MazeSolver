@@ -11,14 +11,7 @@
 #ifndef BONUS_H_INCLUDED
 #define BONUS_H_INCLUDED
 
-#include <string>
-#include <iostream>
 #include "Tile.h"
-
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 
 //----------------------------------------------------------------------------
 // Bonus Class
@@ -26,8 +19,6 @@ using std::endl;
 //
 class Bonus : public Tile
 {
-  private:
-
   public:
 
     //--------------------------------------------------------------------------

@@ -75,7 +75,6 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 int Maze::load(const string& path)
 {
-  cout << "LOAD FILENAME: " << path << endl;
   ifstream file (path);
   string line;
   string moves_save;
@@ -265,7 +264,6 @@ int Maze::load(const string& path)
   {
     throw FileOpenException();
   }
-  cout << "LoadMaze return SUCCESS" << endl;
   return SUCCESS;
 }
 
