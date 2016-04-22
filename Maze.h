@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "Player.h"
+//#include "Player.h"
 #include "Tile.h"
 #include "Wall.h"
 #include "Path.h"
@@ -25,7 +25,7 @@
 #include "Quicksand.h"
 #include "Teleport.h"
 #include "OneWay.h"
-
+class Player;
 class Game;
 
 using std::string;
@@ -192,6 +192,16 @@ class Maze
 
 
     //--------------------------------------------------------------------------
+    // BONUS_OFFSET
+    //
+    static const int BONUS_OFFSET;
+
+    //--------------------------------------------------------------------------
+    // QUICKSAND_OFFSET
+    //
+    static const int QUICKSAND_OFFSET;
+
+    //--------------------------------------------------------------------------
     // SUCCESS return value
     //
     static const int SUCCESS;
@@ -234,12 +244,12 @@ class Maze
     //--------------------------------------------------------------------------
     // Current x Counter
     //
-    int counter_x_;
+    unsigned int counter_x_;
 
     //--------------------------------------------------------------------------
     // Current y Counter
     //
-    int counter_y_;
+    unsigned int counter_y_;
 
     //--------------------------------------------------------------------------
     // Player

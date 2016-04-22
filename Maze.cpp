@@ -12,8 +12,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include "Maze.h"
 #include "Game.h"
+#include "Maze.h"
 #include "FileOpenException.h"
 #include "FileAccessException.h"
 #include "InvalidFileException.h"
@@ -56,6 +56,8 @@ const char Maze::FILENAME_DEFINITION_NUMBER_MIN = '0';
 const char Maze::FILENAME_DEFINITION_NUMBER_MAX = '9';
 const char Maze::FILENAME_DEFINITION_DOT = '.';
 const char Maze::FILENAME_DEFINITION_SLASH = '/';
+const int Maze::BONUS_OFFSET = 1;
+const int Maze::QUICKSAND_OFFSET = 1;
 const int Maze::GAME_WON = 1;
 const int Maze::SUCCESS = 0;
 const int Maze::ERROR = -1;
@@ -382,8 +384,11 @@ int Maze::movePlayer(string direction)
     //cout << "Up" << endl;
     if(tiles_.at(player_.getY()-1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL)
     {
+      if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
+      {
+        steps_--;
+      }
       player_.setY(player_.getY() - 1);
-      steps_--;
       moves_+=Game::DIRECTION_FAST_MOVE_UP;
     }
     else
@@ -396,8 +401,11 @@ int Maze::movePlayer(string direction)
     //cout << "Down" << endl;
     if(tiles_.at(player_.getY()+1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL)
     {
+      if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
+      {
+        steps_--;
+      }
       player_.setY(player_.getY() + 1);
-      steps_--;
       moves_+=Game::DIRECTION_FAST_MOVE_DOWN;
     }
     else
@@ -410,8 +418,11 @@ int Maze::movePlayer(string direction)
     //cout << "Left" << endl;
     if(tiles_.at(player_.getY()).at(player_.getX() - 1)->getSymbol() != FIELD_TYPE_WALL)
     {
+      if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
+      {
+        steps_--;
+      }
       player_.setX(player_.getX() - 1);
-      steps_--;
       moves_+=Game::DIRECTION_FAST_MOVE_LEFT;
     }
     else
@@ -424,8 +435,11 @@ int Maze::movePlayer(string direction)
     //cout << "Right" << endl;
     if(tiles_.at(player_.getY()).at(player_.getX() + 1)->getSymbol() != FIELD_TYPE_WALL)
     {
+      if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_ICE)
+      {
+        steps_--;
+      }
       player_.setX(player_.getX() + 1);
-      steps_--;
       moves_+=Game::DIRECTION_FAST_MOVE_RIGHT;
     }
     else
@@ -440,7 +454,7 @@ int Maze::movePlayer(string direction)
   if((player_.getTile()->getSymbol()>=FIELD_TYPE_TELEPORT_MIN) &&
      (player_.getTile()->getSymbol()<=FIELD_TYPE_TELEPORT_MAX))
   {
-    if(moveTeleport(player_.getTile()->getSymbol()) == 0)
+    if(moveTeleport(player_.getTile()->getSymbol()) == SUCCESS)
     {
       return SUCCESS;
     }
@@ -453,14 +467,14 @@ int Maze::movePlayer(string direction)
   if((player_.getTile()->getSymbol()>=FIELD_TYPE_BONUS_MIN) &&
     (player_.getTile()->getSymbol()<=FIELD_TYPE_BONUS_MAX))
   {
-    steps_ = steps_+((player_.getTile()->getSymbol() - FIELD_TYPE_BONUS_MIN) + 1);
+    steps_ = steps_+((player_.getTile()->getSymbol() - FIELD_TYPE_BONUS_MIN) + BONUS_OFFSET);
   }
 
   // Player lands on Quicksand
   if((player_.getTile()->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
     (player_.getTile()->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
   {
-    steps_ = steps_- ((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + 1);
+    steps_ = steps_- ((player_.getTile()->getSymbol() - FIELD_TYPE_QUICKSAND_MIN) + QUICKSAND_OFFSET);
   }
 
   if(steps_ <= 0 )
@@ -480,7 +494,7 @@ int Maze::movePlayer(string direction)
       movePlayer(direction);
     }
     else if((direction == Game::DIRECTION_MOVE_DOWN) &&
-            (tiles_.at(player_.getY()+1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
+            (tiles_.at(player_.getY() + 1).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
     {
       movePlayer(direction);
     }

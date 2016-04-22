@@ -13,10 +13,9 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include "Player.h"
 #include "Maze.h"
-
-class Maze;
 
 using std::string;
 using std::vector;
@@ -130,7 +129,7 @@ class Game
     vector<string> splitString(string input, char delimiter);
 
   public:
-  
+
     //--------------------------------------------------------------------------
     // Lowercase method
     // Returns the current command transformed to lowercase
@@ -138,64 +137,64 @@ class Game
     // @return the lowercase command
     //
     string toLowercase(string command);
-  
+
     //--------------------------------------------------------------------------
     // Quit command method
     // Quit Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void quitCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Load command method
     // Load Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void loadCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Show command method
     // Show Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void showCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Reset command method
     // Reset Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void resetCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Move command method
     // Move Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void moveCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Fast Move command method
     // Fast Move Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void fastMoveCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Save command method
     // Save Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void saveCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // No more steps method
     // Gets called when no more steps are available
     //
     void handleNoMoreSteps();
-  
+
 public:
-  
+
     //--------------------------------------------------------------------------
     // Move Direction "up"
     //
