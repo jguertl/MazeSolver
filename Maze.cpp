@@ -266,9 +266,13 @@ void Maze::save(const string& path)
   //TODO PETER Hier musst du noch irgendwo 'throw FileAccessException()' werfen
   //Wenn das File nicht geöffnet oder beschrieben werden kann.
 
-
   ofstream outputfile;
   outputfile.open(path.c_str());
+  if(outputfile.fail())
+  {
+    throw FileAccessException();
+    return;
+  }
   if(path == SAVE_FILE_NAME)
   {
     outputfile << endl;

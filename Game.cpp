@@ -45,6 +45,7 @@ const string Game::SHOW_COMMAND = "show";
 const string Game::RESET_COMMAND = "reset";
 const string Game::MOVE_COMMAND = "move";
 const string Game::MORE_COMMAND = "more";
+const string Game::SAVE_COMMAND = "save";
 const string Game::FASTMOVE_COMMAND = "fastmove";
 const string Game::PROMPT_TEXT = "sep> ";
 const string Game::QUIT_TEXT = "Bye!";
@@ -80,7 +81,7 @@ void Game::startGame()
   string line;
   string command;
   running_ = true;
-  
+
   while(running_ == true)
   {
     cout << Game::PROMPT_TEXT;
@@ -97,7 +98,7 @@ void Game::startGame()
     {
       letter = tolower(letter);
     }
-    
+
     try
     {
       if(command == Game::QUIT_COMMAND)
@@ -226,6 +227,7 @@ int Game::showExtendedMaze()
 //------------------------------------------------------------------------------
 int Game::saveMaze(string filename)
 {
+  maze_.save(filename);
   return 1;
 }
 
@@ -239,19 +241,21 @@ int Game::loadMaze(string filename)
 //------------------------------------------------------------------------------
 int Game::movePlayer(string direction)
 {
+  maze_.movePlayer(direction);
   return 1;
 }
 
 //------------------------------------------------------------------------------
 int Game::fastMovePlayer(string directions)
 {
+  maze_.fastMovePlayer(directions);
   return 1;
 }
 
 //------------------------------------------------------------------------------
 int Game::reset()
 {
-  //maze.reset();
+  maze_.reset();
   return 1;
 }
 
