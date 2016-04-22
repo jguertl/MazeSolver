@@ -299,15 +299,13 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  cout << "LOAD COMMAND SELECTED" << endl;
-  LoadCommand* load_command = new LoadCommand(splitted_commands.at(0));
 
-  if((load_command->execute(*this, splitted_commands))==SUCCESS)
+  LoadCommand load_command(splitted_commands.at(0));
+
+  if((load_command.execute(*this, splitted_commands)) == SUCCESS)
   {
-    cout << "LOAD COMMAND SELECTED LOAD SUCCESS" << endl;
     is_maze_loaded_=true;
   }
-  cout << "LOAD COMMAND SELECTED END" << endl;
 }
 
 //------------------------------------------------------------------------------
@@ -320,15 +318,15 @@ void Game::showCommandSelected(vector<string> splitted_commands)
 
   if(splitted_commands.size() == 1)
   {
-    ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
-    show_command->execute(*this, splitted_commands);
+    ShowCommand show_command(splitted_commands.at(0));
+    show_command.execute(*this, splitted_commands);
   }
   else
   {
     if(splitted_commands.at(1) == Game::MORE_COMMAND)
     {
-      ShowMoreCommand* show_more_command = new ShowMoreCommand(splitted_commands.at(0));
-      show_more_command->execute(*this, splitted_commands);
+      ShowMoreCommand show_more_command(splitted_commands.at(0));
+      show_more_command.execute(*this, splitted_commands);
     }
     else
     {
@@ -345,13 +343,13 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
     throw WrongParameterCountException();
   }
 
-  ResetCommand* reset_command = new ResetCommand(splitted_commands.at(0));
-  reset_command->execute(*this, splitted_commands);
+  ResetCommand reset_command(splitted_commands.at(0));
+  reset_command.execute(*this, splitted_commands);
 
   if(autoSaveEnabled_ == true)
   {
-    SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
-    save_command->execute(*this, splitted_commands);
+    SaveCommand save_command(splitted_commands.at(0));
+    save_command.execute(*this, splitted_commands);
   }
 }
 
@@ -363,8 +361,8 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
     throw WrongParameterCountException();
   }
 
-  MoveCommand* move_command = new MoveCommand(splitted_commands.at(0));
-  if(move_command->execute(*this, splitted_commands)!=SUCCESS)
+  MoveCommand move_command(splitted_commands.at(0));
+  if(move_command.execute(*this, splitted_commands)!=SUCCESS)
   {
     throw InvalidMoveException();
   }
@@ -378,17 +376,17 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
     throw WrongParameterCountException();
   }
 
-  FastMoveCommand* fast_move_command = new FastMoveCommand(splitted_commands.at(0));
-  fast_move_command->execute(*this, splitted_commands);
+  FastMoveCommand fast_move_command(splitted_commands.at(0));
+  fast_move_command.execute(*this, splitted_commands);
 
   if(autoSaveEnabled_ == true)
   {
-    SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
-    save_command->execute(*this, splitted_commands);
+    SaveCommand save_command(splitted_commands.at(0));
+    save_command.execute(*this, splitted_commands);
   }
 
-  ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
-  show_command->execute(*this, splitted_commands);
+  ShowCommand show_command(splitted_commands.at(0));
+  show_command.execute(*this, splitted_commands);
 }
 
 //------------------------------------------------------------------------------
@@ -401,10 +399,10 @@ void Game::saveCommandSelected(vector<string> splitted_commands)
 
   if(autoSaveEnabled_ == true)
   {
-    SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
-    save_command->execute(*this, splitted_commands);
+    SaveCommand save_command(splitted_commands.at(0));
+    save_command.execute(*this, splitted_commands);
   }
 
-  ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
-  show_command->execute(*this, splitted_commands);
+  ShowCommand show_command(splitted_commands.at(0));
+  show_command.execute(*this, splitted_commands);
 }
