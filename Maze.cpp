@@ -73,14 +73,9 @@ Maze::~Maze()
 }
 
 //------------------------------------------------------------------------------
-void Maze::load(const string& path)
+int Maze::load(const string& path)
 {
-  if((path == SAVE_FILE_NAME))
-  {
-    cout << "Load Filename cannot be used" << endl;
-    return;
-  }
-
+  cout << "LOAD FILENAME: " << path << endl;
   ifstream file (path);
   string line;
   string moves_save;
@@ -237,7 +232,6 @@ void Maze::load(const string& path)
         file.close();
         deleteMaze();
         throw InvalidFileException();
-        return;
       }
       teleport_duplicate_check=buffer;
       teleport_symbols.pop_back();
@@ -272,16 +266,18 @@ void Maze::load(const string& path)
     cout << "Unable to open file";
     throw FileOpenException();
   }
+  cout << "LoadMaze return SUCCESS" << endl;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
-void Maze::reset()
+int Maze::reset()
 {
-  load(SAVE_FILE_NAME);
+  return(load(SAVE_FILE_NAME));
 }
 
 //------------------------------------------------------------------------------
-void Maze::save(const string& path)
+int Maze::save(const string& path)
 {
   ofstream outputfile;
   outputfile.open(path.c_str());
@@ -308,12 +304,12 @@ void Maze::save(const string& path)
     }
     outputfile << endl;
   }
-
   outputfile.close();
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
-void Maze::show()
+int Maze::show()
 {
   //cout << "Show" << endl;
   for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
@@ -331,15 +327,17 @@ void Maze::show()
     }
     cout << endl;
   }
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
-void Maze::showMore()
+int Maze::showMore()
 {
   //cout << "Show More" << endl;
   cout << Maze::OUTPUT_REMAINING_STEPS << steps_ << endl;
   cout << Maze::OUTPUT_MOVED_STEPS << moves_ << endl;
   show();
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
@@ -583,11 +581,11 @@ int Maze::moveTeleport(char symbol)
       }
     }
   }
-  return -1;
+  return ERROR;
 }
 
 //------------------------------------------------------------------------------
-void Maze::deleteMaze()
+int Maze::deleteMaze()
 {
   //cout << "Delete" << endl;
   for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
@@ -599,7 +597,7 @@ void Maze::deleteMaze()
     tiles_.at(counter_y_).clear();
   }
   tiles_.clear();
-
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------

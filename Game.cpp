@@ -25,6 +25,7 @@
 #include "NoMoreStepsException.h"
 #include "LoadCommand.h"
 #include "ResetCommand.h"
+#include "MoveCommand.h"
 #include "FastMoveCommand.h"
 #include "ShowCommand.h"
 #include "ShowMoreCommand.h"
@@ -57,7 +58,7 @@ const char Game::DIRECTION_FAST_MOVE_UP = 'u';
 const char Game::DIRECTION_FAST_MOVE_DOWN = 'd';
 const char Game::DIRECTION_FAST_MOVE_RIGHT = 'r';
 const char Game::DIRECTION_FAST_MOVE_LEFT = 'l';
-const int Game::SUCCESS=0;
+const int Game::SUCCESS = 0;
 
 //------------------------------------------------------------------------------
 Game::Game()
@@ -95,7 +96,7 @@ void Game::startGame()
     vector<string> splitted_commands = splitString(line, ' ');
     command = splitted_commands.at(0);
     toLowercase(command);
-    
+
     try
     {
       if(command == Game::QUIT_COMMAND)
@@ -298,12 +299,14 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  
+  cout << "LOAD COMMAND SELECTED" << endl;
   LoadCommand* load_command = new LoadCommand(splitted_commands.at(0));
-  if(load_command->execute(*this, splitted_commands)==SUCCESS)
+  if((load_command->execute(*this, splitted_commands))==SUCCESS)
   {
+    cout << "LOAD COMMAND SELECTED LOAD SUCCESS" << endl;
     is_maze_loaded_=true;
   }
+  cout << "LOAD COMMAND SELECTED END" << endl;
 }
 
 //------------------------------------------------------------------------------
@@ -313,7 +316,7 @@ void Game::showCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  
+
   if(splitted_commands.size() == 1)
   {
     ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
@@ -340,10 +343,10 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  
+
   ResetCommand* reset_command = new ResetCommand(splitted_commands.at(0));
   reset_command->execute(*this, splitted_commands);
-  
+
   if(autoSaveEnabled_ == true)
   {
     SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
@@ -358,7 +361,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  
+
   MoveCommand* move_command = new MoveCommand(splitted_commands.at(0));
   if(move_command->execute(*this, splitted_commands)!=SUCCESS)
   {
@@ -373,16 +376,16 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-    
+
   FastMoveCommand* fast_move_command = new FastMoveCommand(splitted_commands.at(0));
   fast_move_command->execute(*this, splitted_commands);
-  
+
   if(autoSaveEnabled_ == true)
   {
     SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
     save_command->execute(*this, splitted_commands);
   }
-  
+
   ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
   show_command->execute(*this, splitted_commands);
 }
@@ -394,13 +397,13 @@ void Game::saveCommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  
+
   if(autoSaveEnabled_ == true)
   {
     SaveCommand* save_command = new SaveCommand(splitted_commands.at(0));
     save_command->execute(*this, splitted_commands);
   }
-  
+
   ShowCommand* show_command = new ShowCommand(splitted_commands.at(0));
   show_command->execute(*this, splitted_commands);
 }

@@ -268,32 +268,32 @@ class Maze
     // TODO description
     // @param path file path to load
     //
-    void load(const string& path);
+    int load(const string& path);
 
     //--------------------------------------------------------------------------
     // Save Method
     // TODO description
     // @param path file path to save
     //
-    void save(const string& path);
+    int save(const string& path);
 
     //--------------------------------------------------------------------------
     // Delete Maze
     // TODO description
     //
-    void deleteMaze();
+    int deleteMaze();
 
     //--------------------------------------------------------------------------
     // Show Maze
     // TODO description
     //
-    void show();
+    int show();
 
     //--------------------------------------------------------------------------
     // Show More
     // TODO description
     //
-    void showMore();
+    int showMore();
 
     //--------------------------------------------------------------------------
     // Move Player
@@ -317,7 +317,7 @@ class Maze
     // Reset Method
     // TODO description
     //
-    void reset();
+    int reset();
 
     //--------------------------------------------------------------------------
     // Get Tile at Position
