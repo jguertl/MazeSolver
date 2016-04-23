@@ -379,11 +379,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   MoveCommand move_command(splitted_commands.at(0));
   maze_return_value = move_command.execute(*this, splitted_commands);
 
-  if(maze_return_value == Maze::GAME_WON)
-  {
-    cout << OUTPUT_MAZE_SOLVED << endl;
-  }
-  else if(maze_return_value != SUCCESS)
+  if(maze_return_value != SUCCESS && maze_return_value != Maze::GAME_WON)
   {
     throw InvalidMoveException();
   }
@@ -398,7 +394,12 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
 
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
-
+  
+  if(maze_return_value == Maze::GAME_WON)
+  {
+    cout << OUTPUT_MAZE_SOLVED << endl;
+  }
+  
 }
 
 //------------------------------------------------------------------------------
