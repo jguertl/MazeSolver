@@ -113,13 +113,7 @@ class Game
     // Variable representing the more command
     //
     static const string MORE_COMMAND;
-  
-  
-    //--------------------------------------------------------------------------
-    // output string naming the finished game
-    //
-    static const string OUTPUT_MAZE_SOLVED;
-  
+
     //--------------------------------------------------------------------------
     // SUCCESS value
     //

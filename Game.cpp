@@ -54,7 +54,6 @@ const string Game::DIRECTION_MOVE_UP = "up";
 const string Game::DIRECTION_MOVE_DOWN = "down";
 const string Game::DIRECTION_MOVE_RIGHT = "right";
 const string Game::DIRECTION_MOVE_LEFT = "left";
-const string Game::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 const char Game::ONE_WAY_UP = '^';
 const char Game::ONE_WAY_DOWN = 'v';
 const char Game::ONE_WAY_LEFT = '<';
@@ -216,7 +215,8 @@ int Game::movePlayer(string direction)
 //------------------------------------------------------------------------------
 int Game::fastMovePlayer(string directions)
 {
-  return maze_.fastMovePlayer(directions);
+  maze_.fastMovePlayer(directions);
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------
@@ -387,7 +387,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   {
     throw InvalidMoveException();
   }
-  
+
   if(autoSaveEnabled_ == true)
   {
     splitted_commands.pop_back();
@@ -395,7 +395,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
-  
+
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
 }
@@ -403,14 +403,14 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
 //------------------------------------------------------------------------------
 void Game::fastMoveCommandSelected(vector<string> splitted_commands)
 {
-  int maze_return_value;
   if(splitted_commands.size() != 2)
   {
     throw WrongParameterCountException();
   }
 
   FastMoveCommand fast_move_command(splitted_commands.at(0));
-  maze_return_value = fast_move_command.execute(*this, splitted_commands);
+
+  fast_move_command.execute(*this, splitted_commands);
 
   if(autoSaveEnabled_ == true)
   {
@@ -419,13 +419,9 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
-  
+
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
-  if(maze_return_value == Maze::GAME_WON)
-  {
-    cout << OUTPUT_MAZE_SOLVED << endl;
-  }
 }
 
 //------------------------------------------------------------------------------
