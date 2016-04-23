@@ -141,30 +141,39 @@ void Game::startGame()
     }
     catch(UnknownCommandException unknown_command_exception)
     {
+      continue;
     }
     catch(WrongParameterCountException wrong_parameter_count_exception)
     {
+      continue;
     }
     catch(WrongParameterException wrong_parameter_exception)
     {
+      continue;
     }
     catch(NoMazeLoadedException no_maze_loaded_exception)
     {
+      continue;
     }
     catch(FileOpenException file_open_exception)
     {
+      continue;
     }
     catch(InvalidFileException invalid_file_exception)
     {
+      continue;
     }
     catch(InvalidPathException invalid_path_exception)
     {
+      continue;
     }
     catch(FileAccessException file_access_exception)
     {
+      continue;
     }
     catch(InvalidMoveException invalid_move_exception)
     {
+      continue;
     }
     catch(NoMoreStepsException no_more_steps_exception)
     {
@@ -229,12 +238,15 @@ void Game::setInputFilename(string input_filename)
   }
   catch(FileOpenException file_open_exception)
   {
+    return;
   }
   catch(InvalidFileException invalid_file_exception)
   {
+    return;
   }
   catch(InvalidPathException invalid_path_exception)
   {
+    return;
   }
 }
 
@@ -289,9 +301,11 @@ void Game::handleNoMoreSteps()
   }
   catch(FileAccessException file_access_exception)
   {
+    return;
   }
   catch(NoMazeLoadedException no_maze_loaded)
   {
+    return;
   }
 }
 
