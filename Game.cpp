@@ -250,6 +250,14 @@ void Game::setInputFilename(string input_filename)
   {
     return;
   }
+  catch(FileAccessException file_access_exception)
+  {
+    return;
+  }
+  catch(NoMazeLoadedException no_maze_loaded)
+  {
+    return;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -335,14 +343,23 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   LoadCommand load_command(splitted_commands.at(0));
   maze_return_value = load_command.execute(*this, splitted_commands);
  
-  if(maze_return_value == SUCCESS)
+  if(maze_return_value == SUCCESS || maze_return_value == Maze::GAME_WON)
   {
     is_maze_loaded_ = true;
   }
   
+  ShowCommand show_command(splitted_commands.at(0));
+  show_command.execute(*this, splitted_commands);
+  
+  if(auto_save_enabled_ == true)
+  {
+    splitted_commands.push_back(output_filename_);
+    SaveCommand save_command(splitted_commands.at(0));
+    save_command.execute(*this, splitted_commands);
+  }
+  
   if(maze_return_value == Maze::GAME_WON)
   {
-    is_maze_loaded_ = true;
     cout << OUTPUT_MAZE_SOLVED << endl;
   }
 }
