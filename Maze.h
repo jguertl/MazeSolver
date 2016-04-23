@@ -226,6 +226,11 @@ class Maze
     static const int INVALID_PATH;
 
     //--------------------------------------------------------------------------
+    // Output string naming the finished game
+    //
+    static const string OUTPUT_MAZE_SOLVED;
+
+    //--------------------------------------------------------------------------
     // TODO
     //
     string moves_;
@@ -261,12 +266,12 @@ class Maze
     vector< vector<Tile*> > tiles_;
 
   public:
-  
+
     //--------------------------------------------------------------------------
     // GAME_WON return value
     //
     static const int GAME_WON;
-  
+
     //--------------------------------------------------------------------------
     // Constructor
     //

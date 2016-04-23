@@ -64,6 +64,7 @@ const int Maze::ERROR = -1;
 const int Maze::OUT_OF_STEPS = -2;
 const int Maze::INVALID_MOVE = -3;
 const int Maze::INVALID_PATH = -4;
+const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 
 //------------------------------------------------------------------------------
 Maze::Maze() : steps_(0)
@@ -297,7 +298,10 @@ int Maze::load(const string& path)
     file.close();
     save(SAVE_FILE_NAME);
     moves_save=moves_;
-    fastMovePlayer(moves_);
+    if(fastMovePlayer(moves_)==GAME_WON)
+    {
+      cout << OUTPUT_MAZE_SOLVED << endl;
+    }
     moves_=moves_save;
   }
   else
