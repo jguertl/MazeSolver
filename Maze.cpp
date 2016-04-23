@@ -29,7 +29,6 @@ using std::endl;
 
 const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
 const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
-const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 const string Maze::SAVE_FILE_NAME = "save_file.txt";
 const char Maze::FAST_MOVE_FLAG = 'f';
 const char Maze::ICE_MOVE_FLAG = 'i';
@@ -545,13 +544,12 @@ int Maze::fastMovePlayer(string directions)
   int player_position_x=player_.getX();
   int player_position_y=player_.getY();
   string moves_save=moves_;
-  unsigned int counter_string=0;
-  int return_value=0;
+  unsigned int counter_string = 0;
+  int return_value = 0;
 
-  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+  if(player_.getTile()->getSymbol() == FIELD_TYPE_FINISH)
   {
-    cout << "[ERR] No more steps possible." << endl;
-    return GAME_WON;
+    throw InvalidMoveException();
   }
   while(counter_string<directions.size())
   {
@@ -600,7 +598,6 @@ int Maze::fastMovePlayer(string directions)
   }
   if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
   {
-    cout << OUTPUT_MAZE_SOLVED << endl;
     return GAME_WON;
   }
   return return_value;
