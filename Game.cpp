@@ -296,6 +296,9 @@ void Game::handleNoMoreSteps()
   catch(FileAccessException file_access_exception)
   {
   }
+  catch(NoMazeLoadedException no_maze_loaded)
+  {
+  }
 }
 
 //------------------------------------------------------------------------------
