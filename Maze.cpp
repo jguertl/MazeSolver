@@ -109,6 +109,13 @@ int Maze::load(const string& path)
     sstream.str("");
     sstream.clear();
 
+    if((moves_.size() > steps_))
+    {
+      file.close();
+      deleteMaze();
+      throw InvalidFileException();
+    }
+
     while(file.get(buffer))
     {
       if(buffer == FIELD_TYPE_WALL)
@@ -183,6 +190,7 @@ int Maze::load(const string& path)
         if((size_check >= 0) && (size_check != (int)buffer_vector.size()))
         {
           //cout << "Input File not valid  B" << endl;
+          file.close();
           deleteMaze();
           throw InvalidFileException();
         }
@@ -190,6 +198,7 @@ int Maze::load(const string& path)
            (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL))
         {
           //cout << "Input File not valid  C" << endl;
+          file.close();
           deleteMaze();
           throw InvalidFileException();
         }
@@ -546,7 +555,7 @@ int Maze::fastMovePlayer(string directions)
   }
   while(counter_string<directions.size())
   {
-    cout << "Fast: " << directions.at(counter_string) << endl;
+    //cout << "Fast: " << directions.at(counter_string) << endl;
     if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_UP)
     {
       return_value=movePlayer(Game::DIRECTION_MOVE_UP + Maze::FAST_MOVE_FLAG);
