@@ -221,7 +221,7 @@ int Maze::load(const string& path)
           throw InvalidFileException();
         }
 
-        size_check = buffer_vector.size();
+        size_check = static_cast<int>(buffer_vector.size());
         buffer_vector.clear();
         counter_y_++;
         counter_x_=0;
@@ -674,9 +674,11 @@ int Maze::moveTeleport(char symbol)
 //------------------------------------------------------------------------------
 int Maze::deleteMaze()
 {
-  for(counter_y_ = tiles_.size()-1; counter_y_ >= 0; counter_y_--)
+  for(counter_y_ = static_cast<int>(tiles_.size())-1; counter_y_ >= 0;
+    counter_y_--)
   {
-    for(counter_x_ = tiles_.at(counter_y_).size()-1; counter_x_ >= 0; counter_x_--)
+    for(counter_x_ = static_cast<int>(tiles_.at(counter_y_).size())-1;
+      counter_x_ >= 0; counter_x_--)
     {
       delete(tiles_.at(counter_y_).at(counter_x_));
     }
