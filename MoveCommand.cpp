@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include "MoveCommand.h"
-#include "InvalidMoveException.h"
+#include "WrongParameterException.h"
 #include "NoMazeLoadedException.h"
 
 using std::cout;
@@ -25,21 +25,22 @@ MoveCommand::MoveCommand(string name) : Command(name)
 //------------------------------------------------------------------------------
 int MoveCommand::execute(Game& board, vector<string>& params)
 {
-  if(board.isMazeLoaded() == false)
-  {
-    throw NoMazeLoadedException();
-  }
-  
   string direction = params.at(1);
   if((direction == Game::DIRECTION_MOVE_UP) ||
     (direction == Game::DIRECTION_MOVE_DOWN) ||
     (direction == Game::DIRECTION_MOVE_LEFT) ||
     (direction == Game::DIRECTION_MOVE_RIGHT))
   {
+    if(board.isMazeLoaded() == false)
+    {
+      throw NoMazeLoadedException();
+    }
+    
     return board.movePlayer(direction);
   }
   else
   {
-    throw InvalidMoveException();
+    throw WrongParameterException();
   }
+
 }
