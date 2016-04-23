@@ -298,9 +298,9 @@ int Maze::load(const string& path)
     file.close();
     save(SAVE_FILE_NAME);
     moves_save=moves_;
-    if(fastMovePlayer(moves_)==GAME_WON)
+    if(fastMovePlayer(moves_) == GAME_WON)
     {
-      cout << OUTPUT_MAZE_SOLVED << endl;
+      return GAME_WON;
     }
     moves_=moves_save;
   }
@@ -592,8 +592,6 @@ int Maze::movePlayer(string direction)
 //------------------------------------------------------------------------------
 int Maze::fastMovePlayer(string directions)
 {
-  int player_position_x=player_.getX();
-  int player_position_y=player_.getY();
   string moves_save=moves_;
   unsigned int counter_string=0;
   int return_value=0;

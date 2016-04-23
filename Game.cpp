@@ -196,8 +196,7 @@ int Game::saveMaze(string filename)
 //------------------------------------------------------------------------------
 int Game::loadMaze(string filename)
 {
-  maze_.load(filename);
-  return SUCCESS;
+  return maze_.load(filename);
 }
 
 //------------------------------------------------------------------------------
@@ -309,15 +308,24 @@ void Game::quitCommandSelected(vector<string> splitted_commands)
 //------------------------------------------------------------------------------
 void Game::loadCommandSelected(vector<string> splitted_commands)
 {
+  int maze_return_value;
   if(splitted_commands.size() != 2)
   {
     throw WrongParameterCountException();
   }
 
   LoadCommand load_command(splitted_commands.at(0));
-  if((load_command.execute(*this, splitted_commands)) == SUCCESS)
+  maze_return_value = load_command.execute(*this, splitted_commands);
+ 
+  if(maze_return_value == SUCCESS)
   {
     is_maze_loaded_ = true;
+  }
+  
+  if(maze_return_value == Maze::GAME_WON)
+  {
+    is_maze_loaded_ = true;
+    cout << OUTPUT_MAZE_SOLVED << endl;
   }
 }
 
@@ -336,7 +344,7 @@ void Game::showCommandSelected(vector<string> splitted_commands)
   }
   else
   {
-    if(splitted_commands.at(1) == Game::MORE_COMMAND)
+    if(splitted_commands.at(1) == MORE_COMMAND)
     {
       ShowMoreCommand show_more_command(splitted_commands.at(0));
       show_more_command.execute(*this, splitted_commands);
