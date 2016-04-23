@@ -55,11 +55,6 @@ class Game
     string output_filename_;
 
     //--------------------------------------------------------------------------
-    // Variable which represents the input filename
-    //
-    string input_filename_;
-
-    //--------------------------------------------------------------------------
     // Variable which is true if a maze has been loaded
     //
     bool is_maze_loaded_;

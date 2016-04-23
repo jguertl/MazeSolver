@@ -231,10 +231,12 @@ int Game::reset()
 //------------------------------------------------------------------------------
 void Game::setInputFilename(string input_filename)
 {
-  input_filename_ = input_filename;
   try
   {
-    loadMaze(input_filename_);
+    vector<string> load_input;
+    load_input.push_back(LOAD_COMMAND);
+    load_input.push_back(input_filename);
+    loadCommandSelected(load_input);
   }
   catch(FileOpenException file_open_exception)
   {
@@ -317,6 +319,7 @@ void Game::quitCommandSelected(vector<string> splitted_commands)
     throw WrongParameterCountException();
   }
   running_ = false;
+  maze_.deleteMaze();
   cout << Game::QUIT_TEXT << endl;
 }
 
