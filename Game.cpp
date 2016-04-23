@@ -342,22 +342,22 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
 
   LoadCommand load_command(splitted_commands.at(0));
   maze_return_value = load_command.execute(*this, splitted_commands);
- 
+
   if(maze_return_value == SUCCESS || maze_return_value == Maze::GAME_WON)
   {
     is_maze_loaded_ = true;
   }
-  
+
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
-  
+
   if(auto_save_enabled_ == true)
   {
     splitted_commands.push_back(output_filename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
-  
+
   if(maze_return_value == Maze::GAME_WON)
   {
     cout << OUTPUT_MAZE_SOLVED << endl;
@@ -402,6 +402,9 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
   ResetCommand reset_command(splitted_commands.at(0));
   reset_command.execute(*this, splitted_commands);
 
+  ShowCommand show_command(splitted_commands.at(0));
+  show_command.execute(*this, splitted_commands);
+
   if(auto_save_enabled_ == true)
   {
     splitted_commands.push_back(output_filename_);
@@ -437,7 +440,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
 
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
-  
+
   if(maze_return_value == Maze::GAME_WON)
   {
     cout << OUTPUT_MAZE_SOLVED << endl;

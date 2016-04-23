@@ -554,11 +554,6 @@ int Maze::movePlayer(string direction)
   }
   player_.setTile(getTile(player_.getX(), player_.getY()));
 
-  if((fastmove==false) && (player_.getTile()->getSymbol()==FIELD_TYPE_FINISH))
-  {
-    return GAME_WON;
-  }
-
   // Player lands on Teleport tile
   if((player_.getTile()->getSymbol()>=FIELD_TYPE_TELEPORT_MIN) &&
      (player_.getTile()->getSymbol()<=FIELD_TYPE_TELEPORT_MAX))
@@ -585,7 +580,10 @@ int Maze::movePlayer(string direction)
   {
     movePlayer(direction+ICE_MOVE_FLAG);
   }
-
+  if((fastmove==false) && (player_.getTile()->getSymbol()==FIELD_TYPE_FINISH))
+  {
+    return GAME_WON;
+  }
   return SUCCESS;
 }
 
