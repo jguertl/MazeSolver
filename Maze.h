@@ -96,11 +96,6 @@ class Maze
     static const string OUTPUT_REMAINING_STEPS;
 
     //--------------------------------------------------------------------------
-    // output string naming the finished game
-    //
-    static const string OUTPUT_MAZE_SOLVED;
-
-    //--------------------------------------------------------------------------
     // name of the save-file for reset
     //
     static const string SAVE_FILE_NAME;
@@ -195,7 +190,6 @@ class Maze
     //
     static const char FIELD_TYPE_ONEWAY_RIGHT;
 
-
     //--------------------------------------------------------------------------
     // BONUS_OFFSET
     //
@@ -215,11 +209,6 @@ class Maze
     // ERROR return value
     //
     static const int ERROR;
-
-    //--------------------------------------------------------------------------
-    // GAME_WON return value
-    //
-    static const int GAME_WON;
 
     //--------------------------------------------------------------------------
     // OUT_OF_STEPS return value
@@ -272,7 +261,12 @@ class Maze
     vector< vector<Tile*> > tiles_;
 
   public:
-
+  
+    //--------------------------------------------------------------------------
+    // GAME_WON return value
+    //
+    static const int GAME_WON;
+  
     //--------------------------------------------------------------------------
     // Constructor
     //

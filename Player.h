@@ -61,28 +61,28 @@ class Player
 
     //--------------------------------------------------------------------------
     // Setter tile_
-    // TODO description
-    // @param tile
+    // Sets the current tile
+    // @param tile Tile to set
     //
     void setTile(Tile* tile);
 
     //--------------------------------------------------------------------------
     // Getter tile_
-    // TODO description
-    // @return tile
+    // returns the current tile
+    // @return tile Tile to return
     //
     Tile* getTile();
 
     //--------------------------------------------------------------------------
     // Setter x_
-    // TODO description
+    // Sets the x value
     // @param x new x value
     //
     void setX(int x);
 
     //--------------------------------------------------------------------------
     // Getter x_
-    // TODO description
+    // Returns the x value
     // @return x x-value
     //
     int getX();

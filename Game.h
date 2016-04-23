@@ -118,7 +118,12 @@ class Game
     // SUCCESS value
     //
     static const int SUCCESS;
-
+  
+    //--------------------------------------------------------------------------
+    // Output string naming the finished game
+    //
+    static const string OUTPUT_MAZE_SOLVED;
+  
     //--------------------------------------------------------------------------
     // Split String
     // Helper Method to split a string
