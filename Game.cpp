@@ -215,8 +215,7 @@ int Game::movePlayer(string direction)
 //------------------------------------------------------------------------------
 int Game::fastMovePlayer(string directions)
 {
-  maze_.fastMovePlayer(directions);
-  return SUCCESS;
+  return maze_.fastMovePlayer(directions);
 }
 
 //------------------------------------------------------------------------------
