@@ -99,7 +99,7 @@ void Game::startGame()
     }
     vector<string> splitted_commands = splitString(line, ' ');
     command = splitted_commands.at(0);
-    toLowercase(command);
+    command = toLowercase(command);
 
     try
     {
@@ -364,6 +364,7 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
 
   if(autoSaveEnabled_ == true)
   {
+    splitted_commands.push_back(outputFilename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
@@ -382,6 +383,17 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   {
     throw InvalidMoveException();
   }
+  
+  if(autoSaveEnabled_ == true)
+  {
+    splitted_commands.pop_back();
+    splitted_commands.push_back(outputFilename_);
+    SaveCommand save_command(splitted_commands.at(0));
+    save_command.execute(*this, splitted_commands);
+  }
+  
+  ShowCommand show_command(splitted_commands.at(0));
+  show_command.execute(*this, splitted_commands);
 }
 
 //------------------------------------------------------------------------------
@@ -397,10 +409,12 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
 
   if(autoSaveEnabled_ == true)
   {
+    splitted_commands.pop_back();
+    splitted_commands.push_back(outputFilename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
-
+  
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
 }

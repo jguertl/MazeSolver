@@ -55,7 +55,7 @@ class Game
     string outputFilename_;
 
     //--------------------------------------------------------------------------
-    // Variable which represents the output filename in case of a save
+    // Variable which represents the input filename
     //
     string inputFilename_;
 
