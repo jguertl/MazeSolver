@@ -37,7 +37,7 @@ class Game
     //--------------------------------------------------------------------------
     // Variable which indicates if auto save has been enabled
     //
-    bool autoSaveEnabled_;
+    bool auto_save_enabled_;
 
     //--------------------------------------------------------------------------
     // Variable which represents the current player
@@ -52,12 +52,12 @@ class Game
     //--------------------------------------------------------------------------
     // Variable which represents the output filename in case of a save
     //
-    string outputFilename_;
+    string output_filename_;
 
     //--------------------------------------------------------------------------
     // Variable which represents the input filename
     //
-    string inputFilename_;
+    string input_filename_;
 
     //--------------------------------------------------------------------------
     // Variable which is true if a maze has been loaded

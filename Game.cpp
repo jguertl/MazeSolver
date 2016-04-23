@@ -68,7 +68,8 @@ const int Game::SUCCESS = 0;
 //------------------------------------------------------------------------------
 Game::Game()
 {
-  autoSaveEnabled_ = false;
+  auto_save_enabled_ = false;
+  is_maze_loaded_ = false;
 }
 
 
@@ -221,10 +222,10 @@ int Game::reset()
 //------------------------------------------------------------------------------
 void Game::setInputFilename(string input_filename)
 {
-  inputFilename_ = input_filename;
+  input_filename_ = input_filename;
   try
   {
-    loadMaze(inputFilename_);
+    loadMaze(input_filename_);
   }
   catch(FileOpenException file_open_exception)
   {
@@ -240,8 +241,8 @@ void Game::setInputFilename(string input_filename)
 //------------------------------------------------------------------------------
 void Game::setOutputFilename(string output_filename)
 {
-  outputFilename_ = output_filename;
-  autoSaveEnabled_ = true;
+  output_filename_ = output_filename;
+  auto_save_enabled_ = true;
 }
 
 //------------------------------------------------------------------------------
@@ -367,9 +368,9 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
   ResetCommand reset_command(splitted_commands.at(0));
   reset_command.execute(*this, splitted_commands);
 
-  if(autoSaveEnabled_ == true)
+  if(auto_save_enabled_ == true)
   {
-    splitted_commands.push_back(outputFilename_);
+    splitted_commands.push_back(output_filename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
@@ -392,10 +393,10 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
     throw InvalidMoveException();
   }
 
-  if(autoSaveEnabled_ == true)
+  if(auto_save_enabled_ == true)
   {
     splitted_commands.pop_back();
-    splitted_commands.push_back(outputFilename_);
+    splitted_commands.push_back(output_filename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
@@ -421,10 +422,10 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
   FastMoveCommand fast_move_command(splitted_commands.at(0));
   maze_return_value = fast_move_command.execute(*this, splitted_commands);
 
-  if(autoSaveEnabled_ == true)
+  if(auto_save_enabled_ == true)
   {
     splitted_commands.pop_back();
-    splitted_commands.push_back(outputFilename_);
+    splitted_commands.push_back(output_filename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
