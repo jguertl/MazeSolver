@@ -19,7 +19,11 @@
 using std::string;
 using std::vector;
 
-class LoadCommand:Command
+//----------------------------------------------------------------------------
+// Load Command Class
+// Class which executes a load instruction
+//
+class LoadCommand : Command
 {
   public:
     

@@ -45,7 +45,7 @@ class Quicksand : public Tile
 
     //--------------------------------------------------------------------------
     // Move Method
-    // Checks if a postition move on this field is possible
+    // Checks if a position move on this field is possible
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //

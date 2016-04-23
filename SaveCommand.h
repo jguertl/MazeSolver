@@ -19,7 +19,11 @@
 using std::string;
 using std::vector;
 
-class SaveCommand:Command
+//----------------------------------------------------------------------------
+// Save Command Class
+// Class which executes a save instruction
+//
+class SaveCommand : Command
 {
   public:
 

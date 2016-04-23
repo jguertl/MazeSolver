@@ -30,5 +30,6 @@ int LoadCommand::execute(Game &board, vector<string> &params)
   {
     throw WrongParameterException();
   }
+
   return board.loadMaze(filename);
 }

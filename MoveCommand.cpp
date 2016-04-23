@@ -8,13 +8,9 @@
 //------------------------------------------------------------------------------
 //
 
-#include <iostream>
 #include "MoveCommand.h"
 #include "WrongParameterException.h"
 #include "NoMazeLoadedException.h"
-
-using std::cout;
-using std::endl;
 
 //------------------------------------------------------------------------------
 MoveCommand::MoveCommand(string name) : Command(name)

@@ -89,14 +89,14 @@ class Player
 
     //--------------------------------------------------------------------------
     // Setter y_
-    // TODO description
+    // Sets the y value
     // @param y new y value
     //
     void setY(int y);
 
     //--------------------------------------------------------------------------
     // Getter y_
-    // TODO description
+    // Returns the y value
     // @return y y-value
     //
     int getY();

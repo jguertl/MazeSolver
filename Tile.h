@@ -24,7 +24,7 @@ class Tile
   private:
 
     //--------------------------------------------------------------------------
-    // TODO
+    // The symbol which refers to this tile
     //
     char symbol_;
 
@@ -49,25 +49,23 @@ class Tile
 
     //--------------------------------------------------------------------------
     // Move Method
-    // TODO description
+    // Checks if a position move on this field is possible
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //
     virtual bool move(string direction) = 0;
 
     //--------------------------------------------------------------------------
-    // Setter
-    // TODO description
-    // @param
-    // @return Returns
+    // Setter Metho
+    // Sets the current symbol
+    // @param symbol THe given symbol as a char
     //
     void setSymbol(char symbol);
 
     //--------------------------------------------------------------------------
-    // Getter
-    // TODO description
-    // @param
-    // @return Returns
+    // Getter Method
+    // Gets the current symbol
+    // @return Returns the symbol as a char
     //
     char getSymbol();
 };

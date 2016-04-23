@@ -15,12 +15,15 @@
 #include <vector>
 #include "Command.h"
 #include "Game.h"
-#include "NoMazeLoadedException.h"
 
 using std::string;
 using std::vector;
 
-class ShowMoreCommand:Command
+//----------------------------------------------------------------------------
+// Show More Command Class
+// Class which executes a show more instruction
+//
+class ShowMoreCommand : Command
 {
   public:
 

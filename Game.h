@@ -284,24 +284,16 @@ public:
     void startGame();
 
     //--------------------------------------------------------------------------
-    // Check Method
-    // TODO description
-    // @param moves Moves to check
-    // @return Returns result of the check operation.
-    //
-    bool checkMoves(string moves);
-
-    //--------------------------------------------------------------------------
     // Show Method
     // Shows the current maze
-    // @return TODO
+    // @return the result of the executed command
     //
     int showMaze();
 
     //--------------------------------------------------------------------------
     // Show More Method
     // Shows the current maze with more infos
-    // @return TODO
+    // @return the result of the executed command
     //
     int showExtendedMaze();
 
@@ -309,7 +301,7 @@ public:
     // Save Method
     // Saves the current maze
     // @param filename Filename of the maze which should be save
-    // @return TODO
+    // @return the result of the executed command
     //
     int saveMaze(string filename);
 
@@ -317,7 +309,7 @@ public:
     // Load Method
     // Loads the current maze
     // @param filename Filename of the maze which should be loaded
-    // @return TODO
+    // @return the result of the executed command
     //
     int loadMaze(string filename);
 
@@ -325,7 +317,7 @@ public:
     // Move Method
     // Move the player in the given direction
     // @param direction Direction to move
-    // @return TODO
+    // @return the result of the executed command
     //
     int movePlayer(string direction);
 
@@ -333,14 +325,14 @@ public:
     // Fast Move Method
     // Move the player in the given direction
     // @param directions Directions to move
-    // @return TODO
+    // @return the result of the executed command
     //
     int fastMovePlayer(string directions);
 
     //--------------------------------------------------------------------------
     // Reset Method
     // Resets the game
-    // @return TODO
+    // @return the result of the executed command
     //
     int reset();
 

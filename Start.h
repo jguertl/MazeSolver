@@ -45,7 +45,7 @@ class Start : public Tile
 
     //--------------------------------------------------------------------------
     // Move Method
-    // TODO description
+    // Checks if a position move on this field is possible
     // @param direction Direction to move
     // @return Returns result of the move operation.
     //

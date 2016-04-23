@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "ShowMoreCommand.h"
+#include "NoMazeLoadedException.h"
 
 //------------------------------------------------------------------------------
 ShowMoreCommand::ShowMoreCommand(string name) : Command(name)

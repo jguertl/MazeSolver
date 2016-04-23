@@ -19,7 +19,11 @@
 using std::string;
 using std::vector;
 
-class FastMoveCommand:Command
+//----------------------------------------------------------------------------
+// Fast Move Command Class
+// Class which executes a fast move instruction
+//
+class FastMoveCommand : Command
 {
   public:
     

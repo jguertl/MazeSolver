@@ -19,7 +19,11 @@
 using std::string;
 using std::vector;
 
-class MoveCommand:Command
+//----------------------------------------------------------------------------
+// Move Command Class
+// Class which executes a move instruction
+//
+class MoveCommand : Command
 {
   public:
 

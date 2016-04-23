@@ -19,7 +19,11 @@
 using std::string;
 using std::vector;
 
-class ResetCommand:Command
+//----------------------------------------------------------------------------
+// Rest Command Class
+// Class which executes a reset instruction
+//
+class ResetCommand : Command
 {
   public:
     

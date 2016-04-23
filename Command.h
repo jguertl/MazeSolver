@@ -16,6 +16,10 @@
 
 class Game;
 
+//----------------------------------------------------------------------------
+// Command Class
+// The base class for all executed Commands
+//
 class Command
 {
   private:
