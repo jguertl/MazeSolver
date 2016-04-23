@@ -25,11 +25,6 @@ FastMoveCommand::FastMoveCommand(string name) : Command(name)
 //------------------------------------------------------------------------------
 int FastMoveCommand::execute(Game& board, vector<string>& params)
 {
-  if(board.isMazeLoaded() == false)
-  {
-    throw NoMazeLoadedException();
-  }
-
   string directions = params.at(1);
   for(char& single_direction : directions)
   {
@@ -41,5 +36,11 @@ int FastMoveCommand::execute(Game& board, vector<string>& params)
       throw WrongParameterException();
     }
   }
+  
+  if(board.isMazeLoaded() == false)
+  {
+    throw NoMazeLoadedException();
+  }
+  
   return board.fastMovePlayer(directions);
 }

@@ -208,8 +208,7 @@ int Game::loadMaze(string filename)
 //------------------------------------------------------------------------------
 int Game::movePlayer(string direction)
 {
-  maze_.movePlayer(direction);
-  return SUCCESS;
+  return maze_.movePlayer(direction);
 }
 
 //------------------------------------------------------------------------------
@@ -324,7 +323,7 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   LoadCommand load_command(splitted_commands.at(0));
   if((load_command.execute(*this, splitted_commands)) == SUCCESS)
   {
-    is_maze_loaded_=true;
+    is_maze_loaded_ = true;
   }
 }
 
@@ -377,13 +376,15 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
 //------------------------------------------------------------------------------
 void Game::moveCommandSelected(vector<string> splitted_commands)
 {
-  if(splitted_commands.size() > 2)
+  int maze_return_value;
+  if(splitted_commands.size() != 2)
   {
     throw WrongParameterCountException();
   }
 
   MoveCommand move_command(splitted_commands.at(0));
-  if(move_command.execute(*this, splitted_commands) != SUCCESS)
+  maze_return_value = move_command.execute(*this, splitted_commands);
+  if(maze_return_value != SUCCESS)
   {
     throw InvalidMoveException();
   }
@@ -398,6 +399,11 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
 
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
+  
+  if(maze_return_value == Maze::GAME_WON)
+  {
+    cout << OUTPUT_MAZE_SOLVED << endl;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -422,6 +428,11 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
 
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
+  
+  if(maze_return_value == Maze::GAME_WON)
+  {
+    cout << OUTPUT_MAZE_SOLVED << endl;
+  }
 }
 
 //------------------------------------------------------------------------------
