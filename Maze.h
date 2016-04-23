@@ -238,22 +238,22 @@ class Maze
     //--------------------------------------------------------------------------
     // Current amount of steps
     //
-    unsigned int steps_;
+    int steps_;
 
     //--------------------------------------------------------------------------
     // Original amount of steps
     //
-    unsigned int original_steps_;
+    int original_steps_;
 
     //--------------------------------------------------------------------------
     // Current x Counter
     //
-    unsigned int counter_x_;
+    int counter_x_;
 
     //--------------------------------------------------------------------------
     // Current y Counter
     //
-    unsigned int counter_y_;
+    int counter_y_;
 
     //--------------------------------------------------------------------------
     // Player
@@ -355,7 +355,7 @@ class Maze
     // TODO description
     // @return x x-value
     //
-    unsigned int getPlayerX();
+    int getPlayerX();
 
     //--------------------------------------------------------------------------
     // Setter Player x
@@ -369,7 +369,7 @@ class Maze
     // TODO description
     // @return y y-value
     //
-    unsigned int getPlayerY();
+    int getPlayerY();
 
     //--------------------------------------------------------------------------
     // Setter Player y

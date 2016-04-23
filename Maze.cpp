@@ -699,7 +699,7 @@ Player* Maze::getPlayer()
 }
 
 //------------------------------------------------------------------------------
-unsigned int Maze::getPlayerX()
+int Maze::getPlayerX()
 {
   return player_.getX();
 }
@@ -711,7 +711,7 @@ void Maze::setPlayerX(int x)
 }
 
 //------------------------------------------------------------------------------
-unsigned int Maze::getPlayerY()
+int Maze::getPlayerY()
 {
   return player_.getY();
 }
