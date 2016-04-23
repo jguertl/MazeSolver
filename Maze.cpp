@@ -110,7 +110,7 @@ int Maze::load(const string& path)
     sstream.clear();
 
     // Check if steps are valid
-    if((moves_.size() > steps_))
+    if(static_cast<int>(moves_.size()) > steps_)
     {
       file.close();
       deleteMaze();
@@ -118,7 +118,7 @@ int Maze::load(const string& path)
     }
 
     // Check if moves are valid
-    while(counter_x_ < moves_.size())
+    while(counter_x_ < static_cast<int>(moves_.size()))
     {
       if((moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_UP) &&
          (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_DOWN) &&
@@ -228,7 +228,7 @@ int Maze::load(const string& path)
       }
     }
     // Check if first line only contains Walls
-    for(counter_x_=0; counter_x_<tiles_.front().size(); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.front().size()); counter_x_++)
     {
       if(tiles_.front().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
@@ -239,7 +239,7 @@ int Maze::load(const string& path)
       }
     }
     // Check if last line only contains Walls
-    for(counter_x_=0; counter_x_<tiles_.back().size(); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.back().size()); counter_x_++)
     {
       if(tiles_.back().at(counter_x_)->getSymbol() != FIELD_TYPE_WALL)
       {
@@ -338,9 +338,9 @@ int Maze::save(const string& path)
 
   outputfile << original_steps_ << endl;
 
-  for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
+  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size()); counter_y_++)
   {
-    for (counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
+    for (counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); counter_x_++)
     {
       outputfile << tiles_.at(counter_y_).at(counter_x_)->getSymbol();
     }
@@ -354,9 +354,9 @@ int Maze::save(const string& path)
 int Maze::show()
 {
   //cout << "Show" << endl;
-  for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
+  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size()); counter_y_++)
   {
-    for (counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
+    for (counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); counter_x_++)
     {
       if((counter_y_ == player_.getY()) && (counter_x_ == player_.getX()))
       {
@@ -654,9 +654,9 @@ int Maze::fastMovePlayer(string directions)
 //------------------------------------------------------------------------------
 int Maze::moveTeleport(char symbol)
 {
-  for (counter_y_ = 0; counter_y_ < tiles_.size(); counter_y_++)
+  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size()); counter_y_++)
   {
-    for(counter_x_ = 0; counter_x_ < tiles_.at(counter_y_).size(); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); counter_x_++)
     {
       if((tiles_.at(counter_y_).at(counter_x_)->getSymbol() == symbol) &&
         ((counter_y_ != player_.getY()) || (counter_x_ != player_.getX())))
