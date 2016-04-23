@@ -399,7 +399,6 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   {
     cout << OUTPUT_MAZE_SOLVED << endl;
   }
-  
 }
 
 //------------------------------------------------------------------------------

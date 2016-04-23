@@ -110,7 +110,7 @@ class Game
     static const string FASTMOVE_COMMAND;
 
     //--------------------------------------------------------------------------
-    // Variable representing the more command
+    // Variable representing the show more command
     //
     static const string MORE_COMMAND;
 
@@ -132,8 +132,12 @@ class Game
     // @return return a vector with the splitted string
     //
     vector<string> splitString(string input, char delimiter);
-
-  public:
+  
+    //--------------------------------------------------------------------------
+    // No more steps method
+    // Gets called when no more steps are available
+    //
+    void handleNoMoreSteps();
 
     //--------------------------------------------------------------------------
     // Lowercase method
@@ -191,12 +195,6 @@ class Game
     // @param splitted_command the command splitted by whitespace
     //
     void saveCommandSelected(vector<string> splitted_command);
-
-    //--------------------------------------------------------------------------
-    // No more steps method
-    // Gets called when no more steps are available
-    //
-    void handleNoMoreSteps();
 
 public:
 
