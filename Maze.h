@@ -13,23 +13,11 @@
 
 #include <string>
 #include <vector>
-#include <algorithm>
-#include "Tile.h"
-#include "Wall.h"
-#include "Path.h"
-#include "Ice.h"
-#include "Start.h"
-#include "Finish.h"
-#include "Bonus.h"
-#include "Quicksand.h"
-#include "Teleport.h"
-#include "OneWay.h"
 class Player;
 class Game;
 
 using std::string;
 using std::vector;
-using std::sort;
 
 //------------------------------------------------------------------------------
 // Style Maze
@@ -200,11 +188,6 @@ class Maze
     static const int QUICKSAND_OFFSET;
 
     //--------------------------------------------------------------------------
-    // SUCCESS return value
-    //
-    static const int SUCCESS;
-
-    //--------------------------------------------------------------------------
     // ERROR return value
     //
     static const int ERROR;
@@ -257,7 +240,7 @@ class Maze
     //--------------------------------------------------------------------------
     // Collection of tiles
     //
-    vector< vector<Tile*> > tiles_;
+    vector<vector<Tile*>> tiles_;
 
   public:
 
@@ -265,6 +248,11 @@ class Maze
     // GAME_WON return value
     //
     static const int GAME_WON;
+
+    //--------------------------------------------------------------------------
+    // SUCCESS return value
+    //
+    static const int SUCCESS;
 
     //--------------------------------------------------------------------------
     // Constructor

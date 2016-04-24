@@ -12,8 +12,19 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include "Game.h"
 #include "Maze.h"
+#include "Tile.h"
+#include "Wall.h"
+#include "Path.h"
+#include "Ice.h"
+#include "Start.h"
+#include "Finish.h"
+#include "Bonus.h"
+#include "Quicksand.h"
+#include "Teleport.h"
+#include "OneWay.h"
 #include "FileOpenException.h"
 #include "FileAccessException.h"
 #include "InvalidFileException.h"
@@ -26,6 +37,7 @@ using std::ifstream;
 using std::string;
 using std::cout;
 using std::endl;
+using std::sort;
 
 const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
 const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
@@ -177,7 +189,6 @@ int Maze::load(const string& path)
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
         teleport_symbols.push_back(buffer);
-        //cout << "Teleport Unsorted: " << buffer << endl;
       }
       else if((buffer == FIELD_TYPE_ONEWAY_LEFT) ||
         (buffer == FIELD_TYPE_ONEWAY_RIGHT) ||

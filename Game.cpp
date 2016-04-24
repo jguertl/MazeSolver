@@ -29,16 +29,14 @@
 #include "FastMoveCommand.h"
 #include "ShowCommand.h"
 #include "ShowMoreCommand.h"
-#include "memory"
 #include <sstream>
 #include <iostream>
 
 using std::cout;
-using std::shared_ptr;
-using std::make_shared;
 using std::cin;
 using std::stringstream;
 using std::tolower;
+using std::endl;
 
 const string Game::QUIT_COMMAND = "quit";
 const string Game::LOAD_COMMAND = "load";
@@ -63,7 +61,6 @@ const char Game::DIRECTION_FAST_MOVE_UP = 'u';
 const char Game::DIRECTION_FAST_MOVE_DOWN = 'd';
 const char Game::DIRECTION_FAST_MOVE_RIGHT = 'r';
 const char Game::DIRECTION_FAST_MOVE_LEFT = 'l';
-const int Game::SUCCESS = 0;
 
 //------------------------------------------------------------------------------
 Game::Game()
@@ -185,22 +182,19 @@ void Game::startGame()
 //------------------------------------------------------------------------------
 int Game::showMaze()
 {
-  maze_.show();
-  return SUCCESS;
+  return maze_.show();
 }
 
 //------------------------------------------------------------------------------
 int Game::showExtendedMaze()
 {
-  maze_.showMore();
-  return SUCCESS;
+  return maze_.showMore();
 }
 
 //------------------------------------------------------------------------------
 int Game::saveMaze(string filename)
 {
-  maze_.save(filename);
-  return SUCCESS;
+  return maze_.save(filename);
 }
 
 //------------------------------------------------------------------------------
@@ -224,8 +218,7 @@ int Game::fastMovePlayer(string directions)
 //------------------------------------------------------------------------------
 int Game::reset()
 {
-  maze_.reset();
-  return SUCCESS;
+  return maze_.reset();
 }
 
 //------------------------------------------------------------------------------
@@ -343,7 +336,7 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   LoadCommand load_command(splitted_commands.at(0));
   maze_return_value = load_command.execute(*this, splitted_commands);
 
-  if(maze_return_value == SUCCESS || maze_return_value == Maze::GAME_WON)
+  if(maze_return_value == Maze::SUCCESS || maze_return_value == Maze::GAME_WON)
   {
     is_maze_loaded_ = true;
   }
@@ -423,7 +416,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   MoveCommand move_command(splitted_commands.at(0));
   maze_return_value = move_command.execute(*this, splitted_commands);
 
-  if(maze_return_value != SUCCESS && maze_return_value != Maze::GAME_WON)
+  if(maze_return_value != Maze::SUCCESS && maze_return_value != Maze::GAME_WON)
   {
     throw InvalidMoveException();
   }

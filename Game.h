@@ -12,14 +12,12 @@
 #define GAME_H_INCLUDED
 
 #include <string>
-#include <iostream>
 #include <vector>
 #include "Player.h"
 #include "Maze.h"
 
 using std::string;
 using std::vector;
-using std::endl;
 
 //------------------------------------------------------------------------------
 // Game Class
@@ -108,11 +106,6 @@ class Game
     // Variable representing the show more command
     //
     static const string MORE_COMMAND;
-
-    //--------------------------------------------------------------------------
-    // SUCCESS value
-    //
-    static const int SUCCESS;
   
     //--------------------------------------------------------------------------
     // Output string naming the finished game
