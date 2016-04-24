@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-//#include "Player.h"
 #include "Tile.h"
 #include "Wall.h"
 #include "Path.h"
@@ -101,12 +100,12 @@ class Maze
     static const string SAVE_FILE_NAME;
 
     //--------------------------------------------------------------------------
-    // field of type player
+    // flag for fastmove identification in movePlayer
     //
     static const char FAST_MOVE_FLAG;
 
     //--------------------------------------------------------------------------
-    // field of type player
+    // flag for ice identification in movePlayer
     //
     static const char ICE_MOVE_FLAG;
 
@@ -226,7 +225,7 @@ class Maze
     static const int INVALID_PATH;
 
     //--------------------------------------------------------------------------
-    // TODO
+    // current moves in fastmove-notation
     //
     string moves_;
 
@@ -279,109 +278,127 @@ class Maze
 
     //--------------------------------------------------------------------------
     // Load Method
-    // TODO description
+    // Loads the file path, checks if it is valid and calls fastmove.
     // @param path file path to load
+    // @return int return value eg.: SUCCESS
     //
     int load(const string& path);
 
     //--------------------------------------------------------------------------
     // Save Method
-    // TODO description
+    // Saves the current maze to a file.
     // @param path file path to save
+    // @return int return value eg.: SUCCESS
     //
     int save(const string& path);
 
     //--------------------------------------------------------------------------
     // Delete Maze
-    // TODO description
+    // Deletes all Tiles in the Maze and clears the vector tiles_ .
+    // @return int return value eg.: SUCCESS
     //
     int deleteMaze();
 
     //--------------------------------------------------------------------------
     // Show Maze
-    // TODO description
+    // Prints the current Maze to Stdout
+    // @return int SUCCESS
     //
     int show();
 
     //--------------------------------------------------------------------------
     // Show More
-    // TODO description
+    // Prints the current maze, the remaining steps and all past valid moves.
+    // @return SUCCESS
     //
     int showMore();
 
     //--------------------------------------------------------------------------
     // Move Player
-    // TODO description
+    // Moves the Player in the direction on the Maze
+    // @param direction direction to move
+    // @return int return value eg.: SUCCESS, INVALID_MOVE
     //
     int movePlayer(string direction);
 
     //--------------------------------------------------------------------------
     // Move Player Fast
-    // TODO description
+    // Moves the Player a few steps in one command.
+    // @param directions directions in fastmove-notation
+    // @return int return value eg.: SUCCESS, INVALID_MOVE
     //
     int fastMovePlayer(string directions);
 
     //--------------------------------------------------------------------------
-    // Move Player Fast
-    // TODO description
+    // Move Player Fast Load
+    // Moves the Player a few steps in one command and is only called in load.
+    // @param directions directions in fastmove-notation
+    // @return int return value eg.: SUCCESS, INVALID_MOVE
     //
     int fastMovePlayerLoad(string directions);
 
     //--------------------------------------------------------------------------
     // Move to the corresponding Teleport Tile
-    // TODO description
+    // Moves the Player to the corresponding teleport tile.
+    // @param symbol the character to which the Player should be teleported
+    // @return int SUCCESS or ERROR
     //
     int moveTeleport(char symbol);
 
     //--------------------------------------------------------------------------
     // Reset Method
-    // TODO description
+    // Loads the file again and the moves from the original file are reset.
+    // @return int return value eg.: SUCCESS, ERROR
     //
     int reset();
 
     //--------------------------------------------------------------------------
     // Get Tile at Position
-    // TODO description
+    // Get the Tile at a specific position in Maze.
+    // @param x x-position of the Tile
+    // @param y y-position of the Tile
+    // @return Tile* pointer to the Tile
     //
     Tile* getTile(int x, int y);
 
     //--------------------------------------------------------------------------
     // Get Player
-    // TODO description
+    // Getter for the player
+    // @return Player* pointer to the player
     //
     Player* getPlayer();
 
     //--------------------------------------------------------------------------
     // Getter Player x
-    // TODO description
-    // @return x x-value
+    // Getter for the x-value of the player
+    // @return int x-value
     //
     int getPlayerX();
 
     //--------------------------------------------------------------------------
     // Setter Player x
-    // TODO description
+    // Setter for the x-value of the player
     // @param x x-value
     //
     void setPlayerX(int x);
 
     //--------------------------------------------------------------------------
     // Getter Player y
-    // TODO description
-    // @return y y-value
+    // Getter for the y-value of the player
+    // @return int y-value
     //
     int getPlayerY();
 
     //--------------------------------------------------------------------------
     // Setter Player y
-    // TODO description
+    // Setter for the y-value of the player
     // @param y y-value
     //
     void setPlayerY(int y);
 
     //--------------------------------------------------------------------------
     // Filename Validation method
-    // Checks wheter a filename is valid or not
+    // Checks wether a filename is valid or not
     // @param filename the given filename
     //
     static bool isFilenameValid(string filename);

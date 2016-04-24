@@ -47,7 +47,7 @@ class Path : public Tile
     // Move Method
     // Checks if a position move on this field is possible
     // @param direction Direction to move
-    // @return Returns result of the move operation.
+    // @return bool Returns result of the move operation.
     //
     virtual bool move(string direction) override;
 };

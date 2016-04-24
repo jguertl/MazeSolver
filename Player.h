@@ -69,7 +69,7 @@ class Player
     //--------------------------------------------------------------------------
     // Getter tile_
     // returns the current tile
-    // @return tile Tile to return
+    // @return Tile* Tile to return
     //
     Tile* getTile();
 
@@ -83,7 +83,7 @@ class Player
     //--------------------------------------------------------------------------
     // Getter x_
     // Returns the x value
-    // @return x x-value
+    // @return int x-value
     //
     int getX();
 
@@ -97,7 +97,7 @@ class Player
     //--------------------------------------------------------------------------
     // Getter y_
     // Returns the y value
-    // @return y y-value
+    // @return int y-value
     //
     int getY();
 };

@@ -51,21 +51,21 @@ class Tile
     // Move Method
     // Checks if a position move on this field is possible
     // @param direction Direction to move
-    // @return Returns result of the move operation.
+    // @return bool Returns result of the move operation.
     //
     virtual bool move(string direction) = 0;
 
     //--------------------------------------------------------------------------
     // Setter Metho
     // Sets the current symbol
-    // @param symbol THe given symbol as a char
+    // @param symbol The given symbol as a char
     //
     void setSymbol(char symbol);
 
     //--------------------------------------------------------------------------
     // Getter Method
     // Gets the current symbol
-    // @return Returns the symbol as a char
+    // @return char Returns the symbol as a char
     //
     char getSymbol();
 };
