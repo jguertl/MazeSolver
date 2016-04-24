@@ -224,7 +224,8 @@ int Maze::load(const string& path)
       }
     }
     // Check if first line only contains Walls
-    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.front().size()); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.front().size());
+        counter_x_++)
     {
       if((tiles_.front().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
@@ -234,7 +235,8 @@ int Maze::load(const string& path)
       }
     }
     // Check if last line only contains Walls
-    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.back().size()); counter_x_++)
+    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.back().size());
+        counter_x_++)
     {
       if((tiles_.back().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
@@ -325,9 +327,12 @@ int Maze::save(const string& path)
 
   outputfile << original_steps_ << endl;
 
-  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size()); counter_y_++)
+  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
+      counter_y_++)
   {
-    for (counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); counter_x_++)
+    for (counter_x_ = 0;
+        counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
+        counter_x_++)
     {
       outputfile << tiles_.at(counter_y_).at(counter_x_)->getSymbol();
     }
@@ -340,9 +345,12 @@ int Maze::save(const string& path)
 //------------------------------------------------------------------------------
 int Maze::show()
 {
-  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size()); counter_y_++)
+  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
+      counter_y_++)
   {
-    for (counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); counter_x_++)
+    for (counter_x_ = 0; counter_x_ < 
+        static_cast<int>(tiles_.at(counter_y_).size()); 
+        counter_x_++)
     {
       if((counter_y_ == player_.getY()) && (counter_x_ == player_.getX()))
       {
@@ -402,7 +410,8 @@ int Maze::movePlayer(string direction)
     }
   }
 
-  if((fastmove == false) && (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
+  if((fastmove == false) && 
+     (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
   {
     throw InvalidMoveException();
   }
