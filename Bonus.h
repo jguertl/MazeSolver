@@ -29,7 +29,7 @@ class Bonus : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Bonus(char symbol);
+    Bonus(char symbol, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -50,6 +50,7 @@ class Bonus : public Tile
     // @return bool Returns result of the move operation.
     //
     virtual bool move(string direction) override;
+
 };
 
 #endif //BONUS_H_INCLUDED

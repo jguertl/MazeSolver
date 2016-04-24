@@ -28,6 +28,11 @@ class Tile
     //
     char symbol_;
 
+    //--------------------------------------------------------------------------
+    // The value of the tile
+    //
+    int value_;
+
   public:
 
     //--------------------------------------------------------------------------
@@ -56,7 +61,7 @@ class Tile
     virtual bool move(string direction) = 0;
 
     //--------------------------------------------------------------------------
-    // Setter Metho
+    // Setter Method
     // Sets the current symbol
     // @param symbol The given symbol as a char
     //
@@ -68,6 +73,20 @@ class Tile
     // @return char Returns the symbol as a char
     //
     char getSymbol();
+
+    //--------------------------------------------------------------------------
+    // Setter Method
+    // Sets the current value
+    // @param symbol The given value
+    //
+    void setValue(char symbol);
+
+    //--------------------------------------------------------------------------
+    // Getter Method
+    // Gets the current value
+    // @return int returns the value
+    //
+    int getValue();
 };
 
 #endif //TILE_H_INCLUDED
