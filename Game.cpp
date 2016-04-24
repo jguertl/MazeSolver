@@ -353,6 +353,7 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
 
   if(auto_save_enabled_ == true)
   {
+    splitted_commands.pop_back();
     splitted_commands.push_back(output_filename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
@@ -401,9 +402,6 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
 
   ResetCommand reset_command(splitted_commands.at(0));
   reset_command.execute(*this, splitted_commands);
-
-  ShowCommand show_command(splitted_commands.at(0));
-  show_command.execute(*this, splitted_commands);
 
   if(auto_save_enabled_ == true)
   {

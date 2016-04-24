@@ -73,11 +73,6 @@ Maze::Maze() : steps_(0)
 //------------------------------------------------------------------------------
 Maze::~Maze()
 {
-  // TODO PETER
-  // - vor und nach einem operator ein Leerzeichen (z.b. sstream << line)
-  // - kein Leerzeichen vor einer for-Schleife (z.b. for(int i....) )
-  // - Wenn du länger als 80 Zeichen bist, dann auf die nächste Zeile und genau
-  //   2 Leerzeilen einrücken
 }
 
 //------------------------------------------------------------------------------
@@ -120,9 +115,9 @@ int Maze::load(const string& path)
     while(counter_x_ < (static_cast<int>(moves_.size())))
     {
       if((moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_UP) &&
-         (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_DOWN) &&
-         (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_LEFT) &&
-         (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_RIGHT))
+        (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_DOWN) &&
+        (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_LEFT) &&
+        (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_RIGHT))
       {
         file.close();
         deleteMaze();
@@ -164,19 +159,19 @@ int Maze::load(const string& path)
         finish_check++;
       }
       else if((buffer >= FIELD_TYPE_BONUS_MIN) &&
-              (buffer <= FIELD_TYPE_BONUS_MAX))
+        (buffer <= FIELD_TYPE_BONUS_MAX))
       {
         // Bonus
         buffer_vector.push_back(new Bonus(buffer));
       }
       else if((buffer >= FIELD_TYPE_QUICKSAND_MIN) &&
-              (buffer <= FIELD_TYPE_QUICKSAND_MAX))
+        (buffer <= FIELD_TYPE_QUICKSAND_MAX))
       {
         // Quicksand
         buffer_vector.push_back(new Quicksand(buffer));
       }
       else if((buffer >= FIELD_TYPE_TELEPORT_MIN) &&
-              (buffer <= FIELD_TYPE_TELEPORT_MAX))
+        (buffer <= FIELD_TYPE_TELEPORT_MAX))
       {
         // Teleport
         buffer_vector.push_back(new Teleport(buffer));
@@ -184,13 +179,14 @@ int Maze::load(const string& path)
         //cout << "Teleport Unsorted: " << buffer << endl;
       }
       else if((buffer == FIELD_TYPE_ONEWAY_LEFT) ||
-              (buffer == FIELD_TYPE_ONEWAY_RIGHT) ||
-              (buffer == FIELD_TYPE_ONEWAY_UP) ||
-              (buffer == FIELD_TYPE_ONEWAY_DOWN))
+        (buffer == FIELD_TYPE_ONEWAY_RIGHT) ||
+        (buffer == FIELD_TYPE_ONEWAY_UP) ||
+        (buffer == FIELD_TYPE_ONEWAY_DOWN))
       {
         // OneWay
         buffer_vector.push_back(new OneWay(buffer));
-      }else if(buffer != '\n')
+      }
+      else if(buffer != '\n')
       {
         file.close();
         deleteMaze();
@@ -225,7 +221,7 @@ int Maze::load(const string& path)
     }
     // Check if first line only contains Walls
     for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.front().size());
-        counter_x_++)
+      counter_x_++)
     {
       if((tiles_.front().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
@@ -236,7 +232,7 @@ int Maze::load(const string& path)
     }
     // Check if last line only contains Walls
     for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.back().size());
-        counter_x_++)
+      counter_x_++)
     {
       if((tiles_.back().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
@@ -328,11 +324,11 @@ int Maze::save(const string& path)
   outputfile << original_steps_ << endl;
 
   for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-      counter_y_++)
+    counter_y_++)
   {
     for (counter_x_ = 0;
-        counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
-        counter_x_++)
+      counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
+      counter_x_++)
     {
       outputfile << tiles_.at(counter_y_).at(counter_x_)->getSymbol();
     }
@@ -346,11 +342,11 @@ int Maze::save(const string& path)
 int Maze::show()
 {
   for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-      counter_y_++)
+    counter_y_++)
   {
     for (counter_x_ = 0; counter_x_ < 
-        static_cast<int>(tiles_.at(counter_y_).size()); 
-        counter_x_++)
+      static_cast<int>(tiles_.at(counter_y_).size());
+      counter_x_++)
     {
       if((counter_y_ == player_.getY()) && (counter_x_ == player_.getX()))
       {
@@ -411,7 +407,7 @@ int Maze::movePlayer(string direction)
   }
 
   if((fastmove == false) && 
-     (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
+    (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
   {
     throw InvalidMoveException();
   }
@@ -424,7 +420,7 @@ int Maze::movePlayer(string direction)
 
   // delete Bonus Tile
   if((player_.getTile()->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-     (player_.getTile()->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+    (player_.getTile()->getSymbol() <= FIELD_TYPE_BONUS_MAX))
   {
     delete tiles_.at(player_.getY()).at(player_.getX());
     tiles_.at(player_.getY()).at(player_.getX()) = new Path(' ');
@@ -433,10 +429,10 @@ int Maze::movePlayer(string direction)
   // Move the player and count down
   if(direction == Game::DIRECTION_MOVE_UP)
   {
-    next_tile = tiles_.at(player_.getY()-1).at(player_.getX());
+    next_tile = tiles_.at(player_.getY() - 1).at(player_.getX());
     if(next_tile->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setY(player_.getY()-1);
+      player_.setY(player_.getY() - 1);
       if(ice == false)
       {
         steps_--;
@@ -460,10 +456,10 @@ int Maze::movePlayer(string direction)
   }
   else if(direction == Game::DIRECTION_MOVE_DOWN)
   {
-    next_tile = tiles_.at(player_.getY()+1).at(player_.getX());
+    next_tile = tiles_.at(player_.getY() + 1).at(player_.getX());
     if(next_tile->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setY(player_.getY()+1);
+      player_.setY(player_.getY() + 1);
       if(ice == false)
       {
         steps_--;
@@ -487,10 +483,10 @@ int Maze::movePlayer(string direction)
   }
   else if(direction == Game::DIRECTION_MOVE_LEFT)
   {
-    next_tile = tiles_.at(player_.getY()).at(player_.getX()-1);
+    next_tile = tiles_.at(player_.getY()).at(player_.getX() - 1);
     if(next_tile->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setX(player_.getX()-1);
+      player_.setX(player_.getX() - 1);
       if(ice == false)
       {
         steps_--;
@@ -514,10 +510,10 @@ int Maze::movePlayer(string direction)
   }
   else if(direction == Game::DIRECTION_MOVE_RIGHT)
   {
-    next_tile = tiles_.at(player_.getY()).at(player_.getX()+1);
+    next_tile = tiles_.at(player_.getY()).at(player_.getX() + 1);
     if(next_tile->getSymbol() != FIELD_TYPE_WALL)
     {
-      player_.setX(player_.getX()+1);
+      player_.setX(player_.getX() + 1);
       if(ice == false)
       {
         steps_--;
@@ -543,7 +539,7 @@ int Maze::movePlayer(string direction)
 
   // Player lands on Teleport tile
   if((player_.getTile()->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-     (player_.getTile()->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+    (player_.getTile()->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
   {
     moveTeleport(player_.getTile()->getSymbol());
   }
@@ -553,15 +549,15 @@ int Maze::movePlayer(string direction)
     (player_.getTile()->getSymbol() <= FIELD_TYPE_BONUS_MAX))
   {
     steps_ = steps_ + ((player_.getTile()->getSymbol() -
-        FIELD_TYPE_BONUS_MIN) + BONUS_OFFSET);
+      FIELD_TYPE_BONUS_MIN) + BONUS_OFFSET);
   }
 
   // Player lands on Quicksand
   if((player_.getTile()->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-     (player_.getTile()->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+    (player_.getTile()->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
   {
     steps_ = steps_- ((player_.getTile()->getSymbol() -
-        FIELD_TYPE_QUICKSAND_MIN) + QUICKSAND_OFFSET);
+      FIELD_TYPE_QUICKSAND_MIN) + QUICKSAND_OFFSET);
   }
 
   // Player lands on Ice
@@ -570,7 +566,7 @@ int Maze::movePlayer(string direction)
     movePlayer(direction + ICE_MOVE_FLAG);
   }
   if((fastmove == false) &&
-      (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
+    (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
   {
     return GAME_WON;
   }
@@ -594,22 +590,22 @@ int Maze::fastMovePlayer(string directions)
     if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_UP)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_UP + 
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_DOWN)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_DOWN +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_LEFT)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_LEFT +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_RIGHT)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_RIGHT +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else
     {
@@ -618,11 +614,12 @@ int Maze::fastMovePlayer(string directions)
     counter_string++;
 
     if((return_value != SUCCESS) &&
-       (return_value != GAME_WON))
+      (return_value != GAME_WON))
     {
       moves_save = moves_;
       load(SAVE_FILE_NAME);
       fastMovePlayer(moves_save);
+      
       if(return_value == OUT_OF_STEPS)
       {
         throw NoMoreStepsException();
@@ -634,6 +631,7 @@ int Maze::fastMovePlayer(string directions)
     }
   }
   moves_ += directions;
+  
   if(player_.getTile()->getSymbol() == FIELD_TYPE_FINISH)
   {
     return GAME_WON;
@@ -658,22 +656,22 @@ int Maze::fastMovePlayerLoad(string directions)
     if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_UP)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_UP +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_DOWN)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_DOWN +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_LEFT)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_LEFT +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else if(directions.at(counter_string) == Game::DIRECTION_FAST_MOVE_RIGHT)
     {
       return_value = movePlayer(Game::DIRECTION_MOVE_RIGHT +
-                                Maze::FAST_MOVE_FLAG);
+        Maze::FAST_MOVE_FLAG);
     }
     else
     {
@@ -698,6 +696,7 @@ int Maze::fastMovePlayerLoad(string directions)
     }
   }
   moves_ += directions;
+  
   if(player_.getTile()->getSymbol() == FIELD_TYPE_FINISH)
   {
     return GAME_WON;
@@ -708,8 +707,8 @@ int Maze::fastMovePlayerLoad(string directions)
 //------------------------------------------------------------------------------
 int Maze::moveTeleport(char symbol)
 {
-  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-        counter_y_++)
+  for(counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
+    counter_y_++)
   {
     for(counter_x_ = 0; 
       counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); counter_x_++)

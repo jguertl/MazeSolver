@@ -44,14 +44,14 @@ int main(int argc, char** argv) {
     else if(argc == 5 && string(argv[1]) == PROGRAM_ARGUMENT_OUTPUT &&
       string(argv[3]) == PROGRAM_ARGUMENT_INPUT)
     {
-      game.setInputFilename(argv[4]);
       game.setOutputFilename(argv[2]);
+      game.setInputFilename(argv[4]);
     }
     else if(argc == 5 && string(argv[1]) == PROGRAM_ARGUMENT_INPUT &&
       string(argv[3]) == PROGRAM_ARGUMENT_OUTPUT)
     {
-      game.setInputFilename(argv[2]);
       game.setOutputFilename(argv[4]);
+      game.setInputFilename(argv[2]);
     }
     else if(argc != 1)
     {
