@@ -64,7 +64,6 @@ const int Maze::ERROR = -1;
 const int Maze::OUT_OF_STEPS = -2;
 const int Maze::INVALID_MOVE = -3;
 const int Maze::INVALID_PATH = -4;
-const string Maze::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
 
 //------------------------------------------------------------------------------
 Maze::Maze() : steps_(0)
@@ -297,12 +296,12 @@ int Maze::load(const string& path)
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
     save(SAVE_FILE_NAME);
-    moves_save=moves_;
-    if(fastMovePlayer(moves_) == GAME_WON)
+    moves_save = moves_;
+    if(fastMovePlayerLoad(moves_) == GAME_WON)
     {
       return GAME_WON;
     }
-    moves_=moves_save;
+    moves_ = moves_save;
   }
   else
   {
@@ -645,7 +644,67 @@ int Maze::fastMovePlayer(string directions)
   {
     return GAME_WON;
   }
+  return return_value;
+}
 
+//------------------------------------------------------------------------------
+int Maze::fastMovePlayerLoad(string directions)
+{
+  string moves_save=moves_;
+  unsigned int counter_string=0;
+  int return_value=0;
+
+  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+  {
+    throw InvalidMoveException();
+  }
+
+  while(counter_string<directions.size())
+  {
+    //cout << "Fast: " << directions.at(counter_string) << endl;
+    if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_UP)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_UP + Maze::FAST_MOVE_FLAG);
+    }
+    else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_DOWN)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_DOWN + Maze::FAST_MOVE_FLAG);
+    }
+    else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_LEFT)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_LEFT + Maze::FAST_MOVE_FLAG);
+    }
+    else if(directions.at(counter_string)==Game::DIRECTION_FAST_MOVE_RIGHT)
+    {
+      return_value=movePlayer(Game::DIRECTION_MOVE_RIGHT + Maze::FAST_MOVE_FLAG);
+    }
+    else
+    {
+      return_value=INVALID_MOVE;
+    }
+    counter_string++;
+
+    if((return_value!=SUCCESS) &&
+       (return_value!=GAME_WON))
+    {
+      moves_save=moves_;
+      load(SAVE_FILE_NAME);
+      fastMovePlayerLoad(moves_save);
+      if(return_value==OUT_OF_STEPS)
+      {
+        throw NoMoreStepsException();
+      }
+      else if(return_value!=SUCCESS)
+      {
+        throw InvalidPathException();
+      }
+    }
+  }
+  moves_ += directions;
+  if(player_.getTile()->getSymbol()==FIELD_TYPE_FINISH)
+  {
+    return GAME_WON;
+  }
   return return_value;
 }
 

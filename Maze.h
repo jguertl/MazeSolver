@@ -226,11 +226,6 @@ class Maze
     static const int INVALID_PATH;
 
     //--------------------------------------------------------------------------
-    // Output string naming the finished game
-    //
-    static const string OUTPUT_MAZE_SOLVED;
-
-    //--------------------------------------------------------------------------
     // TODO
     //
     string moves_;
@@ -325,6 +320,12 @@ class Maze
     // TODO description
     //
     int fastMovePlayer(string directions);
+
+    //--------------------------------------------------------------------------
+    // Move Player Fast
+    // TODO description
+    //
+    int fastMovePlayerLoad(string directions);
 
     //--------------------------------------------------------------------------
     // Move to the corresponding Teleport Tile
