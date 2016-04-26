@@ -109,6 +109,15 @@ int Maze::load(const string& path)
   {
     std::getline(file, moves_);
     std::getline(file, line);
+
+    // Check if line only contains a number
+    if(line.find_first_not_of("0123456789") != string::npos)
+    {
+      file.close();
+      deleteMaze();
+      throw InvalidFileException();
+    }
+
     sstream << line;
     sstream >> original_steps_;
     steps_ = original_steps_;
