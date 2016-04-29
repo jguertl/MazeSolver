@@ -25,6 +25,13 @@ using std::vector;
 //
 class ShowCommand : Command
 {
+  private:
+  
+  //--------------------------------------------------------------------------
+  // Checks if the current maze is loaded
+  // @param board The board which should be checked
+  void checkIfMazeIsLoaded(Game& board);
+  
   public:
 
     //--------------------------------------------------------------------------

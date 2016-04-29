@@ -101,11 +101,6 @@ class Game
     // Variable representing the fastmove command
     //
     static const string FASTMOVE_COMMAND;
-
-    //--------------------------------------------------------------------------
-    // Variable representing the show more command
-    //
-    static const string MORE_COMMAND;
   
     //--------------------------------------------------------------------------
     // Output string naming the finished game
@@ -225,7 +220,12 @@ public:
     // Fast Move Direction "r"
     //
     static const char DIRECTION_FAST_MOVE_RIGHT;
-
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the show more command
+    //
+    static const string MORE_COMMAND;
+  
     //--------------------------------------------------------------------------
     // One Way up
     //

@@ -20,7 +20,7 @@ using std::string;
 // Custom Wrong Parameter Exception
 // class inform about a wrong parameter es
 //
-class WrongParameterException : BaseException
+class WrongParameterException : public BaseException
 {
   private:
     

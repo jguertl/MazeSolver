@@ -20,7 +20,7 @@ using std::string;
 // Custom Wrong Parameter Count Exception
 // class inform about a wrong parameter count
 //
-class WrongParameterCountException : BaseException
+class WrongParameterCountException : public BaseException
 {
   private:
     

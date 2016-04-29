@@ -9,11 +9,13 @@
 //
 
 #include <string>
+#include <iostream>
 #include "WrongUsageException.h"
-#include "OutOfMemoryException.h"
 #include "Game.h"
 
 using std::string;
+using std::cout;
+using std::endl;
 using std::exception;
 
 //------------------------------------------------------------------------------
@@ -62,8 +64,9 @@ int main(int argc, char** argv) {
   }
   
   //Catch out of memory exception
-  catch(OutOfMemoryException out_of_memory_exception)
+  catch(std::bad_alloc out_of_memory_exception)
   {
+    cout << "[ERR] Out of memory." << endl;
     return PROGRAM_EXIT_ERROR;
   }
   

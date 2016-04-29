@@ -20,7 +20,7 @@ using std::string;
 // Custom File Open Exception
 // class inform about a file which cannot be openend
 //
-class FileOpenException : BaseException
+class FileOpenException : public BaseException
 {
   private:
     

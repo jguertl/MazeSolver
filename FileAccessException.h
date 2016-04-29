@@ -20,7 +20,7 @@ using std::string;
 // Custom File Access Exception
 // class inform about invalid file access
 //
-class FileAccessException : BaseException
+class FileAccessException : public BaseException
 {
   private:
     

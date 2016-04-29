@@ -28,7 +28,6 @@
 #include "MoveCommand.h"
 #include "FastMoveCommand.h"
 #include "ShowCommand.h"
-#include "ShowMoreCommand.h"
 #include <sstream>
 #include <iostream>
 
@@ -136,45 +135,13 @@ void Game::startGame()
         throw UnknownCommandException();
       }
     }
-    catch(UnknownCommandException unknown_command_exception)
-    {
-      continue;
-    }
-    catch(WrongParameterCountException wrong_parameter_count_exception)
-    {
-      continue;
-    }
-    catch(WrongParameterException wrong_parameter_exception)
-    {
-      continue;
-    }
-    catch(NoMazeLoadedException no_maze_loaded_exception)
-    {
-      continue;
-    }
-    catch(FileOpenException file_open_exception)
-    {
-      continue;
-    }
-    catch(InvalidFileException invalid_file_exception)
-    {
-      continue;
-    }
-    catch(InvalidPathException invalid_path_exception)
-    {
-      continue;
-    }
-    catch(FileAccessException file_access_exception)
-    {
-      continue;
-    }
-    catch(InvalidMoveException invalid_move_exception)
-    {
-      continue;
-    }
-    catch(NoMoreStepsException no_more_steps_exception)
+    catch(NoMoreStepsException& no_more_steps_exception)
     {
       handleNoMoreSteps();
+    }
+    catch(BaseException& unknown_command_exception)
+    {
+      continue;
     }
   }
 }
@@ -231,23 +198,7 @@ void Game::setInputFilename(string input_filename)
     load_input.push_back(input_filename);
     loadCommandSelected(load_input);
   }
-  catch(FileOpenException file_open_exception)
-  {
-    return;
-  }
-  catch(InvalidFileException invalid_file_exception)
-  {
-    return;
-  }
-  catch(InvalidPathException invalid_path_exception)
-  {
-    return;
-  }
-  catch(FileAccessException file_access_exception)
-  {
-    return;
-  }
-  catch(NoMazeLoadedException no_maze_loaded)
+  catch(BaseException& unknown_command_exception)
   {
     return;
   }
@@ -302,11 +253,7 @@ void Game::handleNoMoreSteps()
     vector<string> reset_command = {RESET_COMMAND};
     resetCommandSelected(reset_command);
   }
-  catch(FileAccessException file_access_exception)
-  {
-    return;
-  }
-  catch(NoMazeLoadedException no_maze_loaded)
+  catch(BaseException& unknown_command_exception)
   {
     return;
   }
@@ -340,13 +287,13 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   {
     is_maze_loaded_ = true;
   }
-
+  
+  splitted_commands.pop_back();
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
 
   if(auto_save_enabled_ == true)
   {
-    splitted_commands.pop_back();
     splitted_commands.push_back(output_filename_);
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
@@ -366,23 +313,8 @@ void Game::showCommandSelected(vector<string> splitted_commands)
     throw WrongParameterCountException();
   }
 
-  if(splitted_commands.size() == 1)
-  {
-    ShowCommand show_command(splitted_commands.at(0));
-    show_command.execute(*this, splitted_commands);
-  }
-  else
-  {
-    if(splitted_commands.at(1) == MORE_COMMAND)
-    {
-      ShowMoreCommand show_more_command(splitted_commands.at(0));
-      show_more_command.execute(*this, splitted_commands);
-    }
-    else
-    {
-      throw WrongParameterException();
-    }
-  }
+  ShowCommand show_command(splitted_commands.at(0));
+  show_command.execute(*this, splitted_commands);
 }
 
 //------------------------------------------------------------------------------
@@ -429,6 +361,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
     save_command.execute(*this, splitted_commands);
   }
 
+  splitted_commands.pop_back();
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
 
@@ -457,7 +390,8 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
     SaveCommand save_command(splitted_commands.at(0));
     save_command.execute(*this, splitted_commands);
   }
-
+  
+  splitted_commands.pop_back();
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
 

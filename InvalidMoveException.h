@@ -20,7 +20,7 @@ using std::string;
 // Custom Invalid Move Exception
 // class inform about a invalid move
 //
-class InvalidMoveException : BaseException
+class InvalidMoveException : public BaseException
 {
   private:
     

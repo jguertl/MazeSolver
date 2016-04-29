@@ -13,11 +13,10 @@
 
 #include <exception>
 
-
 //---------------------------------------------------------------------------
 // Base for all exceptions
 //
-class BaseException : std::exception
+class BaseException : public std::exception
 {
         
 };

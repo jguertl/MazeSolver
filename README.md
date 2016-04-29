@@ -1,15 +1,15 @@
 # SEP2016
 
 Zusammenfassung
-- [ ] ShowMore nicht als eigener Command notwendig
-- [ ] OutOfMemoryException nicht notwendig
+- [x] ShowMore nicht als eigener Command notwendig ([Jakob](https://github.com/jguertl))
+- [x] OutOfMemoryException nicht notwendig ([Jakob](https://github.com/jguertl))
 
 Dokumentation und Programmierstil
 - [ ] Wiederkehrende Hardcoded Values
 
 OOP Konzepte
 - [ ] Unnötig komplizierte Konstrukte
-- [ ] Other: try catch in startGame, BaseException Sinn?
+- [x] Other: try catch in startGame, BaseException Sinn? ([Jakob](https://github.com/jguertl))
 
 Struktur & Korrektheit
 - [ ] Fehlermeldungen von Valgrind
@@ -27,11 +27,11 @@ Nicht bestandene Testcases
 - [ ] Feld: Einbahn
 - [ ] Feld: Bonus/Treibsand
 - [ ] "No more steps" Behandlung
-- [ ] Other: WrongParameterException nicht aufgefangen
+- [ ] Other: WrongParameterException nicht aufgefangen ([Jakob](https://github.com/jguertl))
 
 Allgemeine Fehler in Testcases
-- [ ] Tippfehler in Fehlermeldung
-- [ ] Falsche Reihenfolge der Fehlermeldungen
+- [ ] Tippfehler in Fehlermeldung ([Jakob](https://github.com/jguertl))
+- [ ] Falsche Reihenfolge der Fehlermeldungen ([Jakob](https://github.com/jguertl))
 
 Features
 - [x] Command Line Argumente ([Jakob](https://github.com/jguertl))

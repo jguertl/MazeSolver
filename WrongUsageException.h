@@ -20,7 +20,7 @@ using std::string;
 // Custom Wrong Usage Exception
 // class to inform about invalid arguments
 //
-class WrongUsageException : BaseException
+class WrongUsageException : public BaseException
 {
   private:
   

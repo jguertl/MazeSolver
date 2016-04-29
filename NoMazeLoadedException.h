@@ -20,7 +20,7 @@ using std::string;
 // Custom No Maze Loaded Exception
 // class inform if a maze has been loaded
 //
-class NoMazeLoadedException : BaseException
+class NoMazeLoadedException : public BaseException
 {
   private:
     

@@ -20,7 +20,7 @@ using std::string;
 // Custom File Open Exception
 // class inform about an invalid file format
 //
-class InvalidFileException : BaseException
+class InvalidFileException : public BaseException
 {
   private:
 

@@ -20,7 +20,7 @@ using std::string;
 // Custom No More Steps Exception
 // class inform that no more steps are available
 //
-class NoMoreStepsException : BaseException
+class NoMoreStepsException : public BaseException
 {
   private:
     

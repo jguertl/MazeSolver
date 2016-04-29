@@ -20,7 +20,7 @@ using std::string;
 // Custom Unknown Command Exception
 // class inform about a unknown command
 //
-class UnknownCommandException : BaseException
+class UnknownCommandException : public BaseException
 {
   private:
     
