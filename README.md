@@ -7,13 +7,13 @@ Zusammenfassung
 Dokumentation und Programmierstil
 - [ ] Wiederkehrende Hardcoded Values
 
- OOP Konzepte
+OOP Konzepte
 - [ ] Unnötig komplizierte Konstrukte
 - [ ] Other: try catch in startGame, BaseException Sinn?
 
 Struktur & Korrektheit
 - [ ] Fehlermeldungen von Valgrind
-- [ ] (Drohende) Segmentation Violations
+- [ ] Drohende Segmentation Violations
 - [ ] Speicherlöcher
 - [ ] Abfangen von bad_alloc
 - [ ] Speicherlöcher: alle new in unique_pointer oder saubereres Speichermanagement
