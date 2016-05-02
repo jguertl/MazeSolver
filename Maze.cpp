@@ -226,8 +226,9 @@ int Maze::load(const string& path)
           deleteMaze();
           throw InvalidFileException();
         }
-        if((buffer_vector.front()->getSymbol() != FIELD_TYPE_WALL) &&
-           (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL))
+        if(((int)buffer_vector.size() == 0) ||
+           ((buffer_vector.front()->getSymbol() != FIELD_TYPE_WALL) &&
+           (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL)))
         {
           file.close();
           deleteMaze();
