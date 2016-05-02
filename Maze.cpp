@@ -654,11 +654,7 @@ int Maze::fastMovePlayer(string directions)
       load(SAVE_FILE_NAME);
       fastMovePlayer(moves_save);
 
-      if(return_value == OUT_OF_STEPS)
-      {
-        throw NoMoreStepsException();
-      }
-      else if(return_value != SUCCESS)
+      if(return_value != SUCCESS)
       {
         throw InvalidMoveException();
       }
