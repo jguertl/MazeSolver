@@ -583,7 +583,6 @@ int Maze::movePlayer(string direction)
   if((player_.getTile()->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
     (player_.getTile()->getSymbol() <= FIELD_TYPE_BONUS_MAX))
   {
-    cout << "Steps plus: " << player_.getTile()->getValue() << endl;
     steps_ = steps_ + player_.getTile()->getValue();
   }
 
