@@ -109,7 +109,7 @@ int Maze::load(const string& path)
   {
     std::getline(file, moves_);
     // Check if line is not empty
-    if(moves_.size() == 0)
+    if(file.eof())
     {
       file.close();
       deleteMaze();
@@ -118,7 +118,7 @@ int Maze::load(const string& path)
 
     std::getline(file, line);
     // Check if line is not empty
-    if(moves_.size() == 0)
+    if(file.eof())
     {
       file.close();
       deleteMaze();
@@ -242,6 +242,16 @@ int Maze::load(const string& path)
           deleteMaze();
           throw InvalidFileException();
         }
+
+        // Check if width is greater than zero
+        if(buffer_vector.size() == 0)
+        {
+          file.close();
+          deleteMaze();
+          throw InvalidFileException();
+        }
+
+        // Check if leading and trailing # are valid
         if(((int)buffer_vector.size() == 0) ||
            ((buffer_vector.front()->getSymbol() != FIELD_TYPE_WALL) &&
            (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL)))
