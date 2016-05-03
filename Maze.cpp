@@ -108,7 +108,23 @@ int Maze::load(const string& path)
   if (file.is_open())
   {
     std::getline(file, moves_);
+    // Check if line is not empty
+    if(moves_.size() == 0)
+    {
+      file.close();
+      deleteMaze();
+      throw InvalidFileException();
+    }
+
     std::getline(file, line);
+    // Check if line is not empty
+    if(moves_.size() == 0)
+    {
+      file.close();
+      deleteMaze();
+      throw InvalidFileException();
+    }
+
 
     // Check if line only contains a number
     if(line.find_first_not_of("0123456789") != string::npos)
@@ -124,14 +140,6 @@ int Maze::load(const string& path)
     sstream.str("");
     sstream.clear();
 
-    // Check if steps are valid
-    if(static_cast<int>(moves_.size()) > steps_)
-    {
-      file.close();
-      deleteMaze();
-      throw InvalidFileException();
-    }
-
     // Check if moves are valid
     while(counter_x_ < (static_cast<int>(moves_.size())))
     {
@@ -145,6 +153,14 @@ int Maze::load(const string& path)
         throw InvalidFileException();
       }
       counter_x_++;
+    }
+
+    // Check if steps are valid
+    if(static_cast<int>(moves_.size()) > steps_)
+    {
+      file.close();
+      deleteMaze();
+      throw InvalidPathException();
     }
 
     counter_x_ = 0;
