@@ -330,11 +330,14 @@ int Maze::load(const string& path)
     player_.setTile(tiles_.at(player_.getY()).at(player_.getX()));
     file.close();
     save(SAVE_FILE_NAME);
+
     moves_save = moves_;
     if(fastMovePlayerLoad(moves_) == GAME_WON)
     {
+      moves_ = moves_save;
       return GAME_WON;
     }
+
     moves_ = moves_save;
   }
   else
@@ -453,6 +456,12 @@ int Maze::movePlayer(string direction)
     ice = true;
   }
 
+  if((fastmove == false) &&
+    (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
+  {
+    throw InvalidMoveException();
+  }
+
   if(ice == false)
   {
     if(steps_ <= 0)
@@ -467,12 +476,6 @@ int Maze::movePlayer(string direction)
         throw NoMoreStepsException();
       }
     }
-  }
-
-  if((fastmove == false) &&
-    (player_.getTile()->getSymbol() == FIELD_TYPE_FINISH))
-  {
-    throw InvalidMoveException();
   }
 
   // Check if move is valid
