@@ -90,10 +90,10 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 int Maze::load(const string& path)
 {
-  deleteMaze();
+
   ifstream file (path);
   string line;
-  string moves_save;
+  string moves_save = moves_;
   char buffer;
   char teleport_duplicate_check;
   int start_check = 0;
@@ -101,27 +101,45 @@ int Maze::load(const string& path)
   vector<Tile*> buffer_vector;
   vector<char> teleport_symbols;
   std::stringstream sstream;
+  bool maze_loaded = false;
   int size_check = -1;
   counter_x_ = 0;
   counter_y_ = 0;
 
+  if(tiles_.size() != 0)
+  {
+    maze_loaded = true;
+    save(SAVE_FILE_NAME);
+    deleteMaze();
+  }
+
   if (file.is_open())
   {
     std::getline(file, moves_);
-    // Check if line is not empty
+    // Check if file is not empty
     if(file.eof())
     {
       file.close();
-      deleteMaze();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
       throw InvalidFileException();
     }
 
     std::getline(file, line);
-    // Check if line is not empty
+    // Check if file is not empty
     if(file.eof())
     {
       file.close();
-      deleteMaze();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
       throw InvalidFileException();
     }
 
@@ -130,7 +148,12 @@ int Maze::load(const string& path)
     if(line.find_first_not_of("0123456789") != string::npos)
     {
       file.close();
-      deleteMaze();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
       throw InvalidFileException();
     }
 
@@ -140,6 +163,8 @@ int Maze::load(const string& path)
     sstream.str("");
     sstream.clear();
 
+    counter_x_ = 0;
+    counter_y_ = 0;
     // Check if moves are valid
     while(counter_x_ < (static_cast<int>(moves_.size())))
     {
@@ -149,7 +174,12 @@ int Maze::load(const string& path)
         (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_RIGHT))
       {
         file.close();
-        deleteMaze();
+        if(maze_loaded)
+        {
+          deleteMaze();
+          load(SAVE_FILE_NAME);
+          fastMovePlayer(moves_save);
+        }
         throw InvalidFileException();
       }
       counter_x_++;
@@ -159,7 +189,12 @@ int Maze::load(const string& path)
     if(static_cast<int>(moves_.size()) > steps_)
     {
       file.close();
-      deleteMaze();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
       throw InvalidPathException();
     }
 
@@ -226,7 +261,12 @@ int Maze::load(const string& path)
       else if(buffer != '\n')
       {
         file.close();
-        deleteMaze();
+        if(maze_loaded)
+        {
+          deleteMaze();
+          load(SAVE_FILE_NAME);
+          fastMovePlayer(moves_save);
+        }
         throw InvalidFileException();
       }
 
@@ -239,7 +279,12 @@ int Maze::load(const string& path)
         if((size_check >= 0) && (size_check != (int)buffer_vector.size()))
         {
           file.close();
-          deleteMaze();
+          if(maze_loaded)
+          {
+            deleteMaze();
+            load(SAVE_FILE_NAME);
+            fastMovePlayer(moves_save);
+          }
           throw InvalidFileException();
         }
 
@@ -247,7 +292,12 @@ int Maze::load(const string& path)
         if(buffer_vector.size() == 0)
         {
           file.close();
-          deleteMaze();
+          if(maze_loaded)
+          {
+            deleteMaze();
+            load(SAVE_FILE_NAME);
+            fastMovePlayer(moves_save);
+          }
           throw InvalidFileException();
         }
 
@@ -257,7 +307,12 @@ int Maze::load(const string& path)
            (buffer_vector.back()->getSymbol() != FIELD_TYPE_WALL)))
         {
           file.close();
-          deleteMaze();
+          if(maze_loaded)
+          {
+            deleteMaze();
+            load(SAVE_FILE_NAME);
+            fastMovePlayer(moves_save);
+          }
           throw InvalidFileException();
         }
 
@@ -274,7 +329,12 @@ int Maze::load(const string& path)
       if((tiles_.front().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
         file.close();
-        deleteMaze();
+        if(maze_loaded)
+        {
+          deleteMaze();
+          load(SAVE_FILE_NAME);
+          fastMovePlayer(moves_save);
+        }
         throw InvalidFileException();
       }
     }
@@ -285,7 +345,12 @@ int Maze::load(const string& path)
       if((tiles_.back().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
         file.close();
-        deleteMaze();
+        if(maze_loaded)
+        {
+          deleteMaze();
+          load(SAVE_FILE_NAME);
+          fastMovePlayer(moves_save);
+        }
         throw InvalidFileException();
       }
     }
@@ -294,7 +359,12 @@ int Maze::load(const string& path)
     if((start_check != 1) || (finish_check != 1))
     {
       file.close();
-      deleteMaze();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
       throw InvalidFileException();
     }
 
@@ -307,7 +377,12 @@ int Maze::load(const string& path)
       if(buffer == teleport_duplicate_check)
       {
         file.close();
-        deleteMaze();
+        if(maze_loaded)
+        {
+          deleteMaze();
+          load(SAVE_FILE_NAME);
+          fastMovePlayer(moves_save);
+        }
         throw InvalidFileException();
       }
       teleport_duplicate_check = buffer;
@@ -315,7 +390,12 @@ int Maze::load(const string& path)
       if(buffer != teleport_symbols.back())
       {
         file.close();
-        deleteMaze();
+        if(maze_loaded)
+        {
+          deleteMaze();
+          load(SAVE_FILE_NAME);
+          fastMovePlayer(moves_save);
+        }
         throw InvalidFileException();
       }
       teleport_symbols.pop_back();
@@ -323,7 +403,12 @@ int Maze::load(const string& path)
     if(teleport_symbols.size())
     {
       file.close();
-      deleteMaze();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
       throw InvalidFileException();
     }
 
@@ -359,6 +444,7 @@ int Maze::save(const string& path)
   ofstream outputfile;
   outputfile.open(path.c_str());
   string moves_save;
+
   if(outputfile.fail())
   {
     throw FileAccessException();
