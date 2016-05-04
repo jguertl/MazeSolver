@@ -100,7 +100,7 @@ int Maze::load(const string& path)
   int finish_check = 0;
   vector<Tile*> buffer_vector;
   vector<char> teleport_symbols;
-  std::stringstream sstream;
+  std::stringstream sstream (std::stringstream::in | std::stringstream::out);
   bool maze_loaded = false;
   int size_check = -1;
   counter_x_ = 0;
@@ -322,6 +322,20 @@ int Maze::load(const string& path)
         counter_x_=0;
       }
     }
+
+    // Check if maze is empty
+    if(tiles_.size() == 0)
+    {
+      file.close();
+      if(maze_loaded)
+      {
+        deleteMaze();
+        load(SAVE_FILE_NAME);
+        fastMovePlayer(moves_save);
+      }
+      throw InvalidFileException();
+    }
+
     // Check if first line only contains Walls
     for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.front().size());
       counter_x_++)
@@ -338,16 +352,19 @@ int Maze::load(const string& path)
         throw InvalidFileException();
       }
     }
+
     // Check if last line only contains Walls
-    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.back().size());
+    counter_x_ = 0;
+    for(counter_x_ = 0; counter_x_ < (int)(tiles_.back().size());
       counter_x_++)
     {
+
       if((tiles_.back().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
         file.close();
+        deleteMaze();
         if(maze_loaded)
         {
-          deleteMaze();
           load(SAVE_FILE_NAME);
           fastMovePlayer(moves_save);
         }
