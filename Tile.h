@@ -12,8 +12,10 @@
 #define TILE_H_INCLUDED
 
 #include <string>
+#include <memory>
 
 using std::string;
+using std::unique_ptr;
 
 //----------------------------------------------------------------------------
 // Tile Class

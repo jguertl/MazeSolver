@@ -33,7 +33,7 @@ class Player
     //--------------------------------------------------------------------------
     // Current tile
     //
-    Tile* tile_;
+    char tile_;
 
   public:
 
@@ -64,14 +64,14 @@ class Player
     // Sets the current tile
     // @param tile Tile to set
     //
-    void setTile(Tile* tile);
+    void setTile(char tile);
 
     //--------------------------------------------------------------------------
     // Getter tile_
     // returns the current tile
     // @return Tile* Tile to return
     //
-    Tile* getTile();
+    char getTile();
 
     //--------------------------------------------------------------------------
     // Setter x_

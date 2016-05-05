@@ -13,11 +13,13 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 class Player;
 class Game;
 
 using std::string;
 using std::vector;
+using std::unique_ptr;
 
 //------------------------------------------------------------------------------
 // Style Maze
@@ -240,7 +242,7 @@ class Maze
     //--------------------------------------------------------------------------
     // Collection of tiles
     //
-    vector<vector<Tile*>> tiles_;
+    vector< vector< unique_ptr<Tile> > > tiles_;
 
   public:
 
@@ -347,7 +349,7 @@ class Maze
     // @param y y-position of the Tile
     // @return Tile* pointer to the Tile
     //
-    Tile* getTile(int x, int y);
+    char getTile(int x, int y);
 
     //--------------------------------------------------------------------------
     // Get Player

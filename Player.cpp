@@ -33,13 +33,13 @@ Player::~Player()
 }
 
 //------------------------------------------------------------------------------
-void Player::setTile(Tile* tile)
+void Player::setTile(char tile)
 {
   tile_ = tile;
 }
 
 //------------------------------------------------------------------------------
-Tile* Player::getTile()
+char Player::getTile()
 {
   return tile_;
 }
