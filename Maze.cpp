@@ -326,10 +326,10 @@ int Maze::load(const string& path)
     // Check if maze is empty
     if(tiles_.size() == 0)
     {
-      file.close();
+      ile.close();
+      deleteMaze();
       if(maze_loaded)
       {
-        deleteMaze();
         load(SAVE_FILE_NAME);
         fastMovePlayer(moves_save);
       }
@@ -343,9 +343,9 @@ int Maze::load(const string& path)
       if((tiles_.front().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
       {
         file.close();
+        deleteMaze();
         if(maze_loaded)
         {
-          deleteMaze();
           load(SAVE_FILE_NAME);
           fastMovePlayer(moves_save);
         }
@@ -376,9 +376,9 @@ int Maze::load(const string& path)
     if((start_check != 1) || (finish_check != 1))
     {
       file.close();
+      deleteMaze();
       if(maze_loaded)
       {
-        deleteMaze();
         load(SAVE_FILE_NAME);
         fastMovePlayer(moves_save);
       }
@@ -394,9 +394,9 @@ int Maze::load(const string& path)
       if(buffer == teleport_duplicate_check)
       {
         file.close();
+        deleteMaze();
         if(maze_loaded)
         {
-          deleteMaze();
           load(SAVE_FILE_NAME);
           fastMovePlayer(moves_save);
         }
@@ -407,9 +407,9 @@ int Maze::load(const string& path)
       if(buffer != teleport_symbols.back())
       {
         file.close();
+        deleteMaze();
         if(maze_loaded)
         {
-          deleteMaze();
           load(SAVE_FILE_NAME);
           fastMovePlayer(moves_save);
         }
@@ -420,9 +420,9 @@ int Maze::load(const string& path)
     if(teleport_symbols.size())
     {
       file.close();
+      deleteMaze();
       if(maze_loaded)
       {
-        deleteMaze();
         load(SAVE_FILE_NAME);
         fastMovePlayer(moves_save);
       }
