@@ -19,13 +19,13 @@ Struktur & Korrektheit
 - [ ] Speicherlöcher: alle new in unique_pointer oder saubereres Speichermanagement
 
 Nicht bestandene Testcases
-- [ ] Save
-- [ ] Fehler bei Save: File cannot be written
-- [ ] Fastmove
-- [ ] Feld: Eis
-- [ ] Feld: Teleport
-- [ ] Feld: Einbahn
-- [ ] Feld: Bonus/Treibsand
+- [x] Save
+- [x] Fehler bei Save: File cannot be written
+- [x] Fastmove
+- [x] Feld: Eis
+- [x] Feld: Teleport
+- [x] Feld: Einbahn
+- [x] Feld: Bonus/Treibsand
 - [ ] "No more steps" Behandlung
 - [ ] Other: WrongParameterException nicht aufgefangen ([Jakob](https://github.com/jguertl))
 
