@@ -8,15 +8,15 @@ Dokumentation und Programmierstil
 - [ ] Wiederkehrende Hardcoded Values
 
 OOP Konzepte
-- [ ] Unnötig komplizierte Konstrukte
+- [x] Unnötig komplizierte Konstrukte
 - [x] Other: try catch in startGame, BaseException Sinn? ([Jakob](https://github.com/jguertl))
 
 Struktur & Korrektheit
 - [ ] Fehlermeldungen von Valgrind
 - [ ] Drohende Segmentation Violations
 - [ ] Speicherlöcher
-- [ ] Abfangen von bad_alloc
-- [ ] Speicherlöcher: alle new in unique_pointer oder saubereres Speichermanagement
+- [x] Abfangen von bad_alloc
+- [x] Speicherlöcher: alle new in unique_pointer oder saubereres Speichermanagement
 
 Nicht bestandene Testcases
 - [x] Save
@@ -26,12 +26,12 @@ Nicht bestandene Testcases
 - [x] Feld: Teleport
 - [x] Feld: Einbahn
 - [x] Feld: Bonus/Treibsand
-- [ ] "No more steps" Behandlung
-- [ ] Other: WrongParameterException nicht aufgefangen ([Jakob](https://github.com/jguertl))
+- [x] "No more steps" Behandlung
+- [x] Other: WrongParameterException nicht aufgefangen ([Jakob](https://github.com/jguertl))
 
 Allgemeine Fehler in Testcases
-- [ ] Tippfehler in Fehlermeldung ([Jakob](https://github.com/jguertl))
-- [ ] Falsche Reihenfolge der Fehlermeldungen ([Jakob](https://github.com/jguertl))
+- [x] Tippfehler in Fehlermeldung ([Jakob](https://github.com/jguertl))
+- [x] Falsche Reihenfolge der Fehlermeldungen ([Jakob](https://github.com/jguertl))
 
 Features
 - [x] Command Line Argumente ([Jakob](https://github.com/jguertl))

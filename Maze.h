@@ -242,7 +242,7 @@ class Maze
     //--------------------------------------------------------------------------
     // Collection of tiles
     //
-    vector< vector< unique_ptr<Tile> > > tiles_;
+    vector<vector<unique_ptr<Tile>>> tiles_;
 
   public:
 

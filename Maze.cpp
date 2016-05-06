@@ -91,7 +91,6 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 int Maze::load(const string& path)
 {
-//  cout << "Load " << path << endl;
   ifstream file (path);
   string line = "";
   string moves_save = moves_;
@@ -204,10 +203,6 @@ int Maze::load(const string& path)
     counter_x_ = 0;
     while(file.get(buffer))
     {
-//      cout << "Buffer: " << buffer << endl;
-//      cout << "Y: " << counter_y_ << endl;
-//      cout << "X: " << counter_x_ << endl << endl;
-
       // Store the buffer to check if the last char is a linebreak
       buffer_check = buffer;
 
