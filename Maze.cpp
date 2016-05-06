@@ -101,6 +101,7 @@ int Maze::load(const string& path)
   int start_check = 0;
   int finish_check = 0;
   unique_ptr<Tile> unique_buffer;
+  vector < unique_ptr<Tile> > unique_vector_buffer;
   vector<char> teleport_symbols;
   std::stringstream sstream (std::stringstream::in | std::stringstream::out);
   bool maze_loaded = false;
@@ -132,8 +133,8 @@ int Maze::load(const string& path)
     }
 
     std::getline(file, line);
-    // Check if file is not empty
-    if(file.eof())
+    // Check if file and line are not empty
+    if(file.eof() || line.empty())
     {
       file.close();
       if(maze_loaded)
@@ -214,25 +215,25 @@ int Maze::load(const string& path)
       {
         // Wall
         unique_buffer = unique_ptr<Tile>(new Wall(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_PATH)
       {
         // Path
         unique_buffer = unique_ptr<Tile>(new Path(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_ICE)
       {
         // Ice
         unique_buffer = unique_ptr<Tile>(new Ice(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_START)
       {
         // Start
         unique_buffer = unique_ptr<Tile>(new Start(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
         player_.setX(counter_x_);
         player_.setY(counter_y_);
         start_check++;
@@ -241,7 +242,7 @@ int Maze::load(const string& path)
       {
         // Finish
         unique_buffer = unique_ptr<Tile>(new Finish(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
         finish_check++;
       }
       else if((buffer >= FIELD_TYPE_BONUS_MIN) &&
@@ -250,21 +251,21 @@ int Maze::load(const string& path)
         // Bonus
         unique_buffer = unique_ptr<Tile>(new Bonus(buffer,
                                 (buffer - FIELD_TYPE_BONUS_MIN +1)));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if((buffer >= FIELD_TYPE_QUICKSAND_MIN) &&
         (buffer <= FIELD_TYPE_QUICKSAND_MAX))
       {
         // Quicksand
         unique_buffer = unique_ptr<Tile>(new Quicksand(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if((buffer >= FIELD_TYPE_TELEPORT_MIN) &&
         (buffer <= FIELD_TYPE_TELEPORT_MAX))
       {
         // Teleport
         unique_buffer = unique_ptr<Tile>(new Teleport(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
 
         teleport_symbols.push_back(buffer);
       }
@@ -275,7 +276,7 @@ int Maze::load(const string& path)
       {
         // OneWay
         unique_buffer = unique_ptr<Tile>(new OneWay(buffer));
-        tiles_.at(counter_y_).push_back(move(unique_buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer != '\n')
       {
@@ -292,8 +293,8 @@ int Maze::load(const string& path)
       counter_x_++;
       if(buffer == '\n')
       {
-        // Check Maze
-        if((size_check >= 0) && (size_check != (int)tiles_.at(counter_y_).size()))
+        // Check if width is greater than zero
+        if((int)unique_vector_buffer.size() == 0)
         {
           file.close();
           if(maze_loaded)
@@ -305,8 +306,8 @@ int Maze::load(const string& path)
           throw InvalidFileException();
         }
 
-        // Check if width is greater than zero
-        if(tiles_.at(counter_y_).size() == 0)
+        // Check Maze
+        if((size_check >= 0) && (size_check != (int)unique_vector_buffer.size()))
         {
           file.close();
           if(maze_loaded)
@@ -319,9 +320,8 @@ int Maze::load(const string& path)
         }
 
         // Check if leading and trailing # are valid
-        if(((int)tiles_.at(counter_y_).size() == 0) ||
-           ((tiles_.at(counter_y_).front()->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y_).back()->getSymbol() != FIELD_TYPE_WALL)))
+        if((unique_vector_buffer.front()->getSymbol() != FIELD_TYPE_WALL) &&
+           (unique_vector_buffer.back()->getSymbol() != FIELD_TYPE_WALL))
         {
           file.close();
           if(maze_loaded)
@@ -333,7 +333,9 @@ int Maze::load(const string& path)
           throw InvalidFileException();
         }
 
-        size_check = static_cast<int>(tiles_.at(counter_y_).size());
+        size_check = (int)(unique_vector_buffer.size());
+        tiles_.push_back(move(unique_vector_buffer));
+        unique_vector_buffer.clear();
         counter_y_++;
         counter_x_=0;
       }
