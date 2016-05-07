@@ -70,6 +70,11 @@ class Maze
     static const char FILENAME_DEFINITION_SLASH;
 
     //--------------------------------------------------------------------------
+    // maximum filename length
+    //
+    static const int FILENAME_MAX_SIZE;
+
+    //--------------------------------------------------------------------------
     // newline character
     //
     static const char NEW_LINE;

@@ -70,6 +70,7 @@ const char Maze::FILENAME_DEFINITION_NUMBER_MIN = '0';
 const char Maze::FILENAME_DEFINITION_NUMBER_MAX = '9';
 const char Maze::FILENAME_DEFINITION_DOT = '.';
 const char Maze::FILENAME_DEFINITION_SLASH = '/';
+const int Maze::FILENAME_MAX_SIZE = 255;
 const char Maze::NEW_LINE = '\n';
 const int Maze::BONUS_OFFSET = 1;
 const int Maze::QUICKSAND_OFFSET = 1;
@@ -535,7 +536,7 @@ int Maze::show()
            FIELD_TYPE_BONUS_MAX) &&
            (tiles_.at(counter_y_).at(counter_x_)->getValue() == 0))
         {
-          cout << ' ';
+          cout << FIELD_TYPE_PATH;
         }
         else
         {
@@ -587,7 +588,7 @@ int Maze::movePlayer(string direction)
   {
     if(steps_ <= 0)
     {
-      steps_ = 0;
+      steps_ = INITIALIZE_ZERO;
       if(fastmove)
       {
         return OUT_OF_STEPS;
@@ -758,8 +759,8 @@ int Maze::movePlayer(string direction)
 int Maze::fastMovePlayer(string directions)
 {
   string moves_save = moves_;
-  unsigned int counter_string = 0;
-  int return_value = 0;
+  unsigned int counter_string = INITIALIZE_ZERO;
+  int return_value = INITIALIZE_ZERO;
 
   if(player_.getTile() == FIELD_TYPE_FINISH)
   {
@@ -820,8 +821,8 @@ int Maze::fastMovePlayer(string directions)
 int Maze::fastMovePlayerLoad(string directions)
 {
   string moves_save = moves_;
-  unsigned int counter_string = 0;
-  int return_value = 0;
+  unsigned int counter_string = INITIALIZE_ZERO;
+  int return_value = INITIALIZE_ZERO;
 
   if(player_.getTile() == FIELD_TYPE_FINISH)
   {
@@ -961,10 +962,10 @@ void Maze::setPlayerY(int y)
 //------------------------------------------------------------------------------
 bool Maze::isFilenameValid(string filename)
 {
-  int filename_counter = 0;
+  int filename_counter = INITIALIZE_ZERO;
   for(char& filename_letter : filename)
   {
-    if(filename_counter == 255)
+    if(filename_counter == FILENAME_MAX_SIZE)
     {
       return false;
     }
