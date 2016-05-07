@@ -292,14 +292,7 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   {
     splitted_commands.pop_back();
     splitted_commands.push_back(output_filename_);
-    SaveCommand save_command(splitted_commands.at(0));
-    try
-    {
-      save_command.execute(*this, splitted_commands);
-    }
-    catch(BaseException exe)
-    {
-    }
+    saveCommandSelected(splitted_commands);
   }
   
   splitted_commands.pop_back();
@@ -338,14 +331,7 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
   if(auto_save_enabled_ == true)
   {
     splitted_commands.push_back(output_filename_);
-    SaveCommand save_command(splitted_commands.at(0));
-    try
-    {
-      save_command.execute(*this, splitted_commands);
-    }
-    catch(BaseException exe)
-    {
-    }
+    saveCommandSelected(splitted_commands);
   }
 }
 
@@ -370,14 +356,7 @@ void Game::moveCommandSelected(vector<string> splitted_commands)
   {
     splitted_commands.pop_back();
     splitted_commands.push_back(output_filename_);
-    SaveCommand save_command(splitted_commands.at(0));
-    try
-    {
-      save_command.execute(*this, splitted_commands);
-    }
-    catch(BaseException exe)
-    {
-    }
+    saveCommandSelected(splitted_commands);
   }
 
   splitted_commands.pop_back();
@@ -406,14 +385,7 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
   {
     splitted_commands.pop_back();
     splitted_commands.push_back(output_filename_);
-    SaveCommand save_command(splitted_commands.at(0));
-    try
-    {
-      save_command.execute(*this, splitted_commands);
-    }
-    catch(BaseException exe)
-    {
-    }
+    saveCommandSelected(splitted_commands);
   }
   
   splitted_commands.pop_back();
@@ -435,5 +407,13 @@ void Game::saveCommandSelected(vector<string> splitted_commands)
   }
 
   SaveCommand save_command(splitted_commands.at(0));
-  save_command.execute(*this, splitted_commands);
+  
+  try
+  {
+    save_command.execute(*this, splitted_commands);
+  }
+  catch(BaseException exe)
+  {
+    return;
+  }
 }
