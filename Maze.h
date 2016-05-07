@@ -80,11 +80,6 @@ class Maze
     static const char NEW_LINE;
 
     //--------------------------------------------------------------------------
-    // maximum filename length
-    //
-    static const int FILENAME_DEFINITION_LENGTH = 255;
-
-    //--------------------------------------------------------------------------
     // output string naming the remaining steps
     //
     static const string OUTPUT_MOVED_STEPS;
