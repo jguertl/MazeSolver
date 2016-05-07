@@ -62,14 +62,14 @@ class Player
     //--------------------------------------------------------------------------
     // Setter tile_
     // Sets the current tile
-    // @param tile Tile to set
+    // @param tile symbol of the Tile
     //
     void setTile(char tile);
 
     //--------------------------------------------------------------------------
     // Getter tile_
     // returns the current tile
-    // @return Tile* Tile to return
+    // @return char symbol of the Tile
     //
     char getTile();
 

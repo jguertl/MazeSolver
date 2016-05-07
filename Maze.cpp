@@ -43,6 +43,7 @@ using std::move;
 const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
 const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
 const string Maze::SAVE_FILE_NAME = "save_file.txt";
+const string Maze::NUMBERS = "0123456789";
 const char Maze::FAST_MOVE_FLAG = 'f';
 const char Maze::ICE_MOVE_FLAG = 'i';
 const char Maze::FIELD_TYPE_PLAYER = '*';
@@ -69,14 +70,18 @@ const char Maze::FILENAME_DEFINITION_NUMBER_MIN = '0';
 const char Maze::FILENAME_DEFINITION_NUMBER_MAX = '9';
 const char Maze::FILENAME_DEFINITION_DOT = '.';
 const char Maze::FILENAME_DEFINITION_SLASH = '/';
+const char Maze::NEW_LINE = '\n';
 const int Maze::BONUS_OFFSET = 1;
 const int Maze::QUICKSAND_OFFSET = 1;
 const int Maze::GAME_WON = 1;
 const int Maze::SUCCESS = 0;
+const int Maze::EQUAL = 0;
 const int Maze::ERROR = -1;
 const int Maze::OUT_OF_STEPS = -2;
 const int Maze::INVALID_MOVE = -3;
 const int Maze::INVALID_PATH = -4;
+const int Maze::INITIALIZE_ZERO = 0;
+const int Maze::INITIALIZE_NEGATIVE = -1;
 
 //------------------------------------------------------------------------------
 Maze::Maze() : steps_(0)
@@ -92,23 +97,23 @@ Maze::~Maze()
 int Maze::load(const string& path)
 {
   ifstream file (path);
-  string line = "";
+  string line;
   string moves_save = moves_;
-  char buffer = 0;
-  char buffer_check = 0;
-  char teleport_duplicate_check = 0;
-  int start_check = 0;
-  int finish_check = 0;
+  char buffer = INITIALIZE_ZERO;
+  char buffer_check = INITIALIZE_ZERO;
+  char teleport_duplicate_check = INITIALIZE_ZERO;
+  int start_check = INITIALIZE_ZERO;
+  int finish_check = INITIALIZE_ZERO;
   unique_ptr<Tile> unique_buffer;
   vector < unique_ptr<Tile> > unique_vector_buffer;
   vector<char> teleport_symbols;
   std::stringstream sstream (std::stringstream::in | std::stringstream::out);
   bool maze_loaded = false;
-  int size_check = -1;
-  counter_x_ = 0;
-  counter_y_ = 0;
+  int size_check = INITIALIZE_NEGATIVE;
+  counter_x_ = INITIALIZE_ZERO;
+  counter_y_ = INITIALIZE_ZERO;
 
-  if(tiles_.size() != 0)
+  if(tiles_.size())
   {
     maze_loaded = true;
     save(SAVE_FILE_NAME);
@@ -147,7 +152,7 @@ int Maze::load(const string& path)
 
 
     // Check if line only contains a number
-    if(line.find_first_not_of("0123456789") != string::npos)
+    if(line.find_first_not_of(NUMBERS) != string::npos)
     {
       file.close();
       if(maze_loaded)
@@ -165,8 +170,8 @@ int Maze::load(const string& path)
     sstream.str("");
     sstream.clear();
 
-    counter_x_ = 0;
-    counter_y_ = 0;
+    counter_x_ = INITIALIZE_ZERO;
+    counter_y_ = INITIALIZE_ZERO;
     // Check if moves are valid
     while(counter_x_ < (static_cast<int>(moves_.size())))
     {
@@ -200,7 +205,7 @@ int Maze::load(const string& path)
       throw InvalidPathException();
     }
 
-    counter_x_ = 0;
+    counter_x_ = INITIALIZE_ZERO;
     while(file.get(buffer))
     {
       // Store the buffer to check if the last char is a linebreak
@@ -286,10 +291,10 @@ int Maze::load(const string& path)
       }
 
       counter_x_++;
-      if(buffer == '\n')
+      if(buffer == NEW_LINE)
       {
         // Check if width is greater than zero
-        if((int)unique_vector_buffer.size() == 0)
+        if((int)unique_vector_buffer.size() == EQUAL)
         {
           file.close();
           if(maze_loaded)
@@ -302,7 +307,7 @@ int Maze::load(const string& path)
         }
 
         // Check Maze
-        if((size_check >= 0) && (size_check != (int)unique_vector_buffer.size()))
+        if((size_check >= EQUAL) && (size_check != (int)unique_vector_buffer.size()))
         {
           file.close();
           if(maze_loaded)
@@ -332,12 +337,12 @@ int Maze::load(const string& path)
         tiles_.push_back(move(unique_vector_buffer));
         unique_vector_buffer.clear();
         counter_y_++;
-        counter_x_=0;
+        counter_x_ = INITIALIZE_ZERO;
       }
     }
 
     // Check if maze is not empty and if last character is a linebreak
-    if((tiles_.size() == 0) ||
+    if( !(tiles_.size()) ||
        (buffer_check != '\n'))
     {
       file.close();
@@ -368,7 +373,7 @@ int Maze::load(const string& path)
     }
 
     // Check if last line only contains Walls
-    counter_x_ = 0;
+    counter_x_ = INITIALIZE_ZERO;
     for(counter_x_ = 0; counter_x_ < (int)(tiles_.back().size());
       counter_x_++)
     {
@@ -400,7 +405,7 @@ int Maze::load(const string& path)
     }
 
     // Check all Teleports
-    teleport_duplicate_check = 0;
+    teleport_duplicate_check = INITIALIZE_ZERO;
     sort(teleport_symbols.begin(), teleport_symbols.end());
     while(teleport_symbols.size() > 1)
     {

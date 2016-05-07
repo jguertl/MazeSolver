@@ -5,16 +5,16 @@ Zusammenfassung
 - [x] OutOfMemoryException nicht notwendig ([Jakob](https://github.com/jguertl))
 
 Dokumentation und Programmierstil
-- [ ] Wiederkehrende Hardcoded Values
+- [x] Wiederkehrende Hardcoded Values
 
 OOP Konzepte
 - [x] Unnötig komplizierte Konstrukte
 - [x] Other: try catch in startGame, BaseException Sinn? ([Jakob](https://github.com/jguertl))
 
 Struktur & Korrektheit
-- [ ] Fehlermeldungen von Valgrind
-- [ ] Drohende Segmentation Violations
-- [ ] Speicherlöcher
+- [x] Fehlermeldungen von Valgrind
+- [x] Drohende Segmentation Violations
+- [x] Speicherlöcher
 - [x] Abfangen von bad_alloc
 - [x] Speicherlöcher: alle new in unique_pointer oder saubereres Speichermanagement
 

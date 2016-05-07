@@ -70,6 +70,11 @@ class Maze
     static const char FILENAME_DEFINITION_SLASH;
 
     //--------------------------------------------------------------------------
+    // newline character
+    //
+    static const char NEW_LINE;
+
+    //--------------------------------------------------------------------------
     // maximum filename length
     //
     static const int FILENAME_DEFINITION_LENGTH = 255;
@@ -88,6 +93,11 @@ class Maze
     // name of the save-file for reset
     //
     static const string SAVE_FILE_NAME;
+
+    //--------------------------------------------------------------------------
+    // all numbers from 0 to 9 (used in validation)
+    //
+    static const string NUMBERS;
 
     //--------------------------------------------------------------------------
     // flag for fastmove identification in movePlayer
@@ -210,6 +220,16 @@ class Maze
     static const int INVALID_PATH;
 
     //--------------------------------------------------------------------------
+    // value 0 for initialization
+    //
+    static const int INITIALIZE_ZERO;
+
+    //--------------------------------------------------------------------------
+    // value -1 for initialization
+    //
+    static const int INITIALIZE_NEGATIVE;
+
+    //--------------------------------------------------------------------------
     // current moves in fastmove-notation
     //
     string moves_;
@@ -255,6 +275,11 @@ class Maze
     // SUCCESS return value
     //
     static const int SUCCESS;
+
+    //--------------------------------------------------------------------------
+    // Result of comparison between EQUAL operands
+    //
+    static const int EQUAL;
 
     //--------------------------------------------------------------------------
     // Constructor
@@ -347,7 +372,7 @@ class Maze
     // Get the Tile at a specific position in Maze.
     // @param x x-position of the Tile
     // @param y y-position of the Tile
-    // @return Tile* pointer to the Tile
+    // @return char symbol of the Tile
     //
     char getTile(int x, int y);
 
