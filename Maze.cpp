@@ -295,7 +295,7 @@ int Maze::load(const string& path)
       if(buffer == NEW_LINE)
       {
         // Check if width is greater than zero
-        if(static_cast<int>unique_vector_buffer.size() == EQUAL)
+        if(static_cast<int>(unique_vector_buffer.size()) == EQUAL)
         {
           file.close();
           if(maze_loaded)
@@ -309,7 +309,7 @@ int Maze::load(const string& path)
 
         // Check Maze
         if((size_check >= EQUAL) && (size_check != 
-          static_cast<int>unique_vector_buffer.size()))
+          static_cast<int>(unique_vector_buffer.size())))
         {
           file.close();
           if(maze_loaded)
