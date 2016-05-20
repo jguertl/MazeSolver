@@ -553,10 +553,13 @@ int Maze::show()
 }
 
 //------------------------------------------------------------------------------
-int Maze::showMore()
+int Maze::showMore(bool showPath)
 {
   cout << Maze::OUTPUT_REMAINING_STEPS << steps_ << endl;
-  cout << Maze::OUTPUT_MOVED_STEPS << moves_ << endl;
+  if(showPath == true)
+  {
+    cout << Maze::OUTPUT_MOVED_STEPS << moves_ << endl;
+  }
   show();
   return SUCCESS;
 }

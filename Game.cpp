@@ -47,6 +47,7 @@ const string Game::MORE_COMMAND = "more";
 const string Game::FASTMOVE_COMMAND = "fastmove";
 const string Game::SAVE_COMMAND = "save";
 const string Game::WHOAMI_COMMAND = "whoami";
+const string Game::NOPATH_COMMAND = "nopath";
 const string Game::PROMPT_TEXT = "sep> ";
 const string Game::QUIT_TEXT = "Bye!";
 const string Game::DIRECTION_MOVE_UP = "up";
@@ -160,9 +161,9 @@ int Game::showMaze()
 }
 
 //------------------------------------------------------------------------------
-int Game::showExtendedMaze()
+int Game::showExtendedMaze(bool showPath)
 {
-  return maze_.showMore();
+  return maze_.showMore(showPath);
 }
 
 //------------------------------------------------------------------------------
@@ -322,7 +323,7 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
 //------------------------------------------------------------------------------
 void Game::showCommandSelected(vector<string> splitted_commands)
 {
-  if(splitted_commands.size() > 2)
+  if(splitted_commands.size() > 3)
   {
     throw WrongParameterCountException();
   }

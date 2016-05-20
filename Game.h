@@ -239,11 +239,6 @@ public:
     static const char DIRECTION_FAST_MOVE_RIGHT;
   
     //--------------------------------------------------------------------------
-    // Variable representing the show more command
-    //
-    static const string MORE_COMMAND;
-  
-    //--------------------------------------------------------------------------
     // One Way up
     //
     static const char ONE_WAY_UP;
@@ -262,6 +257,16 @@ public:
     // One Way right
     //
     static const char ONE_WAY_RIGHT;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the nopath command
+    //
+    static const string NOPATH_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the show more command
+    //
+    static const string MORE_COMMAND;
 
     //--------------------------------------------------------------------------
     // Constructor
@@ -296,9 +301,10 @@ public:
     //--------------------------------------------------------------------------
     // Show More Method
     // Shows the current maze with more infos
+    // @param showPath decides wheter the path should be printed
     // @return the result of the executed command
     //
-    int showExtendedMaze();
+    int showExtendedMaze(bool showPath);
 
     //--------------------------------------------------------------------------
     // Save Method

@@ -31,12 +31,25 @@ int ShowCommand::execute(Game& board, vector<string>& params)
     checkIfMazeIsLoaded(board);
     return board.showMaze();
   }
-  else
+  else if(params.size() == 2)
   {
     if(params.at(1) == Game::MORE_COMMAND)
     {
       checkIfMazeIsLoaded(board);
-      return board.showExtendedMaze();
+      return board.showExtendedMaze(true);
+    }
+    else
+    {
+      throw WrongParameterException();
+    }
+  }
+  else
+  {
+    if(params.at(1) == Game::MORE_COMMAND
+      && params.at(2) == Game::NOPATH_COMMAND)
+    {
+      checkIfMazeIsLoaded(board);
+      return board.showExtendedMaze(false);
     }
     else
     {

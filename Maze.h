@@ -324,9 +324,10 @@ class Maze
     //--------------------------------------------------------------------------
     // Show More
     // Prints the current maze, the remaining steps and all past valid moves.
-    // @return SUCCESS
+    // @param showPath true if the path should be printed
+    // @return int SUCCESS
     //
-    int showMore();
+    int showMore(bool showPath);
 
     //--------------------------------------------------------------------------
     // Move Player
