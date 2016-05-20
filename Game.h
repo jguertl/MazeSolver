@@ -103,9 +103,19 @@ class Game
     static const string FASTMOVE_COMMAND;
   
     //--------------------------------------------------------------------------
+    // Variable representing the whoami command
+    //
+    static const string WHOAMI_COMMAND;
+  
+    //--------------------------------------------------------------------------
     // Output string naming the finished game
     //
     static const string OUTPUT_MAZE_SOLVED;
+  
+    //--------------------------------------------------------------------------
+    // Output string naming the finished game
+    //
+    static const string CURRENT_USER;
   
     //--------------------------------------------------------------------------
     // Split String
@@ -178,7 +188,14 @@ class Game
     // @param splitted_command the command splitted by whitespace
     //
     void saveCommandSelected(vector<string> splitted_command);
-
+  
+    //--------------------------------------------------------------------------
+    // Who Am I command method
+    // Who Am I Command has been entered
+    // @param splitted_command the command splitted by whitespace
+    //
+    void whoAmICommandSelected(vector<string> splitted_command);
+  
 public:
 
     //--------------------------------------------------------------------------
@@ -321,7 +338,14 @@ public:
     // @return the result of the executed command
     //
     int reset();
-
+  
+    //--------------------------------------------------------------------------
+    // WhoAmI Method
+    // Prints the current KI
+    // @return the result of the executed command
+    //
+    int whoami();
+  
     //--------------------------------------------------------------------------
     // Set output filename method
     // Sets the output filename

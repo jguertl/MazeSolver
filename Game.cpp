@@ -28,6 +28,7 @@
 #include "MoveCommand.h"
 #include "FastMoveCommand.h"
 #include "ShowCommand.h"
+#include "WhoAmICommand.h"
 #include <sstream>
 #include <iostream>
 
@@ -45,6 +46,7 @@ const string Game::MOVE_COMMAND = "move";
 const string Game::MORE_COMMAND = "more";
 const string Game::FASTMOVE_COMMAND = "fastmove";
 const string Game::SAVE_COMMAND = "save";
+const string Game::WHOAMI_COMMAND = "whoami";
 const string Game::PROMPT_TEXT = "sep> ";
 const string Game::QUIT_TEXT = "Bye!";
 const string Game::DIRECTION_MOVE_UP = "up";
@@ -52,6 +54,7 @@ const string Game::DIRECTION_MOVE_DOWN = "down";
 const string Game::DIRECTION_MOVE_RIGHT = "right";
 const string Game::DIRECTION_MOVE_LEFT = "left";
 const string Game::OUTPUT_MAZE_SOLVED = "Congratulation! You solved the maze.";
+const string Game::CURRENT_USER = "BuerscherGuertl";
 const char Game::ONE_WAY_UP = '^';
 const char Game::ONE_WAY_DOWN = 'v';
 const char Game::ONE_WAY_LEFT = '<';
@@ -130,6 +133,10 @@ void Game::startGame()
       {
         saveCommandSelected(splitted_commands);
       }
+      else if(command == Game::WHOAMI_COMMAND)
+      {
+        whoAmICommandSelected(splitted_commands);
+      }
       else
       {
         throw UnknownCommandException();
@@ -186,6 +193,13 @@ int Game::fastMovePlayer(string directions)
 int Game::reset()
 {
   return maze_.reset();
+}
+
+//------------------------------------------------------------------------------
+int Game::whoami()
+{
+  cout << CURRENT_USER << endl;
+  return Maze::SUCCESS;
 }
 
 //------------------------------------------------------------------------------
@@ -333,6 +347,18 @@ void Game::resetCommandSelected(vector<string> splitted_commands)
     splitted_commands.push_back(output_filename_);
     saveCommandSelected(splitted_commands);
   }
+}
+
+//------------------------------------------------------------------------------
+void Game::whoAmICommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() > 1)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  WhoAmICommand whoami_command(splitted_commands.at(0));
+  whoami_command.execute(*this, splitted_commands);
 }
 
 //------------------------------------------------------------------------------
