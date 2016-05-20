@@ -25,6 +25,8 @@
 #include "Quicksand.h"
 #include "Teleport.h"
 #include "OneWay.h"
+#include "Hole.h"
+#include "Counter.h"
 #include "FileOpenException.h"
 #include "FileAccessException.h"
 #include "InvalidFileException.h"
@@ -64,6 +66,9 @@ const char Maze::FIELD_TYPE_ONEWAY_UP = '^';
 const char Maze::FIELD_TYPE_ONEWAY_DOWN = 'v';
 const char Maze::FIELD_TYPE_ONEWAY_LEFT = '<';
 const char Maze::FIELD_TYPE_ONEWAY_RIGHT = '>';
+const char Maze::FIELD_TYPE_HOLE = 's';
+const char Maze::FIELD_TYPE_COUNTER_MIN = '1';
+const char Maze::FIELD_TYPE_COUNTER_MAX = '9';
 const char Maze::FILENAME_DEFINITION_LOWERCASE_MIN = 'a';
 const char Maze::FILENAME_DEFINITION_LOWERCASE_MAX = 'z';
 const char Maze::FILENAME_DEFINITION_UPPERCASE_MIN = 'A';

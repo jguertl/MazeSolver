@@ -188,7 +188,22 @@ class Maze
     // field of type oneway right
     //
     static const char FIELD_TYPE_ONEWAY_RIGHT;
-
+  
+    //--------------------------------------------------------------------------
+    // field of type hole
+    //
+    static const char FIELD_TYPE_HOLE;
+  
+    //--------------------------------------------------------------------------
+    // field of type counter minimum
+    //
+    static const char FIELD_TYPE_COUNTER_MIN;
+  
+    //--------------------------------------------------------------------------
+    // field of type counter maximum
+    //
+    static const char FIELD_TYPE_COUNTER_MAX;
+  
     //--------------------------------------------------------------------------
     // BONUS_OFFSET
     //

@@ -54,5 +54,5 @@ class Teleport : public Tile
 
 };
 
-#endif //TELEPORT_H _INCLUDED
+#endif //TELEPORT_H_INCLUDED
 
