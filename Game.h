@@ -108,6 +108,11 @@ class Game
     static const string WHOAMI_COMMAND;
   
     //--------------------------------------------------------------------------
+    // Variable representing the solve command
+    //
+    static const string SOLVE_COMMAND;
+  
+    //--------------------------------------------------------------------------
     // Output string naming the finished game
     //
     static const string OUTPUT_MAZE_SOLVED;
@@ -196,6 +201,13 @@ class Game
     //
     void whoAmICommandSelected(vector<string> splitted_command);
   
+    //--------------------------------------------------------------------------
+    // Solve command method
+    // Solve Command has been entered
+    // @param splitted_command the command splitted by whitespace
+    //
+    void solveCommandSelected(vector<string> splitted_command);
+  
 public:
 
     //--------------------------------------------------------------------------
@@ -267,6 +279,11 @@ public:
     // Variable representing the show more command
     //
     static const string MORE_COMMAND;
+  
+    //--------------------------------------------------------------------------
+    // Variable representing the silent more command
+    //
+    static const string SILENT_COMMAND;
 
     //--------------------------------------------------------------------------
     // Constructor
@@ -351,6 +368,14 @@ public:
     // @return the result of the executed command
     //
     int whoami();
+  
+    //--------------------------------------------------------------------------
+    // Solve
+    // Solves the current maze
+    // @param silent decides wheter the path should be printed
+    // @return the result of the executed command
+    //
+    int solveMaze(bool silent);
   
     //--------------------------------------------------------------------------
     // Set output filename method

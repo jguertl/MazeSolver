@@ -328,7 +328,15 @@ class Maze
     // @return int SUCCESS
     //
     int showMore(bool showPath);
-
+  
+    //--------------------------------------------------------------------------
+    // Solve
+    // Solves the current maze
+    // @param silent true if the path should be printed
+    // @return int SUCCESS
+    //
+    int solve(bool silent);
+  
     //--------------------------------------------------------------------------
     // Move Player
     // Moves the Player in the direction on the Maze

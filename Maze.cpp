@@ -31,6 +31,8 @@
 #include "InvalidPathException.h"
 #include "NoMoreStepsException.h"
 #include "InvalidMoveException.h"
+#include "NoPathFoundException.h"
+#include "AlreadySolvedException.h"
 
 using std::ofstream;
 using std::ifstream;
@@ -561,6 +563,18 @@ int Maze::showMore(bool showPath)
     cout << Maze::OUTPUT_MOVED_STEPS << moves_ << endl;
   }
   show();
+  return SUCCESS;
+}
+
+//------------------------------------------------------------------------------
+int Maze::solve(bool silent)
+{
+  //Maze is not solvable
+  throw NoPathFoundException();
+  
+  //Player has already solved the maze
+  throw AlreadySolvedException();
+  
   return SUCCESS;
 }
 

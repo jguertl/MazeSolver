@@ -23,12 +23,14 @@
 #include "FileAccessException.h"
 #include "FileAccessException.h"
 #include "NoMoreStepsException.h"
+#include "NoPathFoundException.h"
 #include "LoadCommand.h"
 #include "ResetCommand.h"
 #include "MoveCommand.h"
 #include "FastMoveCommand.h"
 #include "ShowCommand.h"
 #include "WhoAmICommand.h"
+#include "SolveCommand.h"
 #include <sstream>
 #include <iostream>
 
@@ -48,6 +50,8 @@ const string Game::FASTMOVE_COMMAND = "fastmove";
 const string Game::SAVE_COMMAND = "save";
 const string Game::WHOAMI_COMMAND = "whoami";
 const string Game::NOPATH_COMMAND = "nopath";
+const string Game::SOLVE_COMMAND = "solve";
+const string Game::SILENT_COMMAND = "silent";
 const string Game::PROMPT_TEXT = "sep> ";
 const string Game::QUIT_TEXT = "Bye!";
 const string Game::DIRECTION_MOVE_UP = "up";
@@ -138,6 +142,10 @@ void Game::startGame()
       {
         whoAmICommandSelected(splitted_commands);
       }
+      else if(command == Game::SOLVE_COMMAND)
+      {
+        solveCommandSelected(splitted_commands);
+      }
       else
       {
         throw UnknownCommandException();
@@ -188,6 +196,12 @@ int Game::movePlayer(string direction)
 int Game::fastMovePlayer(string directions)
 {
   return maze_.fastMovePlayer(directions);
+}
+
+//------------------------------------------------------------------------------
+int Game::solveMaze(bool silent)
+{
+  return maze_.solve(silent);
 }
 
 //------------------------------------------------------------------------------
@@ -330,6 +344,18 @@ void Game::showCommandSelected(vector<string> splitted_commands)
 
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
+}
+
+//------------------------------------------------------------------------------
+void Game::solveCommandSelected(vector<string> splitted_commands)
+{
+  if(splitted_commands.size() > 2)
+  {
+    throw WrongParameterCountException();
+  }
+  
+  SolveCommand solve_command(splitted_commands.at(0));
+  solve_command.execute(*this, splitted_commands);
 }
 
 //------------------------------------------------------------------------------
