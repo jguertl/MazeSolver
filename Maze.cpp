@@ -315,7 +315,7 @@ int Maze::load(const string& path)
         }
 
         // Check Maze
-        if((size_check >= EQUAL) && (size_check != 
+        if((size_check >= EQUAL) && (size_check !=
           static_cast<int>(unique_vector_buffer.size())))
         {
           file.close();
@@ -575,25 +575,25 @@ int Maze::showMore(bool showPath)
 int Maze::solve(bool silent)
 {
   //Try to solve the maze
-  
+
   //If Maze is not solvable
   throw NoPathFoundException();
-  
+
   //If Player has already solved the maze
   throw AlreadySolvedException();
-  
+
   //Solve the maze using fastmove
-  
+
   //Save the file
-  
+
   //Print results
   cout << "The maze was solved in " << "7" << " steps." << endl;
-  
+
   if(silent == false)
   {
     cout << "Found path: " << "llldr" << endl;
   }
-  
+
   return SUCCESS;
 }
 
@@ -653,7 +653,7 @@ int Maze::movePlayer(string direction)
   // Move the player and count down
   if(direction == Game::DIRECTION_MOVE_UP)
   {
-    if(tiles_.at(player_.getY() - 1).at(player_.getX())->getSymbol() != 
+    if(tiles_.at(player_.getY() - 1).at(player_.getX())->getSymbol() !=
       FIELD_TYPE_WALL)
     {
       player_.setY(player_.getY() - 1);
@@ -680,7 +680,7 @@ int Maze::movePlayer(string direction)
   }
   else if(direction == Game::DIRECTION_MOVE_DOWN)
   {
-    if(tiles_.at(player_.getY() + 1).at(player_.getX())->getSymbol() != 
+    if(tiles_.at(player_.getY() + 1).at(player_.getX())->getSymbol() !=
       FIELD_TYPE_WALL)
     {
       player_.setY(player_.getY() + 1);
@@ -707,7 +707,7 @@ int Maze::movePlayer(string direction)
   }
   else if(direction == Game::DIRECTION_MOVE_LEFT)
   {
-    if(tiles_.at(player_.getY()).at(player_.getX() - 1)->getSymbol() != 
+    if(tiles_.at(player_.getY()).at(player_.getX() - 1)->getSymbol() !=
       FIELD_TYPE_WALL)
     {
       player_.setX(player_.getX() - 1);
@@ -734,7 +734,7 @@ int Maze::movePlayer(string direction)
   }
   else if(direction == Game::DIRECTION_MOVE_RIGHT)
   {
-    if(tiles_.at(player_.getY()).at(player_.getX() + 1)->getSymbol() != 
+    if(tiles_.at(player_.getY()).at(player_.getX() + 1)->getSymbol() !=
       FIELD_TYPE_WALL)
     {
       player_.setX(player_.getX() + 1);
@@ -904,11 +904,7 @@ int Maze::fastMovePlayerLoad(string directions)
       moves_save = moves_;
       load(SAVE_FILE_NAME);
       fastMovePlayerLoad(moves_save);
-      if(return_value == OUT_OF_STEPS)
-      {
-        throw NoMoreStepsException();
-      }
-      else if(return_value != SUCCESS)
+      if(return_value != SUCCESS)
       {
         throw InvalidPathException();
       }
@@ -930,7 +926,7 @@ int Maze::moveTeleport(char symbol)
     counter_y_++)
   {
     for(counter_x_ = 0;
-      counter_x_ < static_cast<int>(tiles_.at(counter_y_).size()); 
+      counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
       counter_x_++)
     {
       if((tiles_.at(counter_y_).at(counter_x_)->getSymbol() == symbol) &&
