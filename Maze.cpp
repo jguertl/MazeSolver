@@ -277,6 +277,12 @@ int Maze::load(const string& path)
 
         teleport_symbols.push_back(buffer);
       }
+      else if(buffer == FIELD_TYPE_HOLE)
+      {
+        // Hole
+        unique_buffer = unique_ptr<Tile>(new Hole(buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
+      }
       else if((buffer == FIELD_TYPE_ONEWAY_LEFT) ||
         (buffer == FIELD_TYPE_ONEWAY_RIGHT) ||
         (buffer == FIELD_TYPE_ONEWAY_UP) ||
@@ -782,7 +788,13 @@ int Maze::movePlayer(string direction)
     steps_ = steps_- ((player_.getTile() -
       FIELD_TYPE_QUICKSAND_MIN) + QUICKSAND_OFFSET);
   }
-
+  
+  // Player lands on Hole tile
+  if(player_.getTile() == FIELD_TYPE_HOLE)
+  {
+    moveTeleport(FIELD_TYPE_START);
+  }
+  
   // Player lands on Ice
   if((player_.getTile()) == FIELD_TYPE_ICE)
   {

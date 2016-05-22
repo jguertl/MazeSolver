@@ -7,4 +7,4 @@
   - [ ] Maze solving algorithm ([Peter](https://github.com/petbuer))
 - [x] 'Show More Path' Befehl ([Jakob](https://github.com/jguertl))
 - [ ] Counter Feldtyp ([Peter](https://github.com/petbuer))
-- [ ] Hole Feldtyp ([Peter](https://github.com/petbuer))
+- [x] Hole Feldtyp ([Peter](https://github.com/petbuer))
