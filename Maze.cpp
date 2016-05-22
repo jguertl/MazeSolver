@@ -283,6 +283,13 @@ int Maze::load(const string& path)
         unique_buffer = unique_ptr<Tile>(new Hole(buffer));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
+      else if((buffer >= FIELD_TYPE_COUNTER_MIN) &&
+              (buffer <= FIELD_TYPE_COUNTER_MAX))
+      {
+        // Counter
+        unique_buffer = unique_ptr<Tile>(new Counter(buffer));
+        unique_vector_buffer.push_back(move(unique_buffer));
+      }
       else if((buffer == FIELD_TYPE_ONEWAY_LEFT) ||
         (buffer == FIELD_TYPE_ONEWAY_RIGHT) ||
         (buffer == FIELD_TYPE_ONEWAY_UP) ||
