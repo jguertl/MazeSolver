@@ -645,6 +645,7 @@ int Maze::movePlayer(string direction)
       }
       else
       {
+        cout << steps_ << endl;
         throw NoMoreStepsException();
       }
     }
@@ -772,12 +773,14 @@ int Maze::movePlayer(string direction)
       }
     }
   }
+
   player_.setTile(getTile(player_.getX(), player_.getY()));
 
   // Player lands on Teleport tile
   if((player_.getTile() >= FIELD_TYPE_TELEPORT_MIN) &&
     (player_.getTile() <= FIELD_TYPE_TELEPORT_MAX))
   {
+    player_.setTile(getTile(player_.getX(), player_.getY()));
     moveTeleport(player_.getTile());
   }
 
@@ -794,14 +797,20 @@ int Maze::movePlayer(string direction)
   {
     steps_ = steps_- ((player_.getTile() -
       FIELD_TYPE_QUICKSAND_MIN) + QUICKSAND_OFFSET);
+
+    // Set steps_ to zero if it is less than zero
+    if(steps_ < 0)
+    {
+      steps_ = INITIALIZE_ZERO;
+    }
   }
-  
+
   // Player lands on Hole tile
   if(player_.getTile() == FIELD_TYPE_HOLE)
   {
     moveTeleport(FIELD_TYPE_START);
   }
-  
+
   // Player lands on Ice
   if((player_.getTile()) == FIELD_TYPE_ICE)
   {
@@ -812,6 +821,7 @@ int Maze::movePlayer(string direction)
   {
     return GAME_WON;
   }
+
   return SUCCESS;
 }
 
