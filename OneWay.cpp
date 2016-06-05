@@ -16,11 +16,10 @@ OneWay::OneWay()
 }
 
 //------------------------------------------------------------------------------
-OneWay::OneWay(char symbol)
+OneWay::OneWay(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
-
 
 //------------------------------------------------------------------------------
 OneWay::OneWay(const OneWay& orig)

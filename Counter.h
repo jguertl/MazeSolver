@@ -21,29 +21,29 @@
 class Counter : public Tile
 {
 public:
-  
+
   //--------------------------------------------------------------------------
   // Constructor
   //
   Counter();
-  
+
   //--------------------------------------------------------------------------
   // Constructor
   //
-  Counter(char symbol);
-  
+  Counter(char symbol, int id, int value);
+
   //--------------------------------------------------------------------------
   // Copy Constructor
   // Makes a copy of another Counter Object.
   // @param orig Original to copy.
   //
   Counter(const Counter& orig);
-  
+
   //--------------------------------------------------------------------------
   // Destructor
   //
   virtual ~Counter();
-  
+
   //--------------------------------------------------------------------------
   // Move Method
   // Checks if a position move on this field is possible
@@ -51,7 +51,7 @@ public:
   // @return bool Returns result of the move operation.
   //
   virtual bool move(string direction) override;
-  
+
 };
 
 #endif //COUNTER_H_INCLUDED

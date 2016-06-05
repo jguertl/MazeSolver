@@ -29,7 +29,7 @@ class Path : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Path(char symbol);
+    Path(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

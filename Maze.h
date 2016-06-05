@@ -14,12 +14,38 @@
 #include <string>
 #include <vector>
 #include <memory>
+
+#include <vector>
+#include <list>
+#include <limits>
+#include <set>
+#include <utility>
+#include <iterator>
+
 class Player;
 class Game;
 
 using std::string;
 using std::vector;
 using std::unique_ptr;
+
+
+// http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+// -----------------------------------------------------------------------
+typedef int vertex_t;
+typedef double weight_t;
+const weight_t max_weight = std::numeric_limits<double>::infinity();
+struct neighbor {
+    vertex_t target;
+    weight_t weight;
+    neighbor(vertex_t arg_target, weight_t arg_weight)
+        : target(arg_target), weight(arg_weight) { }
+};
+typedef std::vector<std::vector<neighbor> > adjacency_list_t;
+// -----------------------------------------------------------------------
+// http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+
+
 
 //------------------------------------------------------------------------------
 // Style Maze
@@ -188,22 +214,22 @@ class Maze
     // field of type oneway right
     //
     static const char FIELD_TYPE_ONEWAY_RIGHT;
-  
+
     //--------------------------------------------------------------------------
     // field of type hole
     //
     static const char FIELD_TYPE_HOLE;
-  
+
     //--------------------------------------------------------------------------
     // field of type counter minimum
     //
     static const char FIELD_TYPE_COUNTER_MIN;
-  
+
     //--------------------------------------------------------------------------
     // field of type counter maximum
     //
     static const char FIELD_TYPE_COUNTER_MAX;
-  
+
     //--------------------------------------------------------------------------
     // BONUS_OFFSET
     //
@@ -270,6 +296,16 @@ class Maze
     int counter_y_;
 
     //--------------------------------------------------------------------------
+    // ID of the start tile
+    //
+    int start_id_;
+
+    //--------------------------------------------------------------------------
+    // ID of the finish tile
+    //
+    int finish_id_;
+
+    //--------------------------------------------------------------------------
     // Player
     //
     Player player_;
@@ -278,6 +314,11 @@ class Maze
     // Collection of tiles
     //
     vector<vector<unique_ptr<Tile>>> tiles_;
+
+    //--------------------------------------------------------------------------
+    // Twodimensional vector for the adjacencies
+    //
+    adjacency_list_t adjacency_list_;
 
   public:
 
@@ -343,7 +384,7 @@ class Maze
     // @return int SUCCESS
     //
     int showMore(bool showPath);
-  
+
     //--------------------------------------------------------------------------
     // Solve
     // Solves the current maze
@@ -351,7 +392,7 @@ class Maze
     // @return int SUCCESS
     //
     int solve(bool silent);
-  
+
     //--------------------------------------------------------------------------
     // Move Player
     // Moves the Player in the direction on the Maze
@@ -383,6 +424,13 @@ class Maze
     // @return int SUCCESS or ERROR
     //
     int moveTeleport(char symbol);
+
+    //--------------------------------------------------------------------------
+    // Get the ID of the corresponding Teleport-Tile
+    // @param symbol the character of the teleport fields
+    // @return int id of the other teleport field or ERROR
+    //
+    int getTeleportId(char symbol);
 
     //--------------------------------------------------------------------------
     // Reset Method

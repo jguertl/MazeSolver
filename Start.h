@@ -29,7 +29,7 @@ class Start : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Start(char symbol);
+    Start(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

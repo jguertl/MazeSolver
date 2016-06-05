@@ -21,29 +21,29 @@
 class Hole : public Tile
 {
 public:
-  
+
   //--------------------------------------------------------------------------
   // Constructor
   //
   Hole();
-  
+
   //--------------------------------------------------------------------------
   // Constructor
   //
-  Hole(char symbol);
-  
+  Hole(char symbol, int id, int value);
+
   //--------------------------------------------------------------------------
   // Copy Constructor
   // Makes a copy of another Hole Object.
   // @param orig Original to copy.
   //
   Hole(const Hole& orig);
-  
+
   //--------------------------------------------------------------------------
   // Destructor
   //
   virtual ~Hole();
-  
+
   //--------------------------------------------------------------------------
   // Move Method
   // Checks if a position move on this field is possible
@@ -51,7 +51,7 @@ public:
   // @return bool Returns result of the move operation.
   //
   virtual bool move(string direction) override;
-  
+
 };
 
 #endif //HOLE_H_INCLUDED

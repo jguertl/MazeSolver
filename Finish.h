@@ -29,7 +29,7 @@ class Finish : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Finish(char symbol);
+    Finish(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

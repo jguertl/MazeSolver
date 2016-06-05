@@ -16,11 +16,10 @@ Hole::Hole()
 }
 
 //------------------------------------------------------------------------------
-Hole::Hole(char symbol)
+Hole::Hole(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
-
 
 //------------------------------------------------------------------------------
 Hole::Hole(const Hole& orig)

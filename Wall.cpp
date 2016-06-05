@@ -16,9 +16,9 @@ Wall::Wall()
 }
 
 //------------------------------------------------------------------------------
-Wall::Wall(char symbol)
+Wall::Wall(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
 
 //------------------------------------------------------------------------------

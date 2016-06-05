@@ -16,9 +16,9 @@ Quicksand::Quicksand()
 }
 
 //------------------------------------------------------------------------------
-Quicksand::Quicksand(char symbol)
+Quicksand::Quicksand(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
 
 //------------------------------------------------------------------------------

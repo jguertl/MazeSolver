@@ -29,7 +29,7 @@ class Quicksand : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Quicksand(char symbol);
+    Quicksand(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

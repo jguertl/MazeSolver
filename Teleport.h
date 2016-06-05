@@ -30,7 +30,7 @@ class Teleport : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Teleport(char symbol);
+    Teleport(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

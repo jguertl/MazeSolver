@@ -16,9 +16,9 @@ Path::Path()
 }
 
 //------------------------------------------------------------------------------
-Path::Path(char symbol)
+Path::Path(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
 
 //------------------------------------------------------------------------------

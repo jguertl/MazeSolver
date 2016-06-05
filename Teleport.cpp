@@ -16,11 +16,10 @@ Teleport::Teleport()
 }
 
 //------------------------------------------------------------------------------
-Teleport::Teleport(char symbol)
+Teleport::Teleport(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
-
 
 //------------------------------------------------------------------------------
 Teleport::Teleport(const Teleport& orig)

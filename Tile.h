@@ -31,6 +31,11 @@ class Tile
     char symbol_;
 
     //--------------------------------------------------------------------------
+    // Unique identification number
+    //
+    int id_;
+
+    //--------------------------------------------------------------------------
     // The value of the tile
     //
     int value_;
@@ -41,6 +46,11 @@ class Tile
     // Constructor
     //
     Tile();
+
+    //--------------------------------------------------------------------------
+    // Constructor for three arguments
+    //
+    Tile(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor
@@ -89,6 +99,20 @@ class Tile
     // @return int returns the value
     //
     int getValue();
+
+    //--------------------------------------------------------------------------
+    // Setter Method
+    // Sets the current id
+    // @param id The given id
+    //
+    void setId(char id);
+
+    //--------------------------------------------------------------------------
+    // Getter Method
+    // Gets the current id
+    // @return int returns the id
+    //
+    int getId();
 };
 
 #endif //TILE_H_INCLUDED

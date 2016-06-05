@@ -16,9 +16,9 @@ Finish::Finish()
 }
 
 //------------------------------------------------------------------------------
-Finish::Finish(char symbol)
+Finish::Finish(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
 
 //------------------------------------------------------------------------------

@@ -29,7 +29,7 @@ class Ice : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Ice(char symbol);
+    Ice(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

@@ -16,9 +16,9 @@ Start::Start()
 }
 
 //------------------------------------------------------------------------------
-Start::Start(char symbol)
+Start::Start(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
 
 //------------------------------------------------------------------------------

@@ -29,7 +29,7 @@ class Wall : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Wall(char symbol);
+    Wall(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

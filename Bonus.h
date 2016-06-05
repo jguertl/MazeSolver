@@ -29,7 +29,7 @@ class Bonus : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    Bonus(char symbol, int value);
+    Bonus(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor

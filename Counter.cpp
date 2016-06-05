@@ -17,11 +17,10 @@ Counter::Counter()
 }
 
 //------------------------------------------------------------------------------
-Counter::Counter(char symbol)
+Counter::Counter(char symbol, int id, int value) :
+  Tile(symbol, id, value)
 {
-  setSymbol(symbol);
 }
-
 
 //------------------------------------------------------------------------------
 Counter::Counter(const Counter& orig)
@@ -38,10 +37,10 @@ bool Counter::move(string direction)
 {
   if(getSymbol() == '#')
     return false;
-  
+
   int currentCounter = getSymbol();
   std::cout << currentCounter << std::endl;
-  
+
   if(currentCounter == 1)
   {
     setSymbol('#');

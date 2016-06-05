@@ -21,7 +21,7 @@
 class OneWay : public Tile
 {
   public:
-  
+
     //--------------------------------------------------------------------------
     // Constructor
     //
@@ -30,7 +30,7 @@ class OneWay : public Tile
     //--------------------------------------------------------------------------
     // Constructor
     //
-    OneWay(char symbol);
+    OneWay(char symbol, int id, int value);
 
     //--------------------------------------------------------------------------
     // Copy Constructor
