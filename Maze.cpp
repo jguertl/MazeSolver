@@ -223,7 +223,6 @@ int Maze::load(const string& path)
       throw InvalidFileException();
     }
 
-
     // Check if line only contains a number
     if(line.find_first_not_of(NUMBERS) != string::npos)
     {
@@ -956,6 +955,13 @@ int Maze::solve(bool silent)
   solved_path = generatePath(path);
   solved_steps = min_distance[finish_id_] - ((path.size() - 1) * SOLVE_BONUS_CORRECTION);
 
+  // solve the maze with fastmove
+  if(fastMovePlayer(solved_path) == GAME_WON)
+  {
+    cout << Game::OUTPUT_MAZE_SOLVED << endl;
+  }
+
+
   //Save the file
   save(solved_file_name);
 
@@ -967,7 +973,7 @@ int Maze::solve(bool silent)
     cout << "Found path: " << solved_path << endl;
   }
 
-  return GAME_WON;
+  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------

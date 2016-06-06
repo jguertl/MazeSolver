@@ -349,18 +349,13 @@ void Game::showCommandSelected(vector<string> splitted_commands)
 //------------------------------------------------------------------------------
 void Game::solveCommandSelected(vector<string> splitted_commands)
 {
-  int maze_return_value;
   if(splitted_commands.size() > 2)
   {
     throw WrongParameterCountException();
   }
 
   SolveCommand solve_command(splitted_commands.at(0));
-  maze_return_value = solve_command.execute(*this, splitted_commands);
-  if(maze_return_value == Maze::GAME_WON)
-  {
-    cout << OUTPUT_MAZE_SOLVED << endl;
-  }
+  solve_command.execute(*this, splitted_commands);
 }
 
 //------------------------------------------------------------------------------

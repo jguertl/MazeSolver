@@ -101,27 +101,22 @@ class Game
     // Variable representing the fastmove command
     //
     static const string FASTMOVE_COMMAND;
-  
+
     //--------------------------------------------------------------------------
     // Variable representing the whoami command
     //
     static const string WHOAMI_COMMAND;
-  
+
     //--------------------------------------------------------------------------
     // Variable representing the solve command
     //
     static const string SOLVE_COMMAND;
-  
-    //--------------------------------------------------------------------------
-    // Output string naming the finished game
-    //
-    static const string OUTPUT_MAZE_SOLVED;
-  
+
     //--------------------------------------------------------------------------
     // Output string naming the finished game
     //
     static const string CURRENT_USER;
-  
+
     //--------------------------------------------------------------------------
     // Split String
     // Helper Method to split a string
@@ -130,7 +125,7 @@ class Game
     // @return return a vector with the splitted string
     //
     vector<string> splitString(string input, char delimiter);
-  
+
     //--------------------------------------------------------------------------
     // No more steps method
     // Gets called when no more steps are available
@@ -193,22 +188,28 @@ class Game
     // @param splitted_command the command splitted by whitespace
     //
     void saveCommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Who Am I command method
     // Who Am I Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void whoAmICommandSelected(vector<string> splitted_command);
-  
+
     //--------------------------------------------------------------------------
     // Solve command method
     // Solve Command has been entered
     // @param splitted_command the command splitted by whitespace
     //
     void solveCommandSelected(vector<string> splitted_command);
-  
+
 public:
+
+    //--------------------------------------------------------------------------
+    // Output string naming the finished game
+    //
+    static const string OUTPUT_MAZE_SOLVED;
+
 
     //--------------------------------------------------------------------------
     // Move Direction "up"
@@ -249,7 +250,7 @@ public:
     // Fast Move Direction "r"
     //
     static const char DIRECTION_FAST_MOVE_RIGHT;
-  
+
     //--------------------------------------------------------------------------
     // One Way up
     //
@@ -269,17 +270,17 @@ public:
     // One Way right
     //
     static const char ONE_WAY_RIGHT;
-  
+
     //--------------------------------------------------------------------------
     // Variable representing the nopath command
     //
     static const string NOPATH_COMMAND;
-  
+
     //--------------------------------------------------------------------------
     // Variable representing the show more command
     //
     static const string MORE_COMMAND;
-  
+
     //--------------------------------------------------------------------------
     // Variable representing the silent more command
     //
@@ -361,14 +362,14 @@ public:
     // @return the result of the executed command
     //
     int reset();
-  
+
     //--------------------------------------------------------------------------
     // WhoAmI Method
     // Prints the current KI
     // @return the result of the executed command
     //
     int whoami();
-  
+
     //--------------------------------------------------------------------------
     // Solve
     // Solves the current maze
@@ -376,7 +377,7 @@ public:
     // @return the result of the executed command
     //
     int solveMaze(bool silent);
-  
+
     //--------------------------------------------------------------------------
     // Set output filename method
     // Sets the output filename
