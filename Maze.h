@@ -236,6 +236,23 @@ class Maze
     static const char FIELD_TYPE_COUNTER_MAX;
 
     //--------------------------------------------------------------------------
+    // the char '0' is used to convert from a char to an int number between 0
+    // and 9
+    //
+    static const char COUNTER_ZERO_CHAR;
+
+    //--------------------------------------------------------------------------
+    // SOLVE_BONUS_CORRECTION is used to avoid negative costs in the dijkstra
+    // algorithm
+    //
+    static const int SOLVE_BONUS_CORRECTION;
+
+    //--------------------------------------------------------------------------
+    // minimal value of a counter tile
+    //
+    static const int COUNTER_MIN_VALUE;
+
+    //--------------------------------------------------------------------------
     // BONUS_OFFSET
     //
     static const int BONUS_OFFSET;

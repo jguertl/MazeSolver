@@ -36,18 +36,12 @@ Counter::~Counter()
 bool Counter::move(string direction)
 {
   if(getSymbol() == '#')
-    return false;
-
-  int currentCounter = getSymbol();
-  std::cout << currentCounter << std::endl;
-
-  if(currentCounter == 1)
   {
-    setSymbol('#');
+    return false;
   }
   else
   {
-    setSymbol(static_cast<int>(getSymbol()) - 1);
+    return true;
   }
   return true;
 }

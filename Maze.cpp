@@ -70,6 +70,7 @@ const char Maze::FIELD_TYPE_ONEWAY_RIGHT = '>';
 const char Maze::FIELD_TYPE_HOLE = 's';
 const char Maze::FIELD_TYPE_COUNTER_MIN = '1';
 const char Maze::FIELD_TYPE_COUNTER_MAX = '9';
+const char Maze::COUNTER_ZERO_CHAR = '0';
 const char Maze::FILENAME_DEFINITION_LOWERCASE_MIN = 'a';
 const char Maze::FILENAME_DEFINITION_LOWERCASE_MAX = 'z';
 const char Maze::FILENAME_DEFINITION_UPPERCASE_MIN = 'A';
@@ -80,6 +81,8 @@ const char Maze::FILENAME_DEFINITION_DOT = '.';
 const char Maze::FILENAME_DEFINITION_SLASH = '/';
 const int Maze::FILENAME_MAX_SIZE = 255;
 const char Maze::NEW_LINE = '\n';
+const int Maze::SOLVE_BONUS_CORRECTION = 5;
+const int Maze::COUNTER_MIN_VALUE = 1;
 const int Maze::BONUS_OFFSET = 1;
 const int Maze::QUICKSAND_OFFSET = 1;
 const int Maze::GAME_WON = 1;
@@ -361,7 +364,7 @@ int Maze::load(const string& path)
       {
         // Counter
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Counter(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Counter(buffer, counter_id, buffer - COUNTER_ZERO_CHAR));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if((buffer == FIELD_TYPE_ONEWAY_LEFT) ||
@@ -641,12 +644,19 @@ int Maze::show()
         {
           cout << FIELD_TYPE_PATH;
         }
+        /*
+        else if((tiles_.at(counter_y).at(counter_x)->getSymbol() >=
+          FIELD_TYPE_COUNTER_MIN) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() <=
+          FIELD_TYPE_COUNTER_MAX))
+        {
+          cout << tiles_.at(counter_y).at(counter_x)->getValue();
+        }
+        */
         else
         {
           cout << tiles_.at(counter_y).at(counter_x)->getSymbol();
         }
-
-
       }
     }
     cout << endl;
@@ -713,20 +723,20 @@ int Maze::solve(bool silent)
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
-              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue()))+1));
+              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
              (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
-              (tiles_.at(counter_y-1).at(counter_x)->getValue())+1));
+              (tiles_.at(counter_y-1).at(counter_x)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
              (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y-1), 1));
+              neighbor(getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y-1), 1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
           {
@@ -744,18 +754,18 @@ int Maze::solve(bool silent)
              (tiles_.at(ice_counter).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1));
+              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(), 1));
+              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
           }
         }
         if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() != FIELD_TYPE_WALL) &&
@@ -768,20 +778,20 @@ int Maze::solve(bool silent)
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
-              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue()))+1));
+              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
              (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
-              (tiles_.at(counter_y+1).at(counter_x)->getValue())+1));
+              (tiles_.at(counter_y+1).at(counter_x)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
              (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(), counter_x, counter_y+1), 1));
+              neighbor(getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(), counter_x, counter_y+1), 1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
           {
@@ -798,18 +808,18 @@ int Maze::solve(bool silent)
              (tiles_.at(ice_counter).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1));
+              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(), 1));
+              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
           }
         }
         if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() != FIELD_TYPE_WALL) &&
@@ -822,20 +832,20 @@ int Maze::solve(bool silent)
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
-              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue()))+1));
+              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
              (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
-              (tiles_.at(counter_y).at(counter_x-1)->getValue())+1));
+              (tiles_.at(counter_y).at(counter_x-1)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
              (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(), counter_x-1, counter_y), 1));
+              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(), counter_x-1, counter_y), 1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() == FIELD_TYPE_ICE)
           {
@@ -852,18 +862,18 @@ int Maze::solve(bool silent)
              (tiles_.at(counter_y).at(ice_counter)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1));
+              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(), 1));
+              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(), 1 + SOLVE_BONUS_CORRECTION));
           }
         }
         if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() != FIELD_TYPE_WALL) &&
@@ -876,20 +886,20 @@ int Maze::solve(bool silent)
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
-              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue()))+1));
+              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
              (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
-              (tiles_.at(counter_y).at(counter_x+1)->getValue())+1));
+              (tiles_.at(counter_y).at(counter_x+1)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
              (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(), counter_x+1, counter_y), 1));
+              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(), counter_x+1, counter_y), 1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() == FIELD_TYPE_ICE)
           {
@@ -906,18 +916,18 @@ int Maze::solve(bool silent)
              (tiles_.at(counter_y).at(ice_counter)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1));
+              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(), 1));
+              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(), 1 + SOLVE_BONUS_CORRECTION));
           }
         }
       }
@@ -943,10 +953,7 @@ int Maze::solve(bool silent)
   }
 
   solved_path = generatePath(path);
-  solved_steps = min_distance[finish_id_];
-
-  //Solve the maze using fastmove
-  fastMovePlayer(solved_path);
+  solved_steps = min_distance[finish_id_] - ((path.size() - 1) * SOLVE_BONUS_CORRECTION);
 
   //Save the file
   save(solved_file_name);
@@ -959,7 +966,7 @@ int Maze::solve(bool silent)
     cout << "Found path: " << solved_path << endl;
   }
 
-  return SUCCESS;
+  return GAME_WON;
 }
 
 //------------------------------------------------------------------------------
@@ -1223,6 +1230,20 @@ int Maze::movePlayer(string direction)
   {
     tiles_.at(player_.getY()).at(player_.getX())->setValue(0);
   }
+
+  // change counter to wall if the symbol is zero
+  /*
+  if((player_.getTile() >= FIELD_TYPE_COUNTER_MIN) &&
+    (player_.getTile() <= FIELD_TYPE_COUNTER_MAX) &&
+    (tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
+  {
+    tiles_.at(player_.getY()).at(player_.getX())->setSymbol(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() - 1);
+  }
+  if((tiles_.at(player_.getY()).at(player_.getX())->getSymbol() - COUNTER_ZERO_CHAR) == COUNTER_MIN_VALUE)
+  {
+    tiles_.at(player_.getY()).at(player_.getX())->setSymbol(FIELD_TYPE_WALL);
+  }
+  */
 
   // Move the player and count down
   if(direction == Game::DIRECTION_MOVE_UP)

@@ -316,14 +316,14 @@ void Game::loadCommandSelected(vector<string> splitted_commands)
   {
     is_maze_loaded_ = true;
   }
-  
+
   if(auto_save_enabled_ == true)
   {
     splitted_commands.pop_back();
     splitted_commands.push_back(output_filename_);
     saveCommandSelected(splitted_commands);
   }
-  
+
   splitted_commands.pop_back();
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
@@ -349,13 +349,18 @@ void Game::showCommandSelected(vector<string> splitted_commands)
 //------------------------------------------------------------------------------
 void Game::solveCommandSelected(vector<string> splitted_commands)
 {
+  int maze_return_value;
   if(splitted_commands.size() > 2)
   {
     throw WrongParameterCountException();
   }
-  
+
   SolveCommand solve_command(splitted_commands.at(0));
-  solve_command.execute(*this, splitted_commands);
+  maze_return_value = solve_command.execute(*this, splitted_commands);
+  if(maze_return_value == Maze::GAME_WON)
+  {
+    cout << OUTPUT_MAZE_SOLVED << endl;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -383,7 +388,7 @@ void Game::whoAmICommandSelected(vector<string> splitted_commands)
   {
     throw WrongParameterCountException();
   }
-  
+
   WhoAmICommand whoami_command(splitted_commands.at(0));
   whoami_command.execute(*this, splitted_commands);
 }
@@ -440,7 +445,7 @@ void Game::fastMoveCommandSelected(vector<string> splitted_commands)
     splitted_commands.push_back(output_filename_);
     saveCommandSelected(splitted_commands);
   }
-  
+
   splitted_commands.pop_back();
   ShowCommand show_command(splitted_commands.at(0));
   show_command.execute(*this, splitted_commands);
@@ -460,7 +465,7 @@ void Game::saveCommandSelected(vector<string> splitted_commands)
   }
 
   SaveCommand save_command(splitted_commands.at(0));
-  
+
   try
   {
     save_command.execute(*this, splitted_commands);
