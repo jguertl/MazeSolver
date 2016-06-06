@@ -34,7 +34,7 @@ using std::unique_ptr;
 // -----------------------------------------------------------------------
 typedef int vertex_t;
 typedef double weight_t;
-const weight_t max_weight = std::numeric_limits<double>::infinity();
+const weight_t max_weight_ = std::numeric_limits<double>::infinity();
 struct neighbor {
     vertex_t target;
     weight_t weight;
@@ -124,6 +124,11 @@ class Maze
     // all numbers from 0 to 9 (used in validation)
     //
     static const string NUMBERS;
+
+    //--------------------------------------------------------------------------
+    // String which is appended to the filename to get the solved filename
+    //
+    static const string SOLVED_APPEND;
 
     //--------------------------------------------------------------------------
     // flag for fastmove identification in movePlayer
@@ -286,16 +291,6 @@ class Maze
     int original_steps_;
 
     //--------------------------------------------------------------------------
-    // Current x Counter
-    //
-    int counter_x_;
-
-    //--------------------------------------------------------------------------
-    // Current y Counter
-    //
-    int counter_y_;
-
-    //--------------------------------------------------------------------------
     // ID of the start tile
     //
     int start_id_;
@@ -304,6 +299,11 @@ class Maze
     // ID of the finish tile
     //
     int finish_id_;
+
+    //--------------------------------------------------------------------------
+    // Name of the current maze file
+    //
+    string filename_;
 
     //--------------------------------------------------------------------------
     // Player
@@ -388,10 +388,25 @@ class Maze
     //--------------------------------------------------------------------------
     // Solve
     // Solves the current maze
-    // @param silent true if the path should be printed
+    // @param silent true if the path should not be printed
     // @return int SUCCESS
     //
     int solve(bool silent);
+
+    //--------------------------------------------------------------------------
+    // Generate Path
+    // Generates the fastmove-path from the given ID-path
+    // @param path list containing the id path
+    // @return string fastmove-path
+    //
+    string generatePath(std::list<vertex_t> path);
+
+    //--------------------------------------------------------------------------
+    // Reset Adjacency List
+    // This function clears adjacency_list_
+    // @return int SUCCESS or ERROR
+    //
+    int resetAdjacencyList();
 
     //--------------------------------------------------------------------------
     // Move Player
@@ -428,9 +443,11 @@ class Maze
     //--------------------------------------------------------------------------
     // Get the ID of the corresponding Teleport-Tile
     // @param symbol the character of the teleport fields
+    // @param cur_x x-position of the current teleport tile
+    // @param cur_y y-position of the current teleport tile
     // @return int id of the other teleport field or ERROR
     //
-    int getTeleportId(char symbol);
+    int getTeleportId(char symbol, int cur_x, int cur_y);
 
     //--------------------------------------------------------------------------
     // Reset Method

@@ -48,6 +48,7 @@ const string Maze::OUTPUT_REMAINING_STEPS = "Remaining Steps: ";
 const string Maze::OUTPUT_MOVED_STEPS = "Moved Steps: ";
 const string Maze::SAVE_FILE_NAME = "save_file.txt";
 const string Maze::NUMBERS = "0123456789";
+const string Maze::SOLVED_APPEND = "Solved";
 const char Maze::FAST_MOVE_FLAG = 'f';
 const char Maze::ICE_MOVE_FLAG = 'i';
 const char Maze::FIELD_TYPE_PLAYER = '*';
@@ -102,7 +103,7 @@ void dijkstraComputePaths(vertex_t source,
 {
     int n = adjacency_list.size();
     min_distance.clear();
-    min_distance.resize(n, max_weight);
+    min_distance.resize(n, max_weight_);
     min_distance[source] = 0;
     previous.clear();
     previous.resize(n, -1);
@@ -163,6 +164,7 @@ Maze::~Maze()
 //------------------------------------------------------------------------------
 int Maze::load(const string& path)
 {
+  filename_ = path;
   ifstream file (path);
   string line;
   string moves_save = moves_;
@@ -177,8 +179,8 @@ int Maze::load(const string& path)
   std::stringstream sstream (std::stringstream::in | std::stringstream::out);
   bool maze_loaded = false;
   int size_check = INITIALIZE_NEGATIVE;
-  counter_x_ = INITIALIZE_ZERO;
-  counter_y_ = INITIALIZE_ZERO;
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
   int counter_id = INITIALIZE_NEGATIVE;
 
   if(tiles_.size())
@@ -238,15 +240,15 @@ int Maze::load(const string& path)
     sstream.str("");
     sstream.clear();
 
-    counter_x_ = INITIALIZE_ZERO;
-    counter_y_ = INITIALIZE_ZERO;
+    counter_x = INITIALIZE_ZERO;
+    counter_y = INITIALIZE_ZERO;
     // Check if moves are valid
-    while(counter_x_ < (static_cast<int>(moves_.size())))
+    while(counter_x < (static_cast<int>(moves_.size())))
     {
-      if((moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_UP) &&
-        (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_DOWN) &&
-        (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_LEFT) &&
-        (moves_.at(counter_x_) != Game::DIRECTION_FAST_MOVE_RIGHT))
+      if((moves_.at(counter_x) != Game::DIRECTION_FAST_MOVE_UP) &&
+        (moves_.at(counter_x) != Game::DIRECTION_FAST_MOVE_DOWN) &&
+        (moves_.at(counter_x) != Game::DIRECTION_FAST_MOVE_LEFT) &&
+        (moves_.at(counter_x) != Game::DIRECTION_FAST_MOVE_RIGHT))
       {
         file.close();
         if(maze_loaded)
@@ -257,7 +259,7 @@ int Maze::load(const string& path)
         }
         throw InvalidFileException();
       }
-      counter_x_++;
+      counter_x++;
     }
 
     // Check if steps are valid
@@ -273,7 +275,7 @@ int Maze::load(const string& path)
       throw InvalidPathException();
     }
 
-    counter_x_ = INITIALIZE_ZERO;
+    counter_x = INITIALIZE_ZERO;
     while(file.get(buffer))
     {
       // Store the buffer to check if the last char is a linebreak
@@ -305,8 +307,8 @@ int Maze::load(const string& path)
         counter_id++;
         unique_buffer = unique_ptr<Tile>(new Start(buffer, counter_id, 0));
         unique_vector_buffer.push_back(move(unique_buffer));
-        player_.setX(counter_x_);
-        player_.setY(counter_y_);
+        player_.setX(counter_x);
+        player_.setY(counter_y);
         start_id_ = counter_id;
         start_check++;
       }
@@ -384,7 +386,7 @@ int Maze::load(const string& path)
         throw InvalidFileException();
       }
 
-      counter_x_++;
+      counter_x++;
       if(buffer == NEW_LINE)
       {
         // Check if width is greater than zero
@@ -431,8 +433,8 @@ int Maze::load(const string& path)
         size_check = static_cast<int>(unique_vector_buffer.size());
         tiles_.push_back(move(unique_vector_buffer));
         unique_vector_buffer.clear();
-        counter_y_++;
-        counter_x_ = INITIALIZE_ZERO;
+        counter_y++;
+        counter_x = INITIALIZE_ZERO;
       }
     }
 
@@ -451,10 +453,10 @@ int Maze::load(const string& path)
     }
 
     // Check if first line only contains Walls
-    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.front().size());
-      counter_x_++)
+    for(counter_x = 0; counter_x < static_cast<int>(tiles_.front().size());
+      counter_x++)
     {
-      if((tiles_.front().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
+      if((tiles_.front().at(counter_x)->getSymbol()) != FIELD_TYPE_WALL)
       {
         file.close();
         deleteMaze();
@@ -468,12 +470,12 @@ int Maze::load(const string& path)
     }
 
     // Check if last line only contains Walls
-    counter_x_ = INITIALIZE_ZERO;
-    for(counter_x_ = 0; counter_x_ < static_cast<int>(tiles_.back().size());
-      counter_x_++)
+    counter_x = INITIALIZE_ZERO;
+    for(counter_x = 0; counter_x < static_cast<int>(tiles_.back().size());
+      counter_x++)
     {
 
-      if((tiles_.back().at(counter_x_)->getSymbol()) != FIELD_TYPE_WALL)
+      if((tiles_.back().at(counter_x)->getSymbol()) != FIELD_TYPE_WALL)
       {
         file.close();
         deleteMaze();
@@ -561,6 +563,7 @@ int Maze::load(const string& path)
     throw FileOpenException();
   }
   counter_id++;
+  resetAdjacencyList();
   adjacency_list_.resize(counter_id);
   return SUCCESS;
 }
@@ -574,6 +577,8 @@ int Maze::reset()
 //------------------------------------------------------------------------------
 int Maze::save(const string& path)
 {
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
   ofstream outputfile;
   outputfile.open(path.c_str());
   string moves_save;
@@ -595,14 +600,14 @@ int Maze::save(const string& path)
 
   outputfile << original_steps_ << endl;
 
-  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-    counter_y_++)
+  for (counter_y = 0; counter_y < static_cast<int>(tiles_.size());
+    counter_y++)
   {
-    for (counter_x_ = 0;
-      counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
-      counter_x_++)
+    for (counter_x = 0;
+      counter_x < static_cast<int>(tiles_.at(counter_y).size());
+      counter_x++)
     {
-      outputfile << tiles_.at(counter_y_).at(counter_x_)->getSymbol();
+      outputfile << tiles_.at(counter_y).at(counter_x)->getSymbol();
     }
     outputfile << endl;
   }
@@ -613,30 +618,32 @@ int Maze::save(const string& path)
 //------------------------------------------------------------------------------
 int Maze::show()
 {
-  for (counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-    counter_y_++)
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  for (counter_y = 0; counter_y < static_cast<int>(tiles_.size());
+    counter_y++)
   {
-    for (counter_x_ = 0; counter_x_ <
-      static_cast<int>(tiles_.at(counter_y_).size());
-      counter_x_++)
+    for (counter_x = 0; counter_x <
+      static_cast<int>(tiles_.at(counter_y).size());
+      counter_x++)
     {
-      if((counter_y_ == player_.getY()) && (counter_x_ == player_.getX()))
+      if((counter_y == player_.getY()) && (counter_x == player_.getX()))
       {
         cout << FIELD_TYPE_PLAYER;
       }
       else
       {
-        if((tiles_.at(counter_y_).at(counter_x_)->getSymbol() >=
+        if((tiles_.at(counter_y).at(counter_x)->getSymbol() >=
            FIELD_TYPE_BONUS_MIN) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() <=
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() <=
            FIELD_TYPE_BONUS_MAX) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getValue() == 0))
+           (tiles_.at(counter_y).at(counter_x)->getValue() == 0))
         {
           cout << FIELD_TYPE_PATH;
         }
         else
         {
-          cout << tiles_.at(counter_y_).at(counter_x_)->getSymbol();
+          cout << tiles_.at(counter_y).at(counter_x)->getSymbol();
         }
 
 
@@ -662,159 +669,255 @@ int Maze::showMore(bool showPath)
 //------------------------------------------------------------------------------
 int Maze::solve(bool silent)
 {
-
   std::vector<weight_t> min_distance;
   std::vector<vertex_t> previous;
+  string solved_path;
+  int solved_steps = INITIALIZE_ZERO;
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  int ice_counter = INITIALIZE_ZERO;
+  string solved_file_name;
+  solved_file_name = filename_;
+  solved_file_name.append(SOLVED_APPEND);
+
+  //If Player has already solved the maze
+  if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() == FIELD_TYPE_FINISH)
+  {
+    throw AlreadySolvedException();
+  }
+
+  //Try to solve the maze
 
   // Add the neighbors of every tile into the adjacency list
-  for (counter_y_ = 1; counter_y_ < static_cast<int>(tiles_.size()-1);
-    counter_y_++)
+  for (counter_y = 1; counter_y < static_cast<int>(tiles_.size()-1);
+    counter_y++)
   {
-    for (counter_x_ = 1; counter_x_ <
-      static_cast<int>(tiles_.at(counter_y_).size()-1);
-      counter_x_++)
+    for (counter_x = 1; counter_x <
+      static_cast<int>(tiles_.at(counter_y).size()-1);
+      counter_x++)
     {
-      cout << "ID: " << tiles_.at(counter_y_).at(counter_x_)->getId() << endl;
-      if(tiles_.at(counter_y_).at(counter_x_)->getSymbol() == FIELD_TYPE_WALL)
+      // cout << "ID: " << tiles_.at(counter_y).at(counter_x)->getId() << endl;
+      if(tiles_.at(counter_y).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
       {
         // Current tile is a wall
       }
       else
       {
-        if((tiles_.at(counter_y_-1).at(counter_x_)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
+        if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() != FIELD_TYPE_WALL) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
         {
-          if((tiles_.at(counter_y_-1).at(counter_x_)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y_-1).at(counter_x_)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
+             (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_-1).at(counter_x_)->getId() <<
-              " Costs: " << (((-1)*(tiles_.at(counter_y_-1).at(counter_x_)->getValue()))+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_-1).at(counter_x_)->getId(),
-              ((-1)*(tiles_.at(counter_y_-1).at(counter_x_)->getValue()))+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
+              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue()))+1));
           }
-          else if((tiles_.at(counter_y_-1).at(counter_x_)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y_-1).at(counter_x_)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
+             (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_-1).at(counter_x_)->getId() <<
-              " Costs: " << ((tiles_.at(counter_y_-1).at(counter_x_)->getValue())+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_-1).at(counter_x_)->getId(),
-              (tiles_.at(counter_y_-1).at(counter_x_)->getValue())+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
+              (tiles_.at(counter_y-1).at(counter_x)->getValue())+1));
+          }
+          else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          {
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y-1), 1));
+          }
+          else if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+          {
+            ice_counter = counter_y - 1;
+            while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+            {
+              ice_counter--;
+            }
+            if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+            {
+              ice_counter++;
+            }
+
+            if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(ice_counter).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1));
+            }
+            else
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
+            }
           }
           else
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_-1).at(counter_x_)->getId() <<
-              " Costs: " << 1 << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_-1).at(counter_x_)->getId(), 1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(), 1));
           }
         }
-        if((tiles_.at(counter_y_+1).at(counter_x_)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
+        if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() != FIELD_TYPE_WALL) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
         {
-          if((tiles_.at(counter_y_+1).at(counter_x_)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y_+1).at(counter_x_)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
+             (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_-1).at(counter_x_)->getId() <<
-              " Costs: " << (((-1)*(tiles_.at(counter_y_+1).at(counter_x_)->getValue()))+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_+1).at(counter_x_)->getId(),
-              ((-1)*(tiles_.at(counter_y_+1).at(counter_x_)->getValue()))+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
+              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue()))+1));
           }
-          else if((tiles_.at(counter_y_+1).at(counter_x_)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y_+1).at(counter_x_)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
+             (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_+1).at(counter_x_)->getId() <<
-              " Costs: " << ((tiles_.at(counter_y_+1).at(counter_x_)->getValue())+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_+1).at(counter_x_)->getId(),
-              (tiles_.at(counter_y_+1).at(counter_x_)->getValue())+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
+              (tiles_.at(counter_y+1).at(counter_x)->getValue())+1));
+          }
+          else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          {
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(), counter_x, counter_y+1), 1));
+          }
+          else if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+          {
+            ice_counter = counter_y + 1;
+            while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+            {
+              ice_counter++;
+            }
+            if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+            {
+              ice_counter--;
+            }
+            if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(ice_counter).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1));
+            }
+            else
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
+            }
           }
           else
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_+1).at(counter_x_)->getId() <<
-              " Costs: " << 1 << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_+1).at(counter_x_)->getId(), 1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(), 1));
           }
         }
-        if((tiles_.at(counter_y_).at(counter_x_-1)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
+        if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() != FIELD_TYPE_WALL) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
         {
-          if((tiles_.at(counter_y_).at(counter_x_-1)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y_).at(counter_x_-1)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
+             (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_).at(counter_x_-1)->getId() <<
-              " Costs: " << (((-1)*(tiles_.at(counter_y_).at(counter_x_-1)->getValue()))+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_).at(counter_x_-1)->getId(),
-              ((-1)*(tiles_.at(counter_y_).at(counter_x_-1)->getValue()))+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
+              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue()))+1));
           }
-          else if((tiles_.at(counter_y_).at(counter_x_-1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y_).at(counter_x_-1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
+             (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_).at(counter_x_-1)->getId() <<
-              " Costs: " << ((tiles_.at(counter_y_).at(counter_x_-1)->getValue())+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_).at(counter_x_-1)->getId(),
-              (tiles_.at(counter_y_).at(counter_x_-1)->getValue())+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
+              (tiles_.at(counter_y).at(counter_x-1)->getValue())+1));
+          }
+          else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          {
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(), counter_x-1, counter_y), 1));
+          }
+          else if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() == FIELD_TYPE_ICE)
+          {
+            ice_counter = counter_x - 1;
+            while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+            {
+              ice_counter--;
+            }
+            if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+            {
+              ice_counter++;
+            }
+            if((tiles_.at(counter_y).at(ice_counter)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(counter_y).at(ice_counter)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1));
+            }
+            else
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
+            }
           }
           else
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_).at(counter_x_-1)->getId() <<
-              " Costs: " << 1 << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_).at(counter_x_-1)->getId(), 1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(), 1));
           }
         }
-        if((tiles_.at(counter_y_).at(counter_x_+1)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
-           (tiles_.at(counter_y_).at(counter_x_)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT))
+        if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() != FIELD_TYPE_WALL) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
+           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT))
         {
-          if((tiles_.at(counter_y_).at(counter_x_+1)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y_).at(counter_x_+1)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
+             (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_).at(counter_x_+1)->getId() <<
-              " Costs: " << (((-1)*(tiles_.at(counter_y_).at(counter_x_+1)->getValue()))+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_).at(counter_x_+1)->getId(),
-              ((-1)*(tiles_.at(counter_y_).at(counter_x_+1)->getValue()))+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
+              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue()))+1));
           }
-          else if((tiles_.at(counter_y_).at(counter_x_+1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y_).at(counter_x_+1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
+             (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_).at(counter_x_+1)->getId() <<
-              " Costs: " << ((tiles_.at(counter_y_).at(counter_x_+1)->getValue())+1) << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_).at(counter_x_+1)->getId(),
-              (tiles_.at(counter_y_).at(counter_x_+1)->getValue())+1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
+              (tiles_.at(counter_y).at(counter_x+1)->getValue())+1));
+          }
+          else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          {
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(), counter_x+1, counter_y), 1));
+          }
+          else if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() == FIELD_TYPE_ICE)
+          {
+            ice_counter = counter_x + 1;
+            while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+            {
+              ice_counter++;
+            }
+            if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+            {
+              ice_counter--;
+            }
+            if((tiles_.at(counter_y).at(ice_counter)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+             (tiles_.at(counter_y).at(ice_counter)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1));
+            }
+            else
+            {
+              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
+            }
           }
           else
           {
-            cout << "Tile: " << tiles_.at(counter_y_).at(counter_x_)->getId() <<
-              " Neighbor: " << tiles_.at(counter_y_).at(counter_x_+1)->getId() <<
-              " Costs: " << 1 << endl;
-            adjacency_list_[tiles_.at(counter_y_).at(counter_x_)->getId()].push_back(
-              neighbor(tiles_.at(counter_y_).at(counter_x_+1)->getId(), 1));
+            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(), 1));
           }
         }
       }
@@ -822,43 +925,248 @@ int Maze::solve(bool silent)
   }
 
 
-
-
+  // run dijkstras algorithm
+  start_id_ = tiles_.at(player_.getY()).at(player_.getX())->getId();
   dijkstraComputePaths(start_id_, adjacency_list_, min_distance, previous);
-  std::cout << "Distance from start to finish: " << min_distance[finish_id_] << std::endl;
+  // std::cout << "Distance from start to finish: " << min_distance[finish_id_] << std::endl;
   std::list<vertex_t> path = dijkstraGetShortestPathTo(finish_id_, previous);
-  std::cout << "Path : ";
-  std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
-  std::cout << std::endl;
-
-
-
-
-
-
-
-
-
-  //If Player has already solved the maze
-  //throw AlreadySolvedException();
-
-  //Try to solve the maze
+  // std::cout << "Path : ";
+  // std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
+  // std::cout << std::endl;
 
   //If Maze is not solvable
-  //throw NoPathFoundException();
+
+  if(min_distance[finish_id_] == max_weight_)
+  {
+    resetAdjacencyList();
+    throw NoPathFoundException();
+  }
+
+  solved_path = generatePath(path);
+  solved_steps = min_distance[finish_id_];
 
   //Solve the maze using fastmove
+  fastMovePlayer(solved_path);
 
   //Save the file
+  save(solved_file_name);
 
   //Print results
-  //cout << "The maze was solved in " << "7" << " steps." << endl;
+  cout << "The maze was solved in " << solved_steps << " steps." << endl;
 
-  /*if(silent == false)
+  if(silent == false)
   {
-    cout << "Found path: " << "llldr" << endl;
+    cout << "Found path: " << solved_path << endl;
   }
-  */
+
+  return SUCCESS;
+}
+
+//------------------------------------------------------------------------------
+string Maze::generatePath(std::list<vertex_t> path)
+{
+  string path_result;
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  int ice_counter = INITIALIZE_ZERO;
+  vertex_t next_id = INITIALIZE_ZERO;
+
+  counter_x = player_.getX();
+  counter_y = player_.getY();
+
+  // pop first id because the next id is needed
+  path.pop_front();
+  while(!path.empty())
+  {
+    next_id = path.front();
+    // cout << "Next ID: " << next_id << endl;
+    // cout << "CX: " << counter_x << " CY" << counter_y << endl;
+    path.pop_front();
+    // handle teleport fields
+    if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+       (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
+       (getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y+1) == next_id))
+    {
+      path_result.append("u");
+      // cout << "U" << endl;
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      {
+        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        {
+          if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+          {
+            counter_y = counter_a;
+            counter_x = counter_b;
+          }
+        }
+      }
+      continue;
+
+    }
+    else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+       (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
+       (getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(), counter_x, counter_y+1) == next_id))
+    {
+      path_result.append("d");
+      // cout << "D" << endl;
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      {
+        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        {
+          if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+          {
+            counter_y = counter_a;
+            counter_x = counter_b;
+          }
+        }
+      }
+      continue;
+    }
+    else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+       (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
+       (getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(), counter_x-1, counter_y) == next_id))
+    {
+      path_result.append("l");
+      // cout << "L" << endl;
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      {
+        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        {
+          if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+          {
+            counter_y = counter_a;
+            counter_x = counter_b;
+          }
+        }
+      }
+      continue;
+    }
+    else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
+       (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
+       (getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(), counter_x+1, counter_y) == next_id))
+    {
+      path_result.append("r");
+      // cout << "R" << endl;
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      {
+        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        {
+          if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+          {
+            counter_y = counter_a;
+            counter_x = counter_b;
+          }
+        }
+      }
+      continue;
+    }
+
+    // handle the other fields
+    if(tiles_.at(counter_y-1).at(counter_x)->getId() == next_id)
+    {
+      path_result.append("u");
+      // cout << "u" << endl;
+      counter_y--;
+    }
+    else if(tiles_.at(counter_y+1).at(counter_x)->getId() == next_id)
+    {
+      path_result.append("d");
+      // cout << "d" << endl;
+      counter_y++;
+    }
+    else if(tiles_.at(counter_y).at(counter_x-1)->getId() == next_id)
+    {
+      path_result.append("l");
+      // cout << "l" << endl;
+      counter_x--;
+    }
+    else if(tiles_.at(counter_y).at(counter_x+1)->getId() == next_id)
+    {
+      path_result.append("r");
+      // cout << "r" << endl;
+      counter_x++;
+    }
+    else
+    {
+      if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+      {
+        ice_counter = counter_y - 1;
+        while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+        {
+          ice_counter--;
+        }
+        if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+        {
+          ice_counter++;
+        }
+        if(tiles_.at(ice_counter).at(counter_x)->getId() == next_id)
+        {
+          counter_y = ice_counter;
+          path_result.append("u");
+        }
+      }
+      if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+      {
+        ice_counter = counter_y + 1;
+        while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+        {
+          ice_counter++;
+        }
+        if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+        {
+          ice_counter--;
+        }
+        if(tiles_.at(ice_counter).at(counter_x)->getId() == next_id)
+        {
+          counter_y = ice_counter;
+          path_result.append("d");
+        }
+      }
+      if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() == FIELD_TYPE_ICE)
+      {
+        ice_counter = counter_x - 1;
+        while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+        {
+          ice_counter--;
+        }
+        if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+        {
+          ice_counter++;
+        }
+        if(tiles_.at(counter_y).at(ice_counter)->getId() == next_id)
+        {
+          counter_x = ice_counter;
+          path_result.append("l");
+        }
+      }
+      if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() == FIELD_TYPE_ICE)
+      {
+        ice_counter = counter_x + 1;
+        while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+        {
+          ice_counter++;
+        }
+        if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+        {
+          ice_counter--;
+        }
+        if(tiles_.at(counter_y).at(ice_counter)->getId() == next_id)
+        {
+          counter_x = ice_counter;
+          path_result.append("r");
+        }
+      }
+    }
+  }
+
+  return path_result;
+}
+
+//------------------------------------------------------------------------------
+int Maze::resetAdjacencyList()
+{
+  adjacency_list_.clear();
+
   return SUCCESS;
 }
 
@@ -1201,19 +1509,21 @@ int Maze::fastMovePlayerLoad(string directions)
 //------------------------------------------------------------------------------
 int Maze::moveTeleport(char symbol)
 {
-  for(counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-    counter_y_++)
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  for(counter_y = 0; counter_y < static_cast<int>(tiles_.size());
+    counter_y++)
   {
-    for(counter_x_ = 0;
-      counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
-      counter_x_++)
+    for(counter_x = 0;
+      counter_x < static_cast<int>(tiles_.at(counter_y).size());
+      counter_x++)
     {
-      if((tiles_.at(counter_y_).at(counter_x_)->getSymbol() == symbol) &&
-        ((counter_y_ != player_.getY()) || (counter_x_ != player_.getX())))
+      if((tiles_.at(counter_y).at(counter_x)->getSymbol() == symbol) &&
+        ((counter_y != player_.getY()) || (counter_x != player_.getX())))
       {
-        player_.setY(counter_y_);
-        player_.setX(counter_x_);
-        player_.setTile(getTile(counter_x_, counter_y_));
+        player_.setY(counter_y);
+        player_.setX(counter_x);
+        player_.setTile(getTile(counter_x, counter_y));
         return 0;
       }
     }
@@ -1222,22 +1532,21 @@ int Maze::moveTeleport(char symbol)
 }
 
 //------------------------------------------------------------------------------
-int Maze::getTeleportId(char symbol)
+int Maze::getTeleportId(char symbol, int cur_x, int cur_y)
 {
-  for(counter_y_ = 0; counter_y_ < static_cast<int>(tiles_.size());
-    counter_y_++)
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  for(counter_y = 0; counter_y < static_cast<int>(tiles_.size());
+    counter_y++)
   {
-    for(counter_x_ = 0;
-      counter_x_ < static_cast<int>(tiles_.at(counter_y_).size());
-      counter_x_++)
+    for(counter_x = 0;
+      counter_x < static_cast<int>(tiles_.at(counter_y).size());
+      counter_x++)
     {
-      if((tiles_.at(counter_y_).at(counter_x_)->getSymbol() == symbol) &&
-        ((counter_y_ != player_.getY()) || (counter_x_ != player_.getX())))
+      if((tiles_.at(counter_y).at(counter_x)->getSymbol() == symbol) &&
+        ((counter_y != cur_y) || (counter_x != cur_x)))
       {
-        player_.setY(counter_y_);
-        player_.setX(counter_x_);
-        player_.setTile(getTile(counter_x_, counter_y_));
-        return tiles_.at(counter_y_).at(counter_x_)->getId();
+        return tiles_.at(counter_y).at(counter_x)->getId();
       }
     }
   }
@@ -1247,16 +1556,17 @@ int Maze::getTeleportId(char symbol)
 //------------------------------------------------------------------------------
 int Maze::deleteMaze()
 {
-
-  for(counter_y_ = static_cast<int>(tiles_.size())-1; counter_y_ >= 0;
-    counter_y_--)
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  for(counter_y = static_cast<int>(tiles_.size())-1; counter_y >= 0;
+    counter_y--)
   {
-    for(counter_x_ = static_cast<int>(tiles_.at(counter_y_).size()) - 1;
-      counter_x_ >= 0; counter_x_--)
+    for(counter_x = static_cast<int>(tiles_.at(counter_y).size()) - 1;
+      counter_x >= 0; counter_x--)
     {
-      tiles_.at(counter_y_).at(counter_x_).reset();
+      tiles_.at(counter_y).at(counter_x).reset();
     }
-    tiles_.at(counter_y_).clear();
+    tiles_.at(counter_y).clear();
   }
   tiles_.clear();
 
