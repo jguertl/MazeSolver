@@ -287,28 +287,28 @@ int Maze::load(const string& path)
       if(buffer == FIELD_TYPE_WALL)
       {
         // Wall
-        unique_buffer = unique_ptr<Tile>(new Wall(buffer, 0, 0));
+        unique_buffer = unique_ptr<Tile>(new Wall(buffer, INITIALIZE_ZERO, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_PATH)
       {
         // Path
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Path(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Path(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_ICE)
       {
         // Ice
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Ice(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Ice(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_START)
       {
         // Start
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Start(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Start(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
         player_.setX(counter_x);
         player_.setY(counter_y);
@@ -319,7 +319,7 @@ int Maze::load(const string& path)
       {
         // Finish
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Finish(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Finish(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
         finish_id_ = counter_id;
         finish_check++;
@@ -347,7 +347,7 @@ int Maze::load(const string& path)
       {
         // Teleport
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Teleport(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Teleport(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
 
         teleport_symbols.push_back(buffer);
@@ -356,7 +356,7 @@ int Maze::load(const string& path)
       {
         // Hole
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Hole(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new Hole(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if((buffer >= FIELD_TYPE_COUNTER_MIN) &&
@@ -374,7 +374,7 @@ int Maze::load(const string& path)
       {
         // OneWay
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new OneWay(buffer, counter_id, 0));
+        unique_buffer = unique_ptr<Tile>(new OneWay(buffer, counter_id, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer != NEW_LINE)
@@ -610,7 +610,17 @@ int Maze::save(const string& path)
       counter_x < static_cast<int>(tiles_.at(counter_y).size());
       counter_x++)
     {
-      outputfile << tiles_.at(counter_y).at(counter_x)->getSymbol();
+      if(((tiles_.at(counter_y).at(counter_x)->getSymbol() >= FIELD_TYPE_COUNTER_MIN) &&
+        (tiles_.at(counter_y).at(counter_x)->getSymbol() <= FIELD_TYPE_COUNTER_MAX)) ||
+        ((tiles_.at(counter_y).at(counter_x)->getSymbol() == FIELD_TYPE_WALL) &&
+        (tiles_.at(counter_y).at(counter_x)->getValue() != INITIALIZE_ZERO)))
+      {
+        outputfile << tiles_.at(counter_y).at(counter_x)->getValue();
+      }
+      else
+      {
+        outputfile << tiles_.at(counter_y).at(counter_x)->getSymbol();
+      }
     }
     outputfile << endl;
   }
@@ -644,15 +654,6 @@ int Maze::show()
         {
           cout << FIELD_TYPE_PATH;
         }
-        /*
-        else if((tiles_.at(counter_y).at(counter_x)->getSymbol() >=
-          FIELD_TYPE_COUNTER_MIN) &&
-          (tiles_.at(counter_y).at(counter_x)->getSymbol() <=
-          FIELD_TYPE_COUNTER_MAX))
-        {
-          cout << tiles_.at(counter_y).at(counter_x)->getValue();
-        }
-        */
         else
         {
           cout << tiles_.at(counter_y).at(counter_x)->getSymbol();
@@ -1232,18 +1233,17 @@ int Maze::movePlayer(string direction)
   }
 
   // change counter to wall if the symbol is zero
-  /*
+
   if((player_.getTile() >= FIELD_TYPE_COUNTER_MIN) &&
     (player_.getTile() <= FIELD_TYPE_COUNTER_MAX) &&
     (tiles_.at(player_.getY()).at(player_.getX())->getSymbol() != FIELD_TYPE_WALL))
   {
     tiles_.at(player_.getY()).at(player_.getX())->setSymbol(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() - 1);
   }
-  if((tiles_.at(player_.getY()).at(player_.getX())->getSymbol() - COUNTER_ZERO_CHAR) == COUNTER_MIN_VALUE)
+  if((tiles_.at(player_.getY()).at(player_.getX())->getSymbol() - COUNTER_ZERO_CHAR) == INITIALIZE_ZERO)
   {
     tiles_.at(player_.getY()).at(player_.getX())->setSymbol(FIELD_TYPE_WALL);
   }
-  */
 
   // Move the player and count down
   if(direction == Game::DIRECTION_MOVE_UP)
