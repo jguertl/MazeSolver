@@ -286,28 +286,32 @@ int Maze::load(const string& path)
       if(buffer == FIELD_TYPE_WALL)
       {
         // Wall
-        unique_buffer = unique_ptr<Tile>(new Wall(buffer, INITIALIZE_NEGATIVE, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Wall(buffer, INITIALIZE_NEGATIVE,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_PATH)
       {
         // Path
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Path(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Path(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_ICE)
       {
         // Ice
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Ice(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Ice(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_START)
       {
         // Start
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Start(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Start(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
         player_.setX(counter_x);
         player_.setY(counter_y);
@@ -318,7 +322,8 @@ int Maze::load(const string& path)
       {
         // Finish
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Finish(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Finish(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
         finish_id_ = counter_id;
         finish_check++;
@@ -346,7 +351,8 @@ int Maze::load(const string& path)
       {
         // Teleport
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Teleport(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Teleport(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
 
         teleport_symbols.push_back(buffer);
@@ -355,7 +361,8 @@ int Maze::load(const string& path)
       {
         // Hole
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Hole(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Hole(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if((buffer >= FIELD_TYPE_COUNTER_MIN) &&
@@ -363,7 +370,8 @@ int Maze::load(const string& path)
       {
         // Counter
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new Counter(buffer, counter_id, buffer - COUNTER_ZERO_CHAR));
+        unique_buffer = unique_ptr<Tile>(new Counter(buffer, counter_id,
+          buffer - COUNTER_ZERO_CHAR));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if((buffer == FIELD_TYPE_ONEWAY_LEFT) ||
@@ -373,7 +381,8 @@ int Maze::load(const string& path)
       {
         // OneWay
         counter_id++;
-        unique_buffer = unique_ptr<Tile>(new OneWay(buffer, counter_id, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new OneWay(buffer, counter_id,
+          INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer != NEW_LINE)
@@ -691,7 +700,8 @@ int Maze::solve(bool silent)
   solved_file_name.append(SOLVED_APPEND);
 
   //If Player has already solved the maze
-  if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() == FIELD_TYPE_FINISH)
+  if(tiles_.at(player_.getY()).at(player_.getX())->getSymbol() ==
+    FIELD_TYPE_FINISH)
   {
     throw AlreadySolvedException();
   }
@@ -706,246 +716,331 @@ int Maze::solve(bool silent)
       static_cast<int>(tiles_.at(counter_y).size()-1);
       counter_x++)
     {
-      // cout << "ID: " << tiles_.at(counter_y).at(counter_x)->getId() << endl;
       if(tiles_.at(counter_y).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
       {
         // Current tile is a wall
       }
       else
       {
-        if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
+        if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_WALL) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_DOWN) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_LEFT) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_RIGHT))
         {
-          if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >=
+            FIELD_TYPE_BONUS_MIN) &&
+            (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <=
+            FIELD_TYPE_BONUS_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
-              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
+              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue())) + 1));
           }
-          else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >=
+            FIELD_TYPE_QUICKSAND_MIN) &&
+            (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <=
+            FIELD_TYPE_QUICKSAND_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
-              (tiles_.at(counter_y-1).at(counter_x)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
+              (tiles_.at(counter_y-1).at(counter_x)->getValue()) + 1));
           }
-          else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >=
+            FIELD_TYPE_TELEPORT_MIN) &&
+            (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <=
+            FIELD_TYPE_TELEPORT_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y-1), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y-1).at(
+              counter_x)->getSymbol(), counter_x, counter_y-1), 1));
           }
-          else if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+          else if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() ==
+            FIELD_TYPE_ICE)
           {
             ice_counter = counter_y - 1;
-            while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+            while(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+              FIELD_TYPE_ICE)
             {
               ice_counter--;
             }
-            if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+            if(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+              FIELD_TYPE_WALL)
             {
               ice_counter++;
             }
 
-            if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(ice_counter).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >=
+              FIELD_TYPE_TELEPORT_MIN) &&
+              (tiles_.at(ice_counter).at(counter_x)->getSymbol() <=
+              FIELD_TYPE_TELEPORT_MAX))
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(getTeleportId(tiles_.at(ice_counter).at(
+                counter_x)->getSymbol(), counter_x, ice_counter), 1));
             }
             else
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
             }
           }
           else
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(), 1));
           }
         }
-        if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
+        if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_WALL) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_UP) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_LEFT) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_RIGHT))
         {
-          if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >=
+            FIELD_TYPE_BONUS_MIN) &&
+            (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <=
+            FIELD_TYPE_BONUS_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
-              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
+              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue())) + 1));
           }
-          else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >=
+            FIELD_TYPE_QUICKSAND_MIN) &&
+            (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <=
+            FIELD_TYPE_QUICKSAND_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
-              (tiles_.at(counter_y+1).at(counter_x)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
+              (tiles_.at(counter_y+1).at(counter_x)->getValue()) + 1));
           }
-          else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >=
+            FIELD_TYPE_TELEPORT_MIN) &&
+            (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <=
+            FIELD_TYPE_TELEPORT_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(), counter_x, counter_y+1), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+            counter_x)->getId()].push_back(
+            neighbor(getTeleportId(tiles_.at(counter_y+1).at(
+            counter_x)->getSymbol(), counter_x, counter_y+1), 1));
           }
-          else if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+          else if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() ==
+            FIELD_TYPE_ICE)
           {
             ice_counter = counter_y + 1;
-            while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+            while(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+              FIELD_TYPE_ICE)
             {
               ice_counter++;
             }
-            if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+            if(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+              FIELD_TYPE_WALL)
             {
               ice_counter--;
             }
-            if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(ice_counter).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >=
+              FIELD_TYPE_TELEPORT_MIN) &&
+              (tiles_.at(ice_counter).at(counter_x)->getSymbol() <=
+              FIELD_TYPE_TELEPORT_MAX))
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(), counter_x, ice_counter), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(getTeleportId(tiles_.at(ice_counter).at(
+                counter_x)->getSymbol(), counter_x, ice_counter), 1));
             }
             else
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
             }
           }
           else
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(), 1));
           }
         }
-        if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_RIGHT))
+        if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() !=
+          FIELD_TYPE_WALL) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_DOWN) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_UP) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_RIGHT))
         {
-          if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >=
+            FIELD_TYPE_BONUS_MIN) &&
+            (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <=
+            FIELD_TYPE_BONUS_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
-              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
+              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue())) + 1));
           }
-          else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >=
+            FIELD_TYPE_QUICKSAND_MIN) &&
+            (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <=
+            FIELD_TYPE_QUICKSAND_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
-              (tiles_.at(counter_y).at(counter_x-1)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
+              (tiles_.at(counter_y).at(counter_x-1)->getValue()) + 1));
           }
-          else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >=
+            FIELD_TYPE_TELEPORT_MIN) &&
+            (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <=
+            FIELD_TYPE_TELEPORT_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(), counter_x-1, counter_y), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y).at(
+              counter_x-1)->getSymbol(), counter_x-1, counter_y), 1));
           }
-          else if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() == FIELD_TYPE_ICE)
+          else if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() ==
+            FIELD_TYPE_ICE)
           {
             ice_counter = counter_x - 1;
-            while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+            while(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+              FIELD_TYPE_ICE)
             {
               ice_counter--;
             }
-            if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+            if(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+              FIELD_TYPE_WALL)
             {
               ice_counter++;
             }
-            if((tiles_.at(counter_y).at(ice_counter)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(counter_y).at(ice_counter)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            if((tiles_.at(counter_y).at(ice_counter)->getSymbol() >=
+              FIELD_TYPE_TELEPORT_MIN) &&
+              (tiles_.at(counter_y).at(ice_counter)->getSymbol() <=
+              FIELD_TYPE_TELEPORT_MAX))
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(getTeleportId(tiles_.at(counter_y).at(
+                ice_counter)->getSymbol(), ice_counter, counter_y), 1));
             }
             else
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
             }
           }
           else
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(), 1));
           }
         }
-        if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() != FIELD_TYPE_WALL) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_DOWN) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_UP) &&
-           (tiles_.at(counter_y).at(counter_x)->getSymbol() != FIELD_TYPE_ONEWAY_LEFT))
+        if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() !=
+          FIELD_TYPE_WALL) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_DOWN) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_UP) &&
+          (tiles_.at(counter_y).at(counter_x)->getSymbol() !=
+          FIELD_TYPE_ONEWAY_LEFT))
         {
-          if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_BONUS_MIN) &&
-             (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_BONUS_MAX))
+          if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >=
+            FIELD_TYPE_BONUS_MIN) &&
+            (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <=
+            FIELD_TYPE_BONUS_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
-              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue())) + 1 + SOLVE_BONUS_CORRECTION));
+              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue())) + 1));
           }
-          else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_QUICKSAND_MIN) &&
-             (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_QUICKSAND_MAX))
+          else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >=
+            FIELD_TYPE_QUICKSAND_MIN) &&
+            (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <=
+            FIELD_TYPE_QUICKSAND_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
-              (tiles_.at(counter_y).at(counter_x+1)->getValue()) + 1 + SOLVE_BONUS_CORRECTION));
+              (tiles_.at(counter_y).at(counter_x+1)->getValue()) + 1));
           }
-          else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+          else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >=
+            FIELD_TYPE_TELEPORT_MIN) &&
+            (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <=
+            FIELD_TYPE_TELEPORT_MAX))
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(), counter_x+1, counter_y), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y).at(
+              counter_x+1)->getSymbol(), counter_x+1, counter_y), 1));
           }
-          else if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() == FIELD_TYPE_ICE)
+          else if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() ==
+            FIELD_TYPE_ICE)
           {
             ice_counter = counter_x + 1;
-            while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+            while(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+              FIELD_TYPE_ICE)
             {
               ice_counter++;
             }
-            if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+            if(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+              FIELD_TYPE_WALL)
             {
               ice_counter--;
             }
-            if((tiles_.at(counter_y).at(ice_counter)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-             (tiles_.at(counter_y).at(ice_counter)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX))
+            if((tiles_.at(counter_y).at(ice_counter)->getSymbol() >=
+              FIELD_TYPE_TELEPORT_MIN) &&
+              (tiles_.at(counter_y).at(ice_counter)->getSymbol() <=
+              FIELD_TYPE_TELEPORT_MAX))
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(), ice_counter, counter_y), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(getTeleportId(tiles_.at(counter_y).at(
+                ice_counter)->getSymbol(), ice_counter, counter_y), 1));
             }
             else
             {
-              adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+              adjacency_list_[tiles_.at(counter_y).at(
+                counter_x)->getId()].push_back(
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
             }
           }
           else
           {
-            adjacency_list_[tiles_.at(counter_y).at(counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(), 1 + SOLVE_BONUS_CORRECTION));
+            adjacency_list_[tiles_.at(counter_y).at(
+              counter_x)->getId()].push_back(
+              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(), 1));
           }
         }
       }
     }
   }
 
-
   // run dijkstras algorithm
   start_id_ = tiles_.at(player_.getY()).at(player_.getX())->getId();
   dijkstraComputePaths(start_id_, adjacency_list_, min_distance, previous);
-  // std::cout << "Distance from start to finish: " << min_distance[finish_id_] << std::endl;
   std::list<vertex_t> path = dijkstraGetShortestPathTo(finish_id_, previous);
-  // std::cout << "Path : ";
-  // std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
-  // std::cout << std::endl;
 
   //If Maze is not solvable
-
   if(min_distance[finish_id_] == max_weight_)
   {
     resetAdjacencyList();
@@ -953,15 +1048,14 @@ int Maze::solve(bool silent)
   }
 
   solved_path = generatePath(path);
-  solved_steps = min_distance[finish_id_] - ((path.size() - 1) * SOLVE_BONUS_CORRECTION);
-  
-  
+  solved_steps = min_distance[finish_id_];
+
   // solve the maze with fastmove
   if(fastMovePlayer(solved_path) == GAME_WON)
   {
     cout << Game::OUTPUT_MAZE_SOLVED << endl;
   }
-  
+
   //Save the file
   save(solved_file_name);
 
@@ -997,15 +1091,21 @@ string Maze::generatePath(std::list<vertex_t> path)
     // cout << "CX: " << counter_x << " CY" << counter_y << endl;
     path.pop_front();
     // handle teleport fields
-    if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-       (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
-       (getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y-1) == next_id))
+    if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >=
+      FIELD_TYPE_TELEPORT_MIN) &&
+      (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <=
+      FIELD_TYPE_TELEPORT_MAX) &&
+      (getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(),
+      counter_x, counter_y-1) == next_id))
     {
       path_result.append("u");
       // cout << "U" << endl;
-      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+        counter_a++)
       {
-        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        for(int counter_b = 0;
+          counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+          counter_b++)
         {
           if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
           {
@@ -1017,15 +1117,21 @@ string Maze::generatePath(std::list<vertex_t> path)
       continue;
 
     }
-    else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-       (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
-       (getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(), counter_x, counter_y+1) == next_id))
+    else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >=
+      FIELD_TYPE_TELEPORT_MIN) &&
+      (tiles_.at(counter_y+1).at(counter_x)->getSymbol() <=
+      FIELD_TYPE_TELEPORT_MAX) &&
+      (getTeleportId(tiles_.at(counter_y+1).at(counter_x)->getSymbol(),
+      counter_x, counter_y+1) == next_id))
     {
       path_result.append("d");
       // cout << "D" << endl;
-      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+        counter_a++)
       {
-        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        for(int counter_b = 0;
+          counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+          counter_b++)
         {
           if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
           {
@@ -1036,15 +1142,21 @@ string Maze::generatePath(std::list<vertex_t> path)
       }
       continue;
     }
-    else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-       (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
-       (getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(), counter_x-1, counter_y) == next_id))
+    else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >=
+      FIELD_TYPE_TELEPORT_MIN) &&
+      (tiles_.at(counter_y).at(counter_x-1)->getSymbol() <=
+      FIELD_TYPE_TELEPORT_MAX) &&
+      (getTeleportId(tiles_.at(counter_y).at(counter_x-1)->getSymbol(),
+      counter_x-1, counter_y) == next_id))
     {
       path_result.append("l");
       // cout << "L" << endl;
-      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+        counter_a++)
       {
-        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        for(int counter_b = 0;
+          counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+          counter_b++)
         {
           if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
           {
@@ -1055,15 +1167,21 @@ string Maze::generatePath(std::list<vertex_t> path)
       }
       continue;
     }
-    else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
-       (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
-       (getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(), counter_x+1, counter_y) == next_id))
+    else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >=
+      FIELD_TYPE_TELEPORT_MIN) &&
+      (tiles_.at(counter_y).at(counter_x+1)->getSymbol() <=
+      FIELD_TYPE_TELEPORT_MAX) &&
+      (getTeleportId(tiles_.at(counter_y).at(counter_x+1)->getSymbol(),
+      counter_x+1, counter_y) == next_id))
     {
       path_result.append("r");
       // cout << "R" << endl;
-      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+      for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+        counter_a++)
       {
-        for(int counter_b = 0; counter_b < (static_cast<int>(tiles_.at(counter_a).size())); counter_b++)
+        for(int counter_b = 0;
+          counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+          counter_b++)
         {
           if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
           {
@@ -1105,69 +1223,141 @@ string Maze::generatePath(std::list<vertex_t> path)
       if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
       {
         ice_counter = counter_y - 1;
-        while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+        while(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+          FIELD_TYPE_ICE)
         {
           ice_counter--;
         }
-        if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+        if(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+          FIELD_TYPE_WALL)
         {
           ice_counter++;
         }
-        if(tiles_.at(ice_counter).at(counter_x)->getId() == next_id)
+        if((tiles_.at(ice_counter).at(counter_x)->getId() == next_id) ||
+          (getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(),
+          counter_x, ice_counter) == next_id))
         {
           counter_y = ice_counter;
           path_result.append("u");
+          for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+            counter_a++)
+          {
+            for(int counter_b = 0;
+              counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+              counter_b++)
+            {
+              if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+              {
+                counter_y = counter_a;
+                counter_x = counter_b;
+              }
+            }
+          }
         }
       }
       if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
       {
         ice_counter = counter_y + 1;
-        while(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_ICE)
+        while(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+          FIELD_TYPE_ICE)
         {
           ice_counter++;
         }
-        if(tiles_.at(ice_counter).at(counter_x)->getSymbol() == FIELD_TYPE_WALL)
+        if(tiles_.at(ice_counter).at(counter_x)->getSymbol() ==
+          FIELD_TYPE_WALL)
         {
           ice_counter--;
         }
-        if(tiles_.at(ice_counter).at(counter_x)->getId() == next_id)
+        if((tiles_.at(ice_counter).at(counter_x)->getId() == next_id) ||
+          (getTeleportId(tiles_.at(ice_counter).at(counter_x)->getSymbol(),
+          counter_x, ice_counter) == next_id))
         {
           counter_y = ice_counter;
           path_result.append("d");
+          for(int counter_a = 0;
+            counter_a < (static_cast<int>(tiles_.size())); counter_a++)
+          {
+            for(int counter_b = 0;
+              counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+              counter_b++)
+            {
+              if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+              {
+                counter_y = counter_a;
+                counter_x = counter_b;
+              }
+            }
+          }
         }
       }
       if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() == FIELD_TYPE_ICE)
       {
         ice_counter = counter_x - 1;
-        while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+        while(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+          FIELD_TYPE_ICE)
         {
           ice_counter--;
         }
-        if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+        if(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+          FIELD_TYPE_WALL)
         {
           ice_counter++;
         }
-        if(tiles_.at(counter_y).at(ice_counter)->getId() == next_id)
+        if((tiles_.at(counter_y).at(ice_counter)->getId() == next_id) ||
+          (getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(),
+          ice_counter, counter_y) == next_id))
         {
-          counter_x = ice_counter;
+          counter_y = ice_counter;
           path_result.append("l");
+          for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+            counter_a++)
+          {
+            for(int counter_b = 0;
+              counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+              counter_b++)
+            {
+              if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+              {
+                counter_y = counter_a;
+                counter_x = counter_b;
+              }
+            }
+          }
         }
       }
       if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() == FIELD_TYPE_ICE)
       {
         ice_counter = counter_x + 1;
-        while(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_ICE)
+        while(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+          FIELD_TYPE_ICE)
         {
           ice_counter++;
         }
-        if(tiles_.at(counter_y).at(ice_counter)->getSymbol() == FIELD_TYPE_WALL)
+        if(tiles_.at(counter_y).at(ice_counter)->getSymbol() ==
+          FIELD_TYPE_WALL)
         {
           ice_counter--;
         }
-        if(tiles_.at(counter_y).at(ice_counter)->getId() == next_id)
+        if((tiles_.at(counter_y).at(ice_counter)->getId() == next_id) ||
+          (getTeleportId(tiles_.at(counter_y).at(ice_counter)->getSymbol(),
+          ice_counter, counter_y) == next_id))
         {
-          counter_x = ice_counter;
+          counter_y = ice_counter;
           path_result.append("r");
+          for(int counter_a = 0; counter_a < (static_cast<int>(tiles_.size()));
+            counter_a++)
+          {
+            for(int counter_b = 0;
+              counter_b < (static_cast<int>(tiles_.at(counter_a).size()));
+              counter_b++)
+            {
+              if(tiles_.at(counter_a).at(counter_b)->getId() == next_id)
+              {
+                counter_y = counter_a;
+                counter_x = counter_b;
+              }
+            }
+          }
         }
       }
     }
