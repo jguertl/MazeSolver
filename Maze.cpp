@@ -286,7 +286,7 @@ int Maze::load(const string& path)
       if(buffer == FIELD_TYPE_WALL)
       {
         // Wall
-        unique_buffer = unique_ptr<Tile>(new Wall(buffer, INITIALIZE_ZERO, INITIALIZE_ZERO));
+        unique_buffer = unique_ptr<Tile>(new Wall(buffer, INITIALIZE_NEGATIVE, INITIALIZE_ZERO));
         unique_vector_buffer.push_back(move(unique_buffer));
       }
       else if(buffer == FIELD_TYPE_PATH)
@@ -954,14 +954,14 @@ int Maze::solve(bool silent)
 
   solved_path = generatePath(path);
   solved_steps = min_distance[finish_id_] - ((path.size() - 1) * SOLVE_BONUS_CORRECTION);
-
+  
+  
   // solve the maze with fastmove
   if(fastMovePlayer(solved_path) == GAME_WON)
   {
     cout << Game::OUTPUT_MAZE_SOLVED << endl;
   }
-
-
+  
   //Save the file
   save(solved_file_name);
 
@@ -999,7 +999,7 @@ string Maze::generatePath(std::list<vertex_t> path)
     // handle teleport fields
     if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >= FIELD_TYPE_TELEPORT_MIN) &&
        (tiles_.at(counter_y-1).at(counter_x)->getSymbol() <= FIELD_TYPE_TELEPORT_MAX) &&
-       (getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y+1) == next_id))
+       (getTeleportId(tiles_.at(counter_y-1).at(counter_x)->getSymbol(), counter_x, counter_y-1) == next_id))
     {
       path_result.append("u");
       // cout << "U" << endl;
