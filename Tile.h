@@ -105,7 +105,7 @@ class Tile
     // Sets the current id
     // @param id The given id
     //
-    void setId(char id);
+    void setId(int id);
 
     //--------------------------------------------------------------------------
     // Getter Method

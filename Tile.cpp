@@ -58,7 +58,7 @@ int Tile::getValue()
 }
 
 //------------------------------------------------------------------------------
-void Tile::setId(char id)
+void Tile::setId(int id)
 {
   id_ = id;
 }
