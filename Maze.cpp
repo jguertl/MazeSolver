@@ -573,8 +573,11 @@ int Maze::load(const string& path)
   else
   {
     deleteMaze();
-    load(SAVE_FILE_NAME);
-    fastMovePlayer(moves_save);
+    if(maze_loaded)
+    {
+      load(SAVE_FILE_NAME);
+      fastMovePlayer(moves_save);
+    }
     throw FileOpenException();
   }
   counter_id++;
