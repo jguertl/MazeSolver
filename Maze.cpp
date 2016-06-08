@@ -728,7 +728,7 @@ int Maze::solve(bool silent)
   }
 
   solved_path_ = generatePath(path);
-  solved_steps_ = min_distance[finish_id_];
+  solved_steps_ = min_distance[finish_id_] - ((path.size() - 1) * SOLVE_BONUS_CORRECTION);
 
   // solve the maze with fastmove
   if(fastMovePlayer(solved_path_) == GAME_WON)
@@ -787,7 +787,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
-              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue())) + 1));
+              ((-1)*(tiles_.at(counter_y-1).at(counter_x)->getValue()))+ 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >=
             FIELD_TYPE_QUICKSAND_MIN) &&
@@ -797,7 +798,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
-              (tiles_.at(counter_y-1).at(counter_x)->getValue()) + 1));
+              (tiles_.at(counter_y-1).at(counter_x)->getValue()) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y-1).at(counter_x)->getSymbol() >=
             FIELD_TYPE_TELEPORT_MIN) &&
@@ -807,7 +809,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(getTeleportId(tiles_.at(counter_y-1).at(
-              counter_x)->getSymbol(), counter_x, counter_y-1), 1));
+              counter_x)->getSymbol(), counter_x, counter_y-1), 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y-1).at(counter_x)->getSymbol() ==
             FIELD_TYPE_ICE)
@@ -831,20 +834,23 @@ void Maze::generateAdjacencyList()
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
                 neighbor(getTeleportId(tiles_.at(ice_counter).at(
-                counter_x)->getSymbol(), counter_x, ice_counter), 1));
+                counter_x)->getSymbol(), counter_x, ice_counter),
+                1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
-                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(),
+                1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(), 1));
+              neighbor(tiles_.at(counter_y-1).at(counter_x)->getId(),
+              1 + SOLVE_BONUS_CORRECTION));
           }
         }
         if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() !=
@@ -864,7 +870,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
-              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue())) + 1));
+              ((-1)*(tiles_.at(counter_y+1).at(counter_x)->getValue())) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >=
             FIELD_TYPE_QUICKSAND_MIN) &&
@@ -874,7 +881,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
-              (tiles_.at(counter_y+1).at(counter_x)->getValue()) + 1));
+              (tiles_.at(counter_y+1).at(counter_x)->getValue()) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y+1).at(counter_x)->getSymbol() >=
             FIELD_TYPE_TELEPORT_MIN) &&
@@ -882,9 +890,10 @@ void Maze::generateAdjacencyList()
             FIELD_TYPE_TELEPORT_MAX))
           {
             adjacency_list_[tiles_.at(counter_y).at(
-            counter_x)->getId()].push_back(
-            neighbor(getTeleportId(tiles_.at(counter_y+1).at(
-            counter_x)->getSymbol(), counter_x, counter_y+1), 1));
+              counter_x)->getId()].push_back(
+              neighbor(getTeleportId(tiles_.at(counter_y+1).at(
+              counter_x)->getSymbol(), counter_x, counter_y+1),
+              1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y+1).at(counter_x)->getSymbol() ==
             FIELD_TYPE_ICE)
@@ -908,20 +917,23 @@ void Maze::generateAdjacencyList()
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
                 neighbor(getTeleportId(tiles_.at(ice_counter).at(
-                counter_x)->getSymbol(), counter_x, ice_counter), 1));
+                counter_x)->getSymbol(), counter_x, ice_counter),
+                1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
-                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(), 1));
+                neighbor(tiles_.at(ice_counter).at(counter_x)->getId(),
+                1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(), 1));
+              neighbor(tiles_.at(counter_y+1).at(counter_x)->getId(),
+              1 + SOLVE_BONUS_CORRECTION));
           }
         }
         if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() !=
@@ -941,7 +953,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
-              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue())) + 1));
+              ((-1)*(tiles_.at(counter_y).at(counter_x-1)->getValue())) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >=
             FIELD_TYPE_QUICKSAND_MIN) &&
@@ -951,7 +964,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
-              (tiles_.at(counter_y).at(counter_x-1)->getValue()) + 1));
+              (tiles_.at(counter_y).at(counter_x-1)->getValue()) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x-1)->getSymbol() >=
             FIELD_TYPE_TELEPORT_MIN) &&
@@ -961,7 +975,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(getTeleportId(tiles_.at(counter_y).at(
-              counter_x-1)->getSymbol(), counter_x-1, counter_y), 1));
+              counter_x-1)->getSymbol(), counter_x-1, counter_y),
+              1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y).at(counter_x-1)->getSymbol() ==
             FIELD_TYPE_ICE)
@@ -985,20 +1000,23 @@ void Maze::generateAdjacencyList()
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
                 neighbor(getTeleportId(tiles_.at(counter_y).at(
-                ice_counter)->getSymbol(), ice_counter, counter_y), 1));
+                ice_counter)->getSymbol(), ice_counter, counter_y),
+                1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
-                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(),
+                1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(), 1));
+              neighbor(tiles_.at(counter_y).at(counter_x-1)->getId(),
+              1 + SOLVE_BONUS_CORRECTION));
           }
         }
         if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() !=
@@ -1018,7 +1036,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
-              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue())) + 1));
+              ((-1)*(tiles_.at(counter_y).at(counter_x+1)->getValue())) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >=
             FIELD_TYPE_QUICKSAND_MIN) &&
@@ -1028,7 +1047,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
-              (tiles_.at(counter_y).at(counter_x+1)->getValue()) + 1));
+              (tiles_.at(counter_y).at(counter_x+1)->getValue()) + 1
+              + SOLVE_BONUS_CORRECTION));
           }
           else if((tiles_.at(counter_y).at(counter_x+1)->getSymbol() >=
             FIELD_TYPE_TELEPORT_MIN) &&
@@ -1038,7 +1058,8 @@ void Maze::generateAdjacencyList()
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
               neighbor(getTeleportId(tiles_.at(counter_y).at(
-              counter_x+1)->getSymbol(), counter_x+1, counter_y), 1));
+              counter_x+1)->getSymbol(), counter_x+1, counter_y),
+              1 + SOLVE_BONUS_CORRECTION));
           }
           else if(tiles_.at(counter_y).at(counter_x+1)->getSymbol() ==
             FIELD_TYPE_ICE)
@@ -1062,20 +1083,23 @@ void Maze::generateAdjacencyList()
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
                 neighbor(getTeleportId(tiles_.at(counter_y).at(
-                ice_counter)->getSymbol(), ice_counter, counter_y), 1));
+                ice_counter)->getSymbol(), ice_counter, counter_y),
+                1 + SOLVE_BONUS_CORRECTION));
             }
             else
             {
               adjacency_list_[tiles_.at(counter_y).at(
                 counter_x)->getId()].push_back(
-                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(), 1));
+                neighbor(tiles_.at(counter_y).at(ice_counter)->getId(),
+                1 + SOLVE_BONUS_CORRECTION));
             }
           }
           else
           {
             adjacency_list_[tiles_.at(counter_y).at(
               counter_x)->getId()].push_back(
-              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(), 1));
+              neighbor(tiles_.at(counter_y).at(counter_x+1)->getId(),
+              1 + SOLVE_BONUS_CORRECTION));
           }
         }
       }
