@@ -155,7 +155,7 @@ std::list<vertex_t> dijkstraGetShortestPathTo(
 
 
 //------------------------------------------------------------------------------
-Maze::Maze() : steps_(0)
+Maze::Maze() : steps_(0), solved_steps_(0)
 {
 }
 
@@ -336,6 +336,7 @@ int Maze::load(const string& path)
         unique_buffer = unique_ptr<Tile>(new Bonus(buffer, counter_id,
           (buffer - FIELD_TYPE_BONUS_MIN + BONUS_OFFSET)));
         unique_vector_buffer.push_back(move(unique_buffer));
+        bonus_id_list.push_back(counter_id);
       }
       else if((buffer >= FIELD_TYPE_QUICKSAND_MIN) &&
         (buffer <= FIELD_TYPE_QUICKSAND_MAX))
@@ -571,11 +572,15 @@ int Maze::load(const string& path)
   }
   else
   {
+    deleteMaze();
+    load(SAVE_FILE_NAME);
+    fastMovePlayer(moves_save);
     throw FileOpenException();
   }
   counter_id++;
   resetAdjacencyList();
   adjacency_list_.resize(counter_id);
+  is_adjacency_generated_ = false;
   return SUCCESS;
 }
 
@@ -690,11 +695,6 @@ int Maze::solve(bool silent)
 {
   std::vector<weight_t> min_distance;
   std::vector<vertex_t> previous;
-  string solved_path;
-  int solved_steps = INITIALIZE_ZERO;
-  int counter_x = INITIALIZE_ZERO;
-  int counter_y = INITIALIZE_ZERO;
-  int ice_counter = INITIALIZE_ZERO;
   string solved_file_name;
   solved_file_name = filename_;
   solved_file_name.append(SOLVED_APPEND);
@@ -707,7 +707,52 @@ int Maze::solve(bool silent)
   }
 
   //Try to solve the maze
+  if(is_adjacency_generated_ == false)
+  {
+    generateAdjacencyList();
+    is_adjacency_generated_ = true;
+  }
 
+  // run dijkstras algorithm
+  start_id_ = tiles_.at(player_.getY()).at(player_.getX())->getId();
+  dijkstraComputePaths(start_id_, adjacency_list_, min_distance, previous);
+  std::list<vertex_t> path = dijkstraGetShortestPathTo(finish_id_, previous);
+
+  //If Maze is not solvable
+  if(min_distance[finish_id_] == max_weight_)
+  {
+    throw NoPathFoundException();
+  }
+
+  solved_path_ = generatePath(path);
+  solved_steps_ = min_distance[finish_id_];
+
+  // solve the maze with fastmove
+  if(fastMovePlayer(solved_path_) == GAME_WON)
+  {
+    cout << Game::OUTPUT_MAZE_SOLVED << endl;
+  }
+
+  //Save the file
+  save(solved_file_name);
+
+  //Print results
+  cout << "The maze was solved in " << solved_steps_ << " steps." << endl;
+
+  if(silent == false)
+  {
+    cout << "Found path: " << solved_path_ << endl;
+  }
+
+  return SUCCESS;
+}
+
+//------------------------------------------------------------------------------
+void Maze::generateAdjacencyList()
+{
+  int counter_x = INITIALIZE_ZERO;
+  int counter_y = INITIALIZE_ZERO;
+  int ice_counter = INITIALIZE_ZERO;
   // Add the neighbors of every tile into the adjacency list
   for (counter_y = 1; counter_y < static_cast<int>(tiles_.size()-1);
     counter_y++)
@@ -775,7 +820,6 @@ int Maze::solve(bool silent)
             {
               ice_counter++;
             }
-
             if((tiles_.at(ice_counter).at(counter_x)->getSymbol() >=
               FIELD_TYPE_TELEPORT_MIN) &&
               (tiles_.at(ice_counter).at(counter_x)->getSymbol() <=
@@ -1034,40 +1078,6 @@ int Maze::solve(bool silent)
       }
     }
   }
-
-  // run dijkstras algorithm
-  start_id_ = tiles_.at(player_.getY()).at(player_.getX())->getId();
-  dijkstraComputePaths(start_id_, adjacency_list_, min_distance, previous);
-  std::list<vertex_t> path = dijkstraGetShortestPathTo(finish_id_, previous);
-
-  //If Maze is not solvable
-  if(min_distance[finish_id_] == max_weight_)
-  {
-    resetAdjacencyList();
-    throw NoPathFoundException();
-  }
-
-  solved_path = generatePath(path);
-  solved_steps = min_distance[finish_id_];
-
-  // solve the maze with fastmove
-  if(fastMovePlayer(solved_path) == GAME_WON)
-  {
-    cout << Game::OUTPUT_MAZE_SOLVED << endl;
-  }
-
-  //Save the file
-  save(solved_file_name);
-
-  //Print results
-  cout << "The maze was solved in " << solved_steps << " steps." << endl;
-
-  if(silent == false)
-  {
-    cout << "Found path: " << solved_path << endl;
-  }
-
-  return SUCCESS;
 }
 
 //------------------------------------------------------------------------------

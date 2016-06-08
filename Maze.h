@@ -318,6 +318,21 @@ class Maze
     int finish_id_;
 
     //--------------------------------------------------------------------------
+    // fastmove string to solve the maze
+    //
+    string solved_path_;
+
+    //--------------------------------------------------------------------------
+    // step count of solve algorithm
+    //
+    int solved_steps_;
+
+    //--------------------------------------------------------------------------
+    // true if the adjacency list was already generated for this maze
+    //
+    bool is_adjacency_generated_;
+
+    //--------------------------------------------------------------------------
     // Name of the current maze file
     //
     string filename_;
@@ -326,6 +341,11 @@ class Maze
     // Player
     //
     Player player_;
+
+    //--------------------------------------------------------------------------
+    // vector for all ids of bonus tiles
+    //
+    vector<vertex_t> bonus_id_list;
 
     //--------------------------------------------------------------------------
     // Collection of tiles
@@ -409,6 +429,12 @@ class Maze
     // @return int SUCCESS
     //
     int solve(bool silent);
+
+    //--------------------------------------------------------------------------
+    // Generate Dijkstra Graph
+    // Generates the Graph for the Dijkstra algorithm
+    //
+    void generateAdjacencyList();
 
     //--------------------------------------------------------------------------
     // Generate Path
