@@ -96,8 +96,8 @@ const int Maze::INITIALIZE_ZERO = 0;
 const int Maze::INITIALIZE_NEGATIVE = -1;
 
 
-// http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
-// -----------------------------------------------------------------------
+// from: http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+// begin
 
 void dijkstraComputePaths(vertex_t source,
                           const adjacency_list_t &adjacency_list,
@@ -149,10 +149,7 @@ std::list<vertex_t> dijkstraGetShortestPathTo(
         path.push_front(vertex);
     return path;
 }
-// -----------------------------------------------------------------------
-// http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
-
-
+// end
 
 //------------------------------------------------------------------------------
 Maze::Maze() : steps_(0), solved_steps_(0)

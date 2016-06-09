@@ -30,8 +30,8 @@ using std::vector;
 using std::unique_ptr;
 
 
-// http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
-// -----------------------------------------------------------------------
+// from: http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+// begin
 typedef int vertex_t;
 typedef double weight_t;
 const weight_t max_weight_ = std::numeric_limits<double>::infinity();
@@ -42,8 +42,7 @@ struct neighbor {
         : target(arg_target), weight(arg_weight) { }
 };
 typedef std::vector<std::vector<neighbor> > adjacency_list_t;
-// -----------------------------------------------------------------------
-// http://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+// end
 
 
 
